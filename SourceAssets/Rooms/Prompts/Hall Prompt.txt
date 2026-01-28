@@ -1,0 +1,45 @@
+A 2D side-view interior scene of a luxurious entrance hall in the home of a very wealthy corrupt official.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors, slightly eerie mood, similar to Don’t Starve Together and Rusty Lake.
+
+The room should feel expensive, sterile, and overly clean — like a showroom rather than a lived-in home.
+
+Composition requirements:
+
+flat 2D perspective (no strong depth or extreme perspective)
+
+clear separation between objects
+
+no overlapping objects
+
+each object visually distinct and easy to cut out as a separate sprite
+
+no motion blur, no dramatic lighting, no particles
+
+Objects in the room:
+
+luxury shoe cabinet with drawers
+
+minimalist coat rack with a few expensive coats
+
+small wall-mounted key drawer
+
+tall designer vase
+
+expensive rug on the floor
+
+large frameless mirror on the wall
+
+hat shelf
+
+shoe shelf
+
+decorative wall panel
+
+The entrance hall should feel intentionally tidy and suspiciously perfect, as if prepared for an inspection.
+
+Lighting is soft and even, neutral shadows only.
+
+No people, no text, no UI elements.
+
+Background should be simple and not textured heavily, suitable for a game background.

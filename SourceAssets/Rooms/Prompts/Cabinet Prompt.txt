@@ -1,0 +1,45 @@
+A 2D side-view interior scene of a luxurious private office in the home of a very wealthy corrupt official.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors, slightly eerie mood, similar to Don’t Starve Together and Rusty Lake.
+
+The office should feel powerful, controlled, and deliberately intimidating — a space designed to impress inspectors rather than to be lived in.
+
+Composition requirements:
+
+flat 2D perspective (no depth, no dramatic perspective)
+
+clear separation between objects
+
+no overlapping objects
+
+each object visually distinct and easy to cut out as a separate sprite
+
+no motion blur, no cinematic lighting, no particles
+
+Objects in the room:
+
+large luxury writing desk with drawers
+
+hidden safe built into the wall or behind a panel
+
+tall bookcase with neatly arranged books
+
+small cabinet under the desk
+
+designer desk lamp
+
+expensive executive chair
+
+framed painting on the wall
+
+display shelf with awards and trophies
+
+abstract sculpture on a pedestal
+
+The room should look suspiciously perfect, overly tidy, and carefully staged, as if prepared in advance for an official inspection.
+
+Lighting is soft and even, neutral shadows only.
+
+No people, no text, no UI elements.
+
+Background should be simple, clean, and suitable for a 2D game background.

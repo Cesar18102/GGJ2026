@@ -1,0 +1,46 @@
+A 2D side-view interior scene of a luxurious modern kitchen in the home of a very wealthy corrupt official.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors, slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+
+The kitchen should feel expensive, cold, and unused — more like a design showroom than a place where people actually cook.
+
+Composition requirements:
+
+flat 2D side-view perspective (no depth, no dramatic perspective)
+
+clear separation between objects
+
+no overlapping objects
+
+each object visually distinct and easy to cut out as a separate sprite
+
+no motion blur, no cinematic lighting, no particles
+
+Objects in the room:
+
+upper kitchen cabinets (wall-mounted)
+
+lower kitchen cabinets
+
+large luxury refrigerator
+
+built-in microwave
+
+built-in oven
+
+minimalist trash bin
+
+clean kitchen table
+
+sink with modern faucet
+
+expensive coffee machine
+
+The kitchen should look suspiciously perfect and overly clean, as if prepared in advance for an inspection and never actually used.
+
+Lighting is soft and even, neutral shadows only.
+
+No people, no food, no dishes, no clutter.
+No text, no UI elements.
+
+Background should be simple, clean, and suitable for a 2D game background.

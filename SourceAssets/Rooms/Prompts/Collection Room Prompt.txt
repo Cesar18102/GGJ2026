@@ -1,0 +1,43 @@
+A 2D side-view interior scene of a luxurious private collection room in the home of a very wealthy corrupt official.
+
+The room is dedicated to rare collectibles and vintage luxury items, with a strong focus on a classic racing car from the 1930s.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors, slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake. No realism, no photorealism.
+
+The space should feel expensive, curated, and museum-like — more like a private exhibition than a functional room.
+
+Composition requirements:
+
+flat 2D side-view perspective
+
+single flat back wall only (no visible side walls, no ceiling perspective)
+
+clear separation between objects
+
+no overlapping objects
+
+each object visually distinct and easy to cut out as a separate sprite
+
+no motion blur, no cinematic lighting, no particles
+
+Objects in the room:
+
+vintage 1930s racing car (classic pre-war design, large wheels, exposed details, elegant silhouette)
+
+glass display pedestal with rare collectible item
+
+wall-mounted display shelves with luxury collectibles
+
+framed historical racing posters or photographs
+
+polished floor suitable for exhibition
+
+The racing car should be the visual centerpiece, perfectly clean and staged, as if never driven.
+
+The room should feel suspiciously perfect, curated for inspection rather than passion.
+
+Lighting is very soft and even, neutral shadows only.
+
+No people, no text, no UI elements.
+
+Background should be simple, clean, and suitable for a 2D game background.
