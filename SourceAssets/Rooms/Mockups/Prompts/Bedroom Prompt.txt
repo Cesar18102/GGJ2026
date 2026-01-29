@@ -1,0 +1,44 @@
+A 2D side-view interior scene of a luxurious bedroom in the home of a very wealthy corrupt official.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors, slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake. No realism.
+
+The bedroom should feel expensive, cold, and emotionally empty — like a hotel showroom or a staged interior, not a personal living space.
+
+Composition requirements:
+
+flat 2D side-view perspective (no depth, no dramatic perspective)
+
+clear separation between objects
+
+no overlapping objects
+
+each object visually distinct and easy to cut out as a separate sprite
+
+no motion blur, no cinematic lighting, no particles
+
+Objects in the room:
+
+luxury bed with perfectly arranged bedding
+
+bedside table (one)
+
+large dresser
+
+walk-in wardrobe or wardrobe cabinet
+
+vanity table with mirror (trumeau)
+
+tall floor lamp
+
+expensive armchair
+
+The bed should look untouched and perfectly made, as if nobody actually sleeps there.
+
+The room should appear carefully staged for inspection, with no personal items, photos, clothes, or signs of everyday life.
+
+Lighting is very soft and even, neutral shadows only.
+
+No people, no personal belongings, no clutter.
+No text, no UI elements.
+
+Background should be simple, clean, and suitable for a 2D game background.

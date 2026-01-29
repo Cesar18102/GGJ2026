@@ -1,0 +1,75 @@
+A 2D orthogonal-view interior background of a luxurious interior space in the home of a very wealthy corrupt official.
+
+This image represents ONLY the architectural background of the room, without any furniture, props, or interactive objects.
+
+Style:
+dark stylized cartoon,
+hand-drawn look,
+thick outlines,
+flat colors,
+slightly eerie and sterile atmosphere,
+similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Mood:
+expensive,
+cold,
+sterile,
+emotionally empty,
+like a staged showroom prepared for inspection rather than a lived-in home.
+
+Composition requirements:
+- flat 2D orthogonal-view perspective
+- single flat back wall only
+- no visible side walls
+- no ceiling perspective
+- simple flat floor plane
+- clear horizontal separation between wall and floor
+- wall occupies approximately 65% of the image height
+- floor occupies approximately 35% of the image height
+- no depth, no dramatic perspective
+
+Color and lighting adjustments:
+- wall color should be noticeably darker, muted, and heavier, similar to a dimly lit luxury interior
+- overall palette shifted toward dark gray, charcoal, and muted brown tones
+- lighting is low-key and restrained, but still evenly distributed
+- no bright highlights or light patches on the wall
+- no visible light sources
+- no light spots, glows, or gradients suggesting lamps
+
+Visual clarity:
+- clean, readable wall silhouette
+- minimal texture noise
+- subtle hand-drawn shading only
+- no baked-in shadows from furniture
+- no directional lighting cues
+
+Architecture rules:
+- NO doors
+- NO doorways
+- NO openings in the wall
+- NO side walls
+
+Architecture details (allowed, non-interactive):
+- dark elegant wall texture or wallpaper pattern
+- baseboards / floor trim
+- simple, expensive-looking floor material (tile or stone), slightly lighter than the wall
+- symmetrical or intentionally balanced wall composition
+
+Lighting:
+very soft and even ambient lighting,
+overall dark tonality,
+neutral shadows only,
+no directional light,
+no visible light sources.
+
+Restrictions:
+- no furniture
+- no props
+- no decorative objects
+- no architectural elements implying interaction
+- no people
+- no text
+- no UI elements
+
+The background should function as a reusable theatrical stage for placing separate furniture sprites and characters in a 2D game.
