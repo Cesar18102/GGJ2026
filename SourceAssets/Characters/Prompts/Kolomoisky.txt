@@ -1,0 +1,69 @@
+Description:
+A stylized 2D character inspired by Ihor Kolomoisky, portrayed as a powerful, wealthy oligarch.
+Middle-aged to older man, heavy build, confident posture.
+Distinctive facial features: broad face, heavy eyelids, ironic half-smile suggesting control and cynicism.
+Well-groomed but slightly careless appearance, suggesting wealth without the need to impress.
+
+Clothing:
+
+Expensive dark business suit (charcoal or deep brown)
+
+White or light beige shirt, slightly relaxed collar
+
+No tie, or loosely worn tie
+
+Polished leather shoes
+
+Subtle luxury details (gold cufflinks, heavy watch)
+
+Pose & expression:
+
+Standing or slight forward lean
+
+Hands behind back or one hand in pocket
+
+Calm, dominant, self-assured expression
+
+Feels untouchable and confident
+
+No exaggerated emotions
+
+Style
+
+dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Rendering rules
+
+full-body character
+
+isolated character on transparent background
+
+no background, no floor, no environment
+
+no cast shadows on the ground
+
+no visible light sources
+
+neutral, soft internal shading only
+
+clean silhouette, readable shape
+
+orthographic / flat side-view friendly
+
+suitable as a 2D game character sprite
+
+Color palette
+
+muted browns, dark grays, beige
+
+low saturation
+
+no bright accents
+
+Mood
+
+cold, sterile, curated, suspiciously powerful
+wealth without warmth
+a man who owns the room without touching it

@@ -1,0 +1,74 @@
+A stylized 2D character depicting an anonymous NABU (National Anti-Corruption Bureau of Ukraine) field agent.
+
+Adult male figure, athletic and disciplined build. Neutral, professional posture. Face fully concealed by a plain dark balaclava, no visible skin except eyes. Eyes calm, focused, emotionally restrained.
+
+Clothing:
+
+Dark tactical jacket (charcoal / black), clean and well-fitted
+
+Matching tactical pants, minimal seams, no visible wear
+
+Black gloves
+
+Heavy-duty dark boots
+
+Subtle, non-flashy utility belt (no weapons visible)
+
+Small, discreet NABU insignia patch or minimal emblem (very understated, optional)
+
+No personal markings, no individuality — designed for anonymity and institutional presence.
+
+Pose & rigging:
+
+Perfect T-Pose
+
+Arms fully extended horizontally
+
+Legs straight, shoulder-width apart
+
+Symmetrical stance
+
+Neutral head position, facing forward
+
+Designed explicitly for animation rigging and skeletal setup
+
+Style:
+dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Rendering rules:
+
+full-body character
+
+isolated character on transparent background
+
+no background, no floor, no environment
+
+no cast shadows on the ground
+
+no visible light sources
+
+neutral, soft internal shading only
+
+clean silhouette, highly readable shape
+
+orthographic / flat side-view friendly
+
+suitable as a 2D game character sprite
+
+Color palette:
+
+dark grays, black, muted olive
+
+low saturation
+
+no bright accents
+
+no reflective or glossy materials
+
+Mood:
+cold, controlled, institutional
+anonymous authority
+silent pressure
+a presence that exists to observe, not to be seen
