@@ -1,0 +1,28 @@
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Rendering rules:
+- isolated object on transparent background
+- no background, no wall, no floor
+- no cast shadows on the ground
+- no visible light sources
+- neutral, soft internal shading only
+- clean silhouette, readable shape
+- suitable as a 2D game sprite
+
+A decorative wall panel for a luxury entrance hall.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+
+Design:
+- rectangular framed panel
+- abstract geometric or ornamental design
+- muted dark tones with subtle gold accents
+- no text, no symbols
+
+Rendering rules:
+- isolated object on transparent background
+- no cast shadows
+- suitable as a 2D game sprite

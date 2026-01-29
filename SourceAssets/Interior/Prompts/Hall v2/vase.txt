@@ -1,0 +1,21 @@
+A tall designer floor vase placed in the entrance hall.
+Minimalist shape, ceramic or stone, muted luxury tones.
+Decorative but suspiciously empty.
+Designed as a searchable hiding spot.
+
+Style:
+dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Rendering rules:
+- isolated object on transparent background
+- no background, no wall, no floor
+- no cast shadows on the ground
+- no visible light sources
+- neutral, soft internal shading only
+- clean silhouette, readable shape
+- suitable as a 2D game sprite
+
+Mood:
+cold, sterile, curated, suspiciously perfect

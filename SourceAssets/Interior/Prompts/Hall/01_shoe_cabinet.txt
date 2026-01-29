@@ -1,0 +1,34 @@
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Rendering rules:
+- isolated object on transparent background
+- no background, no wall, no floor
+- no cast shadows on the ground
+- no visible light sources
+- neutral, soft internal shading only
+- clean silhouette, readable shape
+- suitable as a 2D game sprite
+
+A luxury shoe cabinet for an entrance hall in the home of a very wealthy corrupt official.
+
+Style: dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
+slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
+No realism, no photorealism.
+
+Design:
+- dark wood with subtle brass or gold accents
+- rectangular, clean silhouette
+- no doors
+- some expensive shoes
+
+Mood:
+cold, sterile, curated, suspiciously perfect
+
+Rendering rules:
+- isolated object on transparent background
+- no background, no wall, no floor
+- no cast shadows
+- neutral internal shading only
+- suitable as a 2D game sprite
