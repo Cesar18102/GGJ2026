@@ -1,32 +1,56 @@
 Description:
 A stylized 2D character inspired by Ihor Kolomoisky, portrayed as a powerful, wealthy oligarch.
-Middle-aged to older man, heavy build, confident posture.
-Distinctive facial features: broad face, heavy eyelids, ironic half-smile suggesting control and cynicism.
-Well-groomed but slightly careless appearance, suggesting wealth without the need to impress.
+Middle-aged to older man, heavy build, confident and dominant presence.
+Broad face, heavy eyelids, subtle ironic half-smile suggesting control and cynicism.
+Well-groomed but slightly careless appearance that signals effortless wealth and influence.
 
-Clothing:
+Clothing
 
 Expensive dark business suit (charcoal or deep brown)
 
 White or light beige shirt, slightly relaxed collar
 
-No tie, or loosely worn tie
+No tie or loosely worn tie
 
 Polished leather shoes
 
 Subtle luxury details (gold cufflinks, heavy watch)
 
-Pose & expression:
+Pose (RIGGING / CUTOUT — IMPORTANT)
 
-Standing or slight forward lean
+strict full side view character
+body fully turned sideways
 
-Hands behind back or one hand in pocket
+rigging-ready cutout pose
+walk-cycle key pose
 
-Calm, dominant, self-assured expression
+one arm forward, one arm backward
+one leg forward, one leg backward
 
-Feels untouchable and confident
+all limbs fully visible and separated
+no overlapping body parts
+clear gap between arms and torso
+clear gap between legs
 
-No exaggerated emotions
+hands fully visible
+feet fully visible
+underarm and leg separation visible
+
+no crossed limbs
+no hands in pockets
+no arms behind back
+no limb merging
+no silhouette fusion
+
+designed specifically for sprite slicing and bone rigging
+animation-ready separation pose
+
+Expression
+
+Calm, dominant, self-assured facial expression
+Cold confidence
+No exaggerated emotion
+Controlled, untouchable demeanor
 
 Style
 
@@ -40,7 +64,7 @@ full-body character
 
 isolated character on transparent background
 
-no background, no floor, no environment
+no background, no wall, no floor
 
 no cast shadows on the ground
 
@@ -54,12 +78,12 @@ orthographic / flat side-view friendly
 
 suitable as a 2D game character sprite
 
+cutout animation friendly
+
 Color palette
 
 muted browns, dark grays, beige
-
 low saturation
-
 no bright accents
 
 Mood

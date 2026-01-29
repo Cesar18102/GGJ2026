@@ -1,49 +1,70 @@
+Description:
 A stylized 2D character depicting an anonymous NABU (National Anti-Corruption Bureau of Ukraine) field agent.
+Adult male figure, athletic and disciplined build, professional and controlled presence.
+Face fully concealed by a plain dark balaclava, only the eyes visible.
+Eyes calm, focused, emotionally restrained.
+No individuality — institutional anonymity and procedural authority.
 
-Adult male figure, athletic and disciplined build. Neutral, professional posture. Face fully concealed by a plain dark balaclava, no visible skin except eyes. Eyes calm, focused, emotionally restrained.
+Clothing
 
-Clothing:
-
-Dark tactical jacket (charcoal / black), clean and well-fitted
-
-Matching tactical pants, minimal seams, no visible wear
-
+Dark tactical jacket (charcoal or black), clean and well-fitted
+Matching tactical pants with minimal seams
 Black gloves
-
 Heavy-duty dark boots
-
-Subtle, non-flashy utility belt (no weapons visible)
-
+Subtle utility belt (no weapons visible)
 Small, discreet NABU insignia patch or minimal emblem (very understated, optional)
 
-No personal markings, no individuality — designed for anonymity and institutional presence.
+No personalization, no decorative elements, no flashy gear.
 
-Pose & rigging:
+Pose (RIGGING / CUTOUT — IMPORTANT)
 
-Perfect T-Pose
+strict full side view character
+body fully turned sideways
 
-Arms fully extended horizontally
+rigging-ready cutout pose
+walk-cycle key pose
 
-Legs straight, shoulder-width apart
+one arm forward, one arm backward
+one leg forward, one leg backward
 
-Symmetrical stance
+all limbs fully visible and separated
+no overlapping body parts
+clear gap between arms and torso
+clear gap between legs
 
-Neutral head position, facing forward
+hands fully visible
+feet fully visible
+underarm and leg separation visible
 
-Designed explicitly for animation rigging and skeletal setup
+no crossed limbs
+no hands touching torso
+no arms behind back
+no limb merging
+no silhouette fusion
 
-Style:
+designed specifically for sprite slicing and bone rigging
+animation-ready separation pose
+
+Expression
+
+Emotionally neutral
+Focused and observant
+No aggression, no friendliness
+Professional operational calm
+
+Style
+
 dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
 slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
 No realism, no photorealism.
 
-Rendering rules:
+Rendering rules
 
 full-body character
 
 isolated character on transparent background
 
-no background, no floor, no environment
+no background, no wall, no floor
 
 no cast shadows on the ground
 
@@ -51,23 +72,23 @@ no visible light sources
 
 neutral, soft internal shading only
 
-clean silhouette, highly readable shape
+clean silhouette, readable shape
 
 orthographic / flat side-view friendly
 
 suitable as a 2D game character sprite
 
-Color palette:
+cutout animation friendly
+
+Color palette
 
 dark grays, black, muted olive
-
 low saturation
-
 no bright accents
+no glossy or reflective materials
 
-no reflective or glossy materials
+Mood
 
-Mood:
 cold, controlled, institutional
 anonymous authority
 silent pressure

@@ -1,36 +1,62 @@
 Description:
-A stylized 2D character inspired by Yulia Tymoshenko, portrayed as a powerful, calculating political figure.
-Middle-aged woman, slender but firm posture, disciplined silhouette.
-Distinctive facial features: sharp cheekbones, controlled gaze, tight lips with a restrained, confident expression.
-Iconic braided hairstyle (crown braid), perfectly maintained, symbolic and unmistakable.
-Overall appearance suggests absolute control, experience, and political endurance rather than warmth.
+A stylized 2D character inspired by Yulia Tymoshenko, portrayed as a powerful, calculating political leader.
+Middle-aged woman, slender but firm build, disciplined silhouette, controlled posture.
+Sharp cheekbones, focused eyes, tight lips with a restrained, confident expression.
+Iconic braided crown hairstyle, perfectly maintained and clearly readable in silhouette.
+Overall presence suggests political endurance, control, and strategic intelligence rather than warmth.
 
-Clothing:
-Elegant tailored business suit or formal dress-suit hybrid (dark gray, deep beige, or muted cream)
-Structured jacket with sharp lines, slightly accentuated shoulders
-Minimal jewelry (small earrings or subtle brooch)
+Clothing
+
+Elegant tailored business suit or formal dress-suit hybrid
+dark gray, deep beige, or muted cream tones
+Structured jacket with sharp lines and slightly accentuated shoulders
+Minimal jewelry — small earrings or subtle brooch
 Classic closed shoes or low heels
 No flashy accessories — authority through restraint
 
-Pose & anatomy (T-pose):
-Full-body character in a strict T-pose
-Arms extended horizontally, palms neutral
-Legs straight, shoulder-width apart
-Neutral, balanced stance suitable for rigging and animation
-Head facing forward, chin slightly raised
+Pose (RIGGING / CUTOUT — IMPORTANT)
 
-Expression:
+strict full side view character
+body fully turned sideways
+
+rigging-ready cutout pose
+walk-cycle key pose
+
+one arm forward, one arm backward
+one leg forward, one leg backward
+
+all limbs fully visible and separated
+no overlapping body parts
+clear gaps between arms and torso
+clear gap between legs
+
+hands fully visible
+feet fully visible
+underarm and leg separation visible
+
+no crossed limbs
+no hands touching torso
+no hands behind back
+no limb merging
+no silhouette fusion
+
+designed specifically for sprite slicing and bone rigging
+animation-ready separation pose
+
+Expression
+
 Cold, composed, politically seasoned
 No smile, no aggression
-A look of someone who survives every regime
-Emotionally distant, intellectually dominant
+Controlled and emotionally distant
+Intellectually dominant presence
 
-Style:
+Style
+
 dark stylized cartoon, hand-drawn look, thick outlines, flat colors,
 slightly eerie and sterile mood, similar to Don’t Starve Together and Rusty Lake.
 No realism, no photorealism.
 
-Rendering rules:
+Rendering rules
 
 full-body character
 
@@ -50,15 +76,17 @@ orthographic / flat side-view friendly
 
 suitable as a 2D game character sprite
 
-T-pose for animation and rigging
+cutout animation friendly
 
-Color palette:
+Color palette
+
 muted grays, warm beige, off-white
 low saturation
 no bright accents
-hair color slightly warmer than clothing for readability
+hair slightly warmer than clothing for silhouette readability
 
-Mood:
+Mood
+
 cold, sterile, curated, suspiciously powerful
 political control without empathy
 a woman who outlasts systems rather than rules them
