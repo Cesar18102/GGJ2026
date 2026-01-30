@@ -1,34 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RoomController : MonoBehaviour
 {
-    [Header("Room Configuration")] [SerializeField]
-    private List<RoomData> rooms = new();
-
+    [Header("Room Configuration")]
+    [SerializeField] private List<RoomData> rooms = new();
     [SerializeField] private int startingRoomIndex;
 
-    [Header("Main Camera")] [SerializeField]
-    private Camera mainCamera;
+    [Header("Main Camera")]
+    [SerializeField] private Camera mainCamera;
 
-    [Header("Preview Textures")] [SerializeField]
-    private RenderTexture leftPreviewTexture;
-
-    [SerializeField] private RenderTexture rightPreviewTexture;
-
-
-    [Header("Preview UI Elements")] [SerializeField]
-    private GameObject leftPreviewPanel;
-
-    [SerializeField] private GameObject rightPreviewPanel;
-    [SerializeField] private RawImage leftPreviewImage;
-    [SerializeField] private RawImage rightPreviewImage;
-
-    [Header("Navigation Buttons")] [SerializeField]
-    private Button leftNavigationButton;
-
-    [SerializeField] private Button rightNavigationButton;
+    [Header("Previews")]
+    [SerializeField] private RoomPreview leftPreview;
+    [SerializeField] private RoomPreview rightPreview;
 
     private int _currentIndex;
 
@@ -36,46 +20,20 @@ public class RoomController : MonoBehaviour
     {
         _currentIndex = Mathf.Clamp(startingRoomIndex, 0, rooms.Count - 1);
 
-        SetupButtonListeners();
-        SetupPreviewClickHandlers();
+        SetupPreviews();
         UpdateView();
     }
 
-    private void SetupButtonListeners()
+    private void SetupPreviews()
     {
-        if (leftNavigationButton != null)
+        if (leftPreview != null)
         {
-            leftNavigationButton.onClick.AddListener(NavigateLeft);
+            leftPreview.OnNavigate += NavigateLeft;
         }
 
-        if (rightNavigationButton != null)
+        if (rightPreview != null)
         {
-            rightNavigationButton.onClick.AddListener(NavigateRight);
-        }
-    }
-
-    private void SetupPreviewClickHandlers()
-    {
-        if (leftPreviewImage != null)
-        {
-            var leftButton = leftPreviewImage.GetComponent<Button>();
-            if (leftButton == null)
-            {
-                leftButton = leftPreviewImage.gameObject.AddComponent<Button>();
-            }
-
-            leftButton.onClick.AddListener(NavigateLeft);
-        }
-
-        if (rightPreviewImage != null)
-        {
-            var rightButton = rightPreviewImage.GetComponent<Button>();
-            if (rightButton == null)
-            {
-                rightButton = rightPreviewImage.gameObject.AddComponent<Button>();
-            }
-
-            rightButton.onClick.AddListener(NavigateRight);
+            rightPreview.OnNavigate += NavigateRight;
         }
     }
 
@@ -115,8 +73,12 @@ public class RoomController : MonoBehaviour
         }
 
         UpdateMainCamera();
-        UpdateLeftPreview();
-        UpdateRightPreview();
+
+        var leftRoom = _currentIndex > 0 ? rooms[_currentIndex - 1] : null;
+        var rightRoom = _currentIndex < rooms.Count - 1 ? rooms[_currentIndex + 1] : null;
+
+        leftPreview?.UpdatePreview(leftRoom?.roomCamera);
+        rightPreview?.UpdatePreview(rightRoom?.roomCamera);
     }
 
     private void UpdateMainCamera()
@@ -129,57 +91,6 @@ public class RoomController : MonoBehaviour
 
         mainCamera.transform.position = currentRoom.roomCamera.transform.position;
         mainCamera.transform.rotation = currentRoom.roomCamera.transform.rotation;
-    }
-
-    private void UpdateLeftPreview()
-    {
-        var hasPreviousRoom = _currentIndex > 0;
-        if (leftPreviewPanel != null)
-        {
-            leftPreviewPanel.SetActive(hasPreviousRoom);
-        }
-
-        if (!hasPreviousRoom)
-        {
-            return;
-        }
-
-        var prevIndex = _currentIndex - 1;
-        var prevRoom = rooms[prevIndex];
-
-        if (prevRoom.roomCamera == null || leftPreviewTexture == null)
-        {
-            return;
-        }
-
-        prevRoom.roomCamera.targetTexture = leftPreviewTexture;
-        prevRoom.roomCamera.Render();
-    }
-
-    private void UpdateRightPreview()
-    {
-        var hasNextRoom = _currentIndex < rooms.Count - 1;
-
-        if (rightPreviewPanel != null)
-        {
-            rightPreviewPanel.SetActive(hasNextRoom);
-        }
-
-        if (!hasNextRoom)
-        {
-            return;
-        }
-
-        var nextIndex = _currentIndex + 1;
-        var nextRoom = rooms[nextIndex];
-
-        if (nextRoom.roomCamera == null || rightPreviewTexture == null)
-        {
-            return;
-        }
-
-        nextRoom.roomCamera.targetTexture = rightPreviewTexture;
-        nextRoom.roomCamera.Render();
     }
 
     public int CurrentRoomIndex => _currentIndex;
