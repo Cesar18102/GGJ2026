@@ -1,0 +1,360 @@
+fileFormatVersion: 2
+guid: c1999d9f0f4807849a54ff35d22d6a68
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2584645979817909207
+    second: Maximize Button 1_0
+  - first:
+      213: -392319224489694919
+    second: Maximize Button 1_1
+  - first:
+      213: -2510602550918385088
+    second: Maximize Button 1_2
+  - first:
+      213: -6570693725032600603
+    second: Maximize Button 1_3
+  - first:
+      213: 3720194456367834754
+    second: Maximize Button 1_4
+  - first:
+      213: -8801021999408245492
+    second: Maximize Button 1_5
+  - first:
+      213: 2904127804910960865
+    second: Maximize Button 1_6
+  - first:
+      213: -3215335937455110180
+    second: Maximize Button 1_7
+  - first:
+      213: -622190531872601230
+    second: Maximize Button 1_8
+  - first:
+      213: 4474809310154884529
+    second: Maximize Button 1_9
+  - first:
+      213: 8438985726705206136
+    second: Maximize Button 1_10
+  - first:
+      213: -8866609900431121269
+    second: Maximize Button 1_11
+  - first:
+      213: 6465978325322823517
+    second: Maximize Button 1_12
+  - first:
+      213: 918475891076603667
+    second: Maximize Button 1_13
+  - first:
+      213: -5753660671653747634
+    second: Maximize Button 1_14
+  - first:
+      213: 6399226824555811167
+    second: Maximize Button 1_15
+  - first:
+      213: -8342764447341108348
+    second: Maximize Button 1_16
+  - first:
+      213: 4015602582822676565
+    second: Maximize Button 1_17
+  - first:
+      213: -8784408276290862410
+    second: Maximize Button 1_18
+  - first:
+      213: 9076986477051637364
+    second: Maximize Button 1_19
+  - first:
+      213: 281452285736048865
+    second: Maximize Button 1_20
+  - first:
+      213: -861973909307052336
+    second: Maximize Button 1_21
+  - first:
+      213: -6771239491336591033
+    second: Maximize Button 1_22
+  - first:
+      213: 5066804250853718006
+    second: Maximize Button 1_23
+  - first:
+      213: 4073008249947874880
+    second: Maximize Button 1_24
+  - first:
+      213: 2713983819649270621
+    second: Maximize Button 1_25
+  - first:
+      213: -8698001317098875634
+    second: Maximize Button 1_26
+  - first:
+      213: -1312465226016745014
+    second: Maximize Button 1_27
+  - first:
+      213: -7962249668814888057
+    second: Maximize Button 1_28
+  - first:
+      213: -1423531130296715710
+    second: Maximize Button 1_29
+  - first:
+      213: 8603012552513107190
+    second: Maximize Button 1_30
+  - first:
+      213: -4502200321198054794
+    second: Maximize Button 1_31
+  - first:
+      213: 3426025336463710491
+    second: Maximize Button 1_32
+  - first:
+      213: 5180260466176646161
+    second: Maximize Button 1_33
+  - first:
+      213: -862577640211431099
+    second: Maximize Button 1_34
+  - first:
+      213: 1055010718338375788
+    second: Maximize Button 1_35
+  - first:
+      213: 645859155796669595
+    second: Maximize Button 1_36
+  - first:
+      213: 745950096103380781
+    second: Maximize Button 1_37
+  - first:
+      213: -1460190420571631384
+    second: Maximize Button 1_38
+  - first:
+      213: -1008572359578230637
+    second: Maximize Button 1_39
+  - first:
+      213: -356404838433799331
+    second: Maximize Button 1_40
+  - first:
+      213: 3130117185368700563
+    second: Maximize Button 1_41
+  - first:
+      213: -8741541992269042842
+    second: Maximize Button 1_42
+  - first:
+      213: 6261842284135903127
+    second: Maximize Button 1_43
+  - first:
+      213: -5895115849258876631
+    second: Maximize Button 1_44
+  - first:
+      213: 8251345963445142668
+    second: Maximize Button 1_45
+  - first:
+      213: -6415211585064582864
+    second: Maximize Button 1_46
+  - first:
+      213: -1439751566547619833
+    second: Maximize Button 1_47
+  - first:
+      213: 1246252931210135914
+    second: Maximize Button 1_48
+  - first:
+      213: -6649370762408264269
+    second: Maximize Button 1_49
+  - first:
+      213: -8709881009269045927
+    second: Maximize Button 1_50
+  - first:
+      213: -801274467579436198
+    second: Maximize Button 1_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Maximize Button 1_41
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 210
+        width: 583
+        height: 655
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3963f3bfef8607b20800000000000000
+      internalID: 3130117185368700563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: adc27420986d65740b0c0096537ee85b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Maximize Button 1_0: -2584645979817909207
+      Maximize Button 1_1: -392319224489694919
+      Maximize Button 1_10: 8438985726705206136
+      Maximize Button 1_11: -8866609900431121269
+      Maximize Button 1_12: 6465978325322823517
+      Maximize Button 1_13: 918475891076603667
+      Maximize Button 1_14: -5753660671653747634
+      Maximize Button 1_15: 6399226824555811167
+      Maximize Button 1_16: -8342764447341108348
+      Maximize Button 1_17: 4015602582822676565
+      Maximize Button 1_18: -8784408276290862410
+      Maximize Button 1_19: 9076986477051637364
+      Maximize Button 1_2: -2510602550918385088
+      Maximize Button 1_20: 281452285736048865
+      Maximize Button 1_21: -861973909307052336
+      Maximize Button 1_22: -6771239491336591033
+      Maximize Button 1_23: 5066804250853718006
+      Maximize Button 1_24: 4073008249947874880
+      Maximize Button 1_25: 2713983819649270621
+      Maximize Button 1_26: -8698001317098875634
+      Maximize Button 1_27: -1312465226016745014
+      Maximize Button 1_28: -7962249668814888057
+      Maximize Button 1_29: -1423531130296715710
+      Maximize Button 1_3: -6570693725032600603
+      Maximize Button 1_30: 8603012552513107190
+      Maximize Button 1_31: -4502200321198054794
+      Maximize Button 1_32: 3426025336463710491
+      Maximize Button 1_33: 5180260466176646161
+      Maximize Button 1_34: -862577640211431099
+      Maximize Button 1_35: 1055010718338375788
+      Maximize Button 1_36: 645859155796669595
+      Maximize Button 1_37: 745950096103380781
+      Maximize Button 1_38: -1460190420571631384
+      Maximize Button 1_39: -1008572359578230637
+      Maximize Button 1_4: 3720194456367834754
+      Maximize Button 1_40: -356404838433799331
+      Maximize Button 1_41: 3130117185368700563
+      Maximize Button 1_42: -8741541992269042842
+      Maximize Button 1_43: 6261842284135903127
+      Maximize Button 1_44: -5895115849258876631
+      Maximize Button 1_45: 8251345963445142668
+      Maximize Button 1_46: -6415211585064582864
+      Maximize Button 1_47: -1439751566547619833
+      Maximize Button 1_48: 1246252931210135914
+      Maximize Button 1_49: -6649370762408264269
+      Maximize Button 1_5: -8801021999408245492
+      Maximize Button 1_50: -8709881009269045927
+      Maximize Button 1_51: -801274467579436198
+      Maximize Button 1_6: 2904127804910960865
+      Maximize Button 1_7: -3215335937455110180
+      Maximize Button 1_8: -622190531872601230
+      Maximize Button 1_9: 4474809310154884529
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

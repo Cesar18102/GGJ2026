@@ -1,0 +1,684 @@
+fileFormatVersion: 2
+guid: 714e81f88f65cc9478f852c7d68bfaa1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8555813788401417054
+    second: Secondary Camera Window 1_0
+  - first:
+      213: -2011246317442551598
+    second: Secondary Camera Window 1_1
+  - first:
+      213: -3052252522312557593
+    second: Secondary Camera Window 1_2
+  - first:
+      213: -5356907524251388224
+    second: Secondary Camera Window 1_3
+  - first:
+      213: -5000814155248737951
+    second: Secondary Camera Window 1_4
+  - first:
+      213: -8238275699185352794
+    second: Secondary Camera Window 1_5
+  - first:
+      213: -8104451244025097084
+    second: Secondary Camera Window 1_6
+  - first:
+      213: 5993922208782290625
+    second: Secondary Camera Window 1_7
+  - first:
+      213: 698797344777596904
+    second: Secondary Camera Window 1_8
+  - first:
+      213: -8225913762923420908
+    second: Secondary Camera Window 1_9
+  - first:
+      213: 4998436885714917613
+    second: Secondary Camera Window 1_10
+  - first:
+      213: 3385023652596723862
+    second: Secondary Camera Window 1_11
+  - first:
+      213: 351877057668868888
+    second: Secondary Camera Window 1_12
+  - first:
+      213: -3518101327137242996
+    second: Secondary Camera Window 1_13
+  - first:
+      213: -2752964132260291391
+    second: Secondary Camera Window 1_14
+  - first:
+      213: 7827977049199045786
+    second: Secondary Camera Window 1_15
+  - first:
+      213: -6600158878536578026
+    second: Secondary Camera Window 1_16
+  - first:
+      213: 5023193613172434721
+    second: Secondary Camera Window 1_17
+  - first:
+      213: 2063662727263690277
+    second: Secondary Camera Window 1_18
+  - first:
+      213: 2884328255596995991
+    second: Secondary Camera Window 1_19
+  - first:
+      213: -588222917580185625
+    second: Secondary Camera Window 1_20
+  - first:
+      213: 3941590135490951809
+    second: Secondary Camera Window 1_21
+  - first:
+      213: -8132287745452289065
+    second: Secondary Camera Window 1_22
+  - first:
+      213: -4563244757656580416
+    second: Secondary Camera Window 1_23
+  - first:
+      213: 6038183793915936673
+    second: Secondary Camera Window 1_24
+  - first:
+      213: -2028105115109619632
+    second: Secondary Camera Window 1_25
+  - first:
+      213: -4899370436856166899
+    second: Secondary Camera Window 1_26
+  - first:
+      213: 6366504221662076346
+    second: Secondary Camera Window 1_27
+  - first:
+      213: 3174251054933390391
+    second: Secondary Camera Window 1_28
+  - first:
+      213: -2481959754500324873
+    second: Secondary Camera Window 1_29
+  - first:
+      213: -6212575572503824116
+    second: Secondary Camera Window 1_30
+  - first:
+      213: -5496400077581025585
+    second: Secondary Camera Window 1_31
+  - first:
+      213: -6545454887566632273
+    second: Secondary Camera Window 1_32
+  - first:
+      213: 4865273626740489939
+    second: Secondary Camera Window 1_33
+  - first:
+      213: 4397815454826913781
+    second: Secondary Camera Window 1_34
+  - first:
+      213: -8386487127795447174
+    second: Secondary Camera Window 1_35
+  - first:
+      213: -7889228851596051350
+    second: Secondary Camera Window 1_36
+  - first:
+      213: -2968925173847731473
+    second: Secondary Camera Window 1_37
+  - first:
+      213: -6560162176940846976
+    second: Secondary Camera Window 1_38
+  - first:
+      213: -5837733101758163364
+    second: Secondary Camera Window 1_39
+  - first:
+      213: -2289797299234590984
+    second: Secondary Camera Window 1_40
+  - first:
+      213: -3246584079056076480
+    second: Secondary Camera Window 1_41
+  - first:
+      213: 3384307961922381643
+    second: Secondary Camera Window 1_42
+  - first:
+      213: -8366415263536823662
+    second: Secondary Camera Window 1_43
+  - first:
+      213: 4949073192936047730
+    second: Secondary Camera Window 1_44
+  - first:
+      213: 3711787469499784221
+    second: Secondary Camera Window 1_45
+  - first:
+      213: -6662363500939589783
+    second: Secondary Camera Window 1_46
+  - first:
+      213: -5193892041091283338
+    second: Secondary Camera Window 1_47
+  - first:
+      213: -2391448804362938044
+    second: Secondary Camera Window 1_48
+  - first:
+      213: -4029096176061898743
+    second: Secondary Camera Window 1_49
+  - first:
+      213: -5609755825753456119
+    second: Secondary Camera Window 1_50
+  - first:
+      213: -4053729541265014342
+    second: Secondary Camera Window 1_51
+  - first:
+      213: 4949019294134202323
+    second: Secondary Camera Window 1_52
+  - first:
+      213: 3197029106499762681
+    second: Secondary Camera Window 1_53
+  - first:
+      213: 4959789790015892539
+    second: Secondary Camera Window 1_54
+  - first:
+      213: 8648131003246424892
+    second: Secondary Camera Window 1_55
+  - first:
+      213: 8187478908949004113
+    second: Secondary Camera Window 1_56
+  - first:
+      213: -2852648047532594894
+    second: Secondary Camera Window 1_57
+  - first:
+      213: 6573468356523808160
+    second: Secondary Camera Window 1_58
+  - first:
+      213: -8009231384314085081
+    second: Secondary Camera Window 1_59
+  - first:
+      213: 2779609770821673067
+    second: Secondary Camera Window 1_60
+  - first:
+      213: 4624496569564612101
+    second: Secondary Camera Window 1_61
+  - first:
+      213: -5058070372090697832
+    second: Secondary Camera Window 1_62
+  - first:
+      213: -2429381084736820301
+    second: Secondary Camera Window 1_63
+  - first:
+      213: 2252089370560943554
+    second: Secondary Camera Window 1_64
+  - first:
+      213: 2618417560023587780
+    second: Secondary Camera Window 1_65
+  - first:
+      213: 3267290133108299676
+    second: Secondary Camera Window 1_66
+  - first:
+      213: -6177967946884237681
+    second: Secondary Camera Window 1_67
+  - first:
+      213: -8556475101684233394
+    second: Secondary Camera Window 1_68
+  - first:
+      213: -1147657090424262473
+    second: Secondary Camera Window 1_69
+  - first:
+      213: 6646114105895354583
+    second: Secondary Camera Window 1_70
+  - first:
+      213: -1169191505362783148
+    second: Secondary Camera Window 1_71
+  - first:
+      213: -2152501432395514640
+    second: Secondary Camera Window 1_72
+  - first:
+      213: -1225552610322032162
+    second: Secondary Camera Window 1_73
+  - first:
+      213: 9077022778849892058
+    second: Secondary Camera Window 1_74
+  - first:
+      213: 8091525650009642645
+    second: Secondary Camera Window 1_75
+  - first:
+      213: -8799675861504357682
+    second: Secondary Camera Window 1_76
+  - first:
+      213: 9125356503461145242
+    second: Secondary Camera Window 1_77
+  - first:
+      213: 6150628101465163794
+    second: Secondary Camera Window 1_78
+  - first:
+      213: 6298013054605350409
+    second: Secondary Camera Window 1_79
+  - first:
+      213: -9134344610148279888
+    second: Secondary Camera Window 1_80
+  - first:
+      213: 7145776225877765507
+    second: Secondary Camera Window 1_81
+  - first:
+      213: -3326264142029225395
+    second: Secondary Camera Window 1_82
+  - first:
+      213: -3808317258526694875
+    second: Secondary Camera Window 1_83
+  - first:
+      213: 4893932381411086047
+    second: Secondary Camera Window 1_84
+  - first:
+      213: 5225051567863680965
+    second: Secondary Camera Window 1_85
+  - first:
+      213: -197429684102281224
+    second: Secondary Camera Window 1_86
+  - first:
+      213: 4250460115492031753
+    second: Secondary Camera Window 1_87
+  - first:
+      213: -267519600523121695
+    second: Secondary Camera Window 1_88
+  - first:
+      213: 6776110456609773910
+    second: Secondary Camera Window 1_89
+  - first:
+      213: 8354238038619436371
+    second: Secondary Camera Window 1_90
+  - first:
+      213: -5864455359965413882
+    second: Secondary Camera Window 1_91
+  - first:
+      213: 3920743940913504766
+    second: Secondary Camera Window 1_92
+  - first:
+      213: -4089614141269049904
+    second: Secondary Camera Window 1_93
+  - first:
+      213: 4723117058728238016
+    second: Secondary Camera Window 1_94
+  - first:
+      213: -3987924123123553694
+    second: Secondary Camera Window 1_95
+  - first:
+      213: 6989295173084778114
+    second: Secondary Camera Window 1_96
+  - first:
+      213: 1860520228712720331
+    second: Secondary Camera Window 1_97
+  - first:
+      213: -9064114081780087202
+    second: Secondary Camera Window 1_98
+  - first:
+      213: 5629384864690192217
+    second: Secondary Camera Window 1_99
+  - first:
+      213: -2757980493083104387
+    second: Secondary Camera Window 1_100
+  - first:
+      213: -9155331123552507625
+    second: Secondary Camera Window 1_101
+  - first:
+      213: 3667910513498482597
+    second: Secondary Camera Window 1_102
+  - first:
+      213: 2345840388507607293
+    second: Secondary Camera Window 1_103
+  - first:
+      213: -5613790945902166635
+    second: Secondary Camera Window 1_104
+  - first:
+      213: 6424488992028076520
+    second: Secondary Camera Window 1_105
+  - first:
+      213: 9045242469664528942
+    second: Secondary Camera Window 1_106
+  - first:
+      213: 7993134844681116672
+    second: Secondary Camera Window 1_107
+  - first:
+      213: 674766760723746154
+    second: Secondary Camera Window 1_108
+  - first:
+      213: 7625664937213863834
+    second: Secondary Camera Window 1_109
+  - first:
+      213: 1792297078004144889
+    second: Secondary Camera Window 1_110
+  - first:
+      213: 6723679337693449542
+    second: Secondary Camera Window 1_111
+  - first:
+      213: 3630058659420190677
+    second: Secondary Camera Window 1_112
+  - first:
+      213: -2508240846038152455
+    second: Secondary Camera Window 1_113
+  - first:
+      213: -7997795588964295867
+    second: Secondary Camera Window 1_114
+  - first:
+      213: 5406176472200489729
+    second: Secondary Camera Window 1_115
+  - first:
+      213: 5983905445706669902
+    second: Secondary Camera Window 1_116
+  - first:
+      213: 3798229165034175361
+    second: Secondary Camera Window 1_117
+  - first:
+      213: -4431824537960641854
+    second: Secondary Camera Window 1_118
+  - first:
+      213: -2335941219187124663
+    second: Secondary Camera Window 1_119
+  - first:
+      213: -1945541664089995482
+    second: Secondary Camera Window 1_120
+  - first:
+      213: -78723729732578043
+    second: Secondary Camera Window 1_121
+  - first:
+      213: 3822798659024590825
+    second: Secondary Camera Window 1_122
+  - first:
+      213: -3332374252380536887
+    second: Secondary Camera Window 1_123
+  - first:
+      213: -2223018790336958193
+    second: Secondary Camera Window 1_124
+  - first:
+      213: 3561074376246260981
+    second: Secondary Camera Window 1_125
+  - first:
+      213: 3327304384667251521
+    second: Secondary Camera Window 1_126
+  - first:
+      213: -3340715430763716347
+    second: Secondary Camera Window 1_127
+  - first:
+      213: 54350555183012441
+    second: Secondary Camera Window 1_128
+  - first:
+      213: -1210274697111125875
+    second: Secondary Camera Window 1_129
+  - first:
+      213: -3782427967440126120
+    second: Secondary Camera Window 1_130
+  - first:
+      213: 5437712191511566031
+    second: Secondary Camera Window 1_131
+  - first:
+      213: -8988627750864211218
+    second: Secondary Camera Window 1_132
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Secondary Camera Window 1_1
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 120
+        width: 1216
+        height: 838
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d0360d512e9614e0800000000000000
+      internalID: -2011246317442551598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: bf774420fc6eaf649a1c2973f4e705cf
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Secondary Camera Window 1_0: -8555813788401417054
+      Secondary Camera Window 1_1: -2011246317442551598
+      Secondary Camera Window 1_10: 4998436885714917613
+      Secondary Camera Window 1_100: -2757980493083104387
+      Secondary Camera Window 1_101: -9155331123552507625
+      Secondary Camera Window 1_102: 3667910513498482597
+      Secondary Camera Window 1_103: 2345840388507607293
+      Secondary Camera Window 1_104: -5613790945902166635
+      Secondary Camera Window 1_105: 6424488992028076520
+      Secondary Camera Window 1_106: 9045242469664528942
+      Secondary Camera Window 1_107: 7993134844681116672
+      Secondary Camera Window 1_108: 674766760723746154
+      Secondary Camera Window 1_109: 7625664937213863834
+      Secondary Camera Window 1_11: 3385023652596723862
+      Secondary Camera Window 1_110: 1792297078004144889
+      Secondary Camera Window 1_111: 6723679337693449542
+      Secondary Camera Window 1_112: 3630058659420190677
+      Secondary Camera Window 1_113: -2508240846038152455
+      Secondary Camera Window 1_114: -7997795588964295867
+      Secondary Camera Window 1_115: 5406176472200489729
+      Secondary Camera Window 1_116: 5983905445706669902
+      Secondary Camera Window 1_117: 3798229165034175361
+      Secondary Camera Window 1_118: -4431824537960641854
+      Secondary Camera Window 1_119: -2335941219187124663
+      Secondary Camera Window 1_12: 351877057668868888
+      Secondary Camera Window 1_120: -1945541664089995482
+      Secondary Camera Window 1_121: -78723729732578043
+      Secondary Camera Window 1_122: 3822798659024590825
+      Secondary Camera Window 1_123: -3332374252380536887
+      Secondary Camera Window 1_124: -2223018790336958193
+      Secondary Camera Window 1_125: 3561074376246260981
+      Secondary Camera Window 1_126: 3327304384667251521
+      Secondary Camera Window 1_127: -3340715430763716347
+      Secondary Camera Window 1_128: 54350555183012441
+      Secondary Camera Window 1_129: -1210274697111125875
+      Secondary Camera Window 1_13: -3518101327137242996
+      Secondary Camera Window 1_130: -3782427967440126120
+      Secondary Camera Window 1_131: 5437712191511566031
+      Secondary Camera Window 1_132: -8988627750864211218
+      Secondary Camera Window 1_14: -2752964132260291391
+      Secondary Camera Window 1_15: 7827977049199045786
+      Secondary Camera Window 1_16: -6600158878536578026
+      Secondary Camera Window 1_17: 5023193613172434721
+      Secondary Camera Window 1_18: 2063662727263690277
+      Secondary Camera Window 1_19: 2884328255596995991
+      Secondary Camera Window 1_2: -3052252522312557593
+      Secondary Camera Window 1_20: -588222917580185625
+      Secondary Camera Window 1_21: 3941590135490951809
+      Secondary Camera Window 1_22: -8132287745452289065
+      Secondary Camera Window 1_23: -4563244757656580416
+      Secondary Camera Window 1_24: 6038183793915936673
+      Secondary Camera Window 1_25: -2028105115109619632
+      Secondary Camera Window 1_26: -4899370436856166899
+      Secondary Camera Window 1_27: 6366504221662076346
+      Secondary Camera Window 1_28: 3174251054933390391
+      Secondary Camera Window 1_29: -2481959754500324873
+      Secondary Camera Window 1_3: -5356907524251388224
+      Secondary Camera Window 1_30: -6212575572503824116
+      Secondary Camera Window 1_31: -5496400077581025585
+      Secondary Camera Window 1_32: -6545454887566632273
+      Secondary Camera Window 1_33: 4865273626740489939
+      Secondary Camera Window 1_34: 4397815454826913781
+      Secondary Camera Window 1_35: -8386487127795447174
+      Secondary Camera Window 1_36: -7889228851596051350
+      Secondary Camera Window 1_37: -2968925173847731473
+      Secondary Camera Window 1_38: -6560162176940846976
+      Secondary Camera Window 1_39: -5837733101758163364
+      Secondary Camera Window 1_4: -5000814155248737951
+      Secondary Camera Window 1_40: -2289797299234590984
+      Secondary Camera Window 1_41: -3246584079056076480
+      Secondary Camera Window 1_42: 3384307961922381643
+      Secondary Camera Window 1_43: -8366415263536823662
+      Secondary Camera Window 1_44: 4949073192936047730
+      Secondary Camera Window 1_45: 3711787469499784221
+      Secondary Camera Window 1_46: -6662363500939589783
+      Secondary Camera Window 1_47: -5193892041091283338
+      Secondary Camera Window 1_48: -2391448804362938044
+      Secondary Camera Window 1_49: -4029096176061898743
+      Secondary Camera Window 1_5: -8238275699185352794
+      Secondary Camera Window 1_50: -5609755825753456119
+      Secondary Camera Window 1_51: -4053729541265014342
+      Secondary Camera Window 1_52: 4949019294134202323
+      Secondary Camera Window 1_53: 3197029106499762681
+      Secondary Camera Window 1_54: 4959789790015892539
+      Secondary Camera Window 1_55: 8648131003246424892
+      Secondary Camera Window 1_56: 8187478908949004113
+      Secondary Camera Window 1_57: -2852648047532594894
+      Secondary Camera Window 1_58: 6573468356523808160
+      Secondary Camera Window 1_59: -8009231384314085081
+      Secondary Camera Window 1_6: -8104451244025097084
+      Secondary Camera Window 1_60: 2779609770821673067
+      Secondary Camera Window 1_61: 4624496569564612101
+      Secondary Camera Window 1_62: -5058070372090697832
+      Secondary Camera Window 1_63: -2429381084736820301
+      Secondary Camera Window 1_64: 2252089370560943554
+      Secondary Camera Window 1_65: 2618417560023587780
+      Secondary Camera Window 1_66: 3267290133108299676
+      Secondary Camera Window 1_67: -6177967946884237681
+      Secondary Camera Window 1_68: -8556475101684233394
+      Secondary Camera Window 1_69: -1147657090424262473
+      Secondary Camera Window 1_7: 5993922208782290625
+      Secondary Camera Window 1_70: 6646114105895354583
+      Secondary Camera Window 1_71: -1169191505362783148
+      Secondary Camera Window 1_72: -2152501432395514640
+      Secondary Camera Window 1_73: -1225552610322032162
+      Secondary Camera Window 1_74: 9077022778849892058
+      Secondary Camera Window 1_75: 8091525650009642645
+      Secondary Camera Window 1_76: -8799675861504357682
+      Secondary Camera Window 1_77: 9125356503461145242
+      Secondary Camera Window 1_78: 6150628101465163794
+      Secondary Camera Window 1_79: 6298013054605350409
+      Secondary Camera Window 1_8: 698797344777596904
+      Secondary Camera Window 1_80: -9134344610148279888
+      Secondary Camera Window 1_81: 7145776225877765507
+      Secondary Camera Window 1_82: -3326264142029225395
+      Secondary Camera Window 1_83: -3808317258526694875
+      Secondary Camera Window 1_84: 4893932381411086047
+      Secondary Camera Window 1_85: 5225051567863680965
+      Secondary Camera Window 1_86: -197429684102281224
+      Secondary Camera Window 1_87: 4250460115492031753
+      Secondary Camera Window 1_88: -267519600523121695
+      Secondary Camera Window 1_89: 6776110456609773910
+      Secondary Camera Window 1_9: -8225913762923420908
+      Secondary Camera Window 1_90: 8354238038619436371
+      Secondary Camera Window 1_91: -5864455359965413882
+      Secondary Camera Window 1_92: 3920743940913504766
+      Secondary Camera Window 1_93: -4089614141269049904
+      Secondary Camera Window 1_94: 4723117058728238016
+      Secondary Camera Window 1_95: -3987924123123553694
+      Secondary Camera Window 1_96: 6989295173084778114
+      Secondary Camera Window 1_97: 1860520228712720331
+      Secondary Camera Window 1_98: -9064114081780087202
+      Secondary Camera Window 1_99: 5629384864690192217
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

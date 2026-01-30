@@ -1,15 +1,21 @@
 fileFormatVersion: 2
-guid: 3e904aa24d1eaaf459fa82821495dfcc
+guid: 44b5628c53e53e842b171cefc786ab07
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8816455073865453574
-    second: Tymoshenko 2_0
+      213: 3487487578901619679
+    second: Secondary Camera Window 2_0
+  - first:
+      213: 3796703644577992359
+    second: Secondary Camera Window 2_1
+  - first:
+      213: 6849009370381024748
+    second: Secondary Camera Window 2_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -75,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +119,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tymoshenko 2_0
+      name: Secondary Camera Window 2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 1531
+        x: 154
+        y: 224
+        width: 1225
+        height: 697
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aff2f0862d8a5a580800000000000000
-      internalID: -8816455073865453574
+      spriteID: fd3a40bb97b066030800000000000000
+      internalID: 3487487578901619679
       vertices: []
       indices: 
       edges: []
@@ -138,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 63ba1b81a8b97694fa6c36ceda41b8af
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +154,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Tymoshenko 2_0: -8816455073865453574
+      Secondary Camera Window 2_0: 3487487578901619679
+      Secondary Camera Window 2_1: 3796703644577992359
+      Secondary Camera Window 2_2: 6849009370381024748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
