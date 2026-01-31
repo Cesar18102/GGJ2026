@@ -653,7 +653,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 271924536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f7cd6d6d5e4441e9da6c18870d5cec3, type: 3}
+  m_Script: {fileID: 11500000, guid: f970100f01587416a877dcc25fe6bc7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomPreview
   panel: {fileID: 271924536}
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 647757444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f7cd6d6d5e4441e9da6c18870d5cec3, type: 3}
+  m_Script: {fileID: 11500000, guid: f970100f01587416a877dcc25fe6bc7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomPreview
   panel: {fileID: 647757444}
@@ -2720,7 +2720,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 766828604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8988d71dddad047ae8f4bc25bf80e887, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ee88a22e9ffd45209c9a74da45e8c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
   rooms:
