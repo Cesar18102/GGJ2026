@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "SceneInputActions",
+    "maps": [
+        {
+            "name": "Scene",
+            "id": "9f5313f6-d648-49cc-89be-369e2b96c8e4",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "cab5a151-e2a6-4df6-8987-975b56e43ef4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "ccdf9d7b-b93d-444b-86f4-3dab1c7e27ec",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a05c253d-dfa7-4e74-a4cb-c366c072e0e5",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c614ca0-d23e-4f21-9bca-6a39f8998110",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
