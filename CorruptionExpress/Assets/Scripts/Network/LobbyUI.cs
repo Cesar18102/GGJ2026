@@ -67,6 +67,7 @@ namespace Network
             _networkManager.OnError += OnError;
             _networkManager.OnSessionJoined += OnSessionJoined;
             _networkManager.OnSessionLeft += OnSessionLeft;
+            _networkManager.OnDisconnected += OnDisconnected;
             _networkManager.OnPlayersChanged += OnPlayersChanged;
 
             if (NetworkManager.Singleton == null)
@@ -86,6 +87,7 @@ namespace Network
                 _networkManager.OnError -= OnError;
                 _networkManager.OnSessionJoined -= OnSessionJoined;
                 _networkManager.OnSessionLeft -= OnSessionLeft;
+                _networkManager.OnDisconnected -= OnDisconnected;
                 _networkManager.OnPlayersChanged -= OnPlayersChanged;
             }
 
@@ -119,6 +121,12 @@ namespace Network
         {
             ShowMainMenu();
             SetStatus("Left session");
+        }
+
+        private void OnDisconnected(string reason)
+        {
+            ShowMainMenu();
+            SetStatus(reason);
         }
 
         private void OnPlayersChanged(IReadOnlyList<SessionPlayer> players)

@@ -24,6 +24,7 @@ namespace Network
         public event Action<string> OnError;
         public event Action OnSessionJoined;
         public event Action OnSessionLeft;
+        public event Action<string> OnDisconnected;
         public event Action<IReadOnlyList<SessionPlayer>> OnPlayersChanged;
 
         public bool IsInitialized { get; private set; }
@@ -96,9 +97,7 @@ namespace Network
 
                 _currentSession = await MultiplayerService.Instance.CreateSessionAsync(options);
 
-                _currentSession.PlayerJoined += OnPlayerJoined;
-                _currentSession.PlayerLeaving += OnPlayerLeft;
-                _currentSession.PlayerPropertiesChanged += OnPlayerPropertiesChanged;
+                SubscribeToSession();
 
                 Debug.Log($"[GameNetworkManager] Created session. Code: {_currentSession.Code}");
                 OnSessionJoined?.Invoke();
@@ -126,9 +125,7 @@ namespace Network
             {
                 _currentSession = await MultiplayerService.Instance.JoinSessionByCodeAsync(sessionCode);
 
-                _currentSession.PlayerJoined += OnPlayerJoined;
-                _currentSession.PlayerLeaving += OnPlayerLeft;
-                _currentSession.PlayerPropertiesChanged += OnPlayerPropertiesChanged;
+                SubscribeToSession();
 
                 Debug.Log($"[GameNetworkManager] Joined session. Code: {_currentSession.Code}");
                 OnSessionJoined?.Invoke();
@@ -153,11 +150,19 @@ namespace Network
 
             try
             {
-                _currentSession.PlayerJoined -= OnPlayerJoined;
-                _currentSession.PlayerLeaving -= OnPlayerLeft;
+                var isHost = _currentSession.IsHost;
+                UnsubscribeFromSession();
 
-                await _currentSession.LeaveAsync();
-                Debug.Log("[GameNetworkManager] Left session");
+                if (isHost)
+                {
+                    await _currentSession.AsHost().DeleteAsync();
+                    Debug.Log("[GameNetworkManager] Deleted session (host)");
+                }
+                else
+                {
+                    await _currentSession.LeaveAsync();
+                    Debug.Log("[GameNetworkManager] Left session");
+                }
             }
             catch (Exception e)
             {
@@ -190,6 +195,23 @@ namespace Network
         public IReadOnlyList<SessionPlayer> GetPlayers()
         {
             return _currentSession?.Players;
+        }
+
+        public List<ulong> GetConnectedClientIds()
+        {
+            var clientIds = new List<ulong>();
+
+            if (NetworkManager.Singleton == null)
+            {
+                return clientIds;
+            }
+
+            foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+            {
+                clientIds.Add(clientId);
+            }
+
+            return clientIds;
         }
 
         public async Task SetPlayerProperty(string key, string value)
@@ -255,6 +277,31 @@ namespace Network
             _ = UpdatePlayers();
         }
 
+        private void OnSessionDeleted()
+        {
+            Debug.Log("[GameNetworkManager] Session was deleted");
+            HandleDisconnection("Host closed the session");
+        }
+
+        private void OnRemovedFromSession()
+        {
+            Debug.Log("[GameNetworkManager] Removed from session");
+            HandleDisconnection("You were removed from the session");
+        }
+
+        private void HandleDisconnection(string reason)
+        {
+            UnsubscribeFromSession();
+            _currentSession = null;
+
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
+            {
+                NetworkManager.Singleton.Shutdown();
+            }
+
+            OnDisconnected?.Invoke(reason);
+        }
+
         private async Task UpdatePlayers()
         {
             if (_currentSession == null)
@@ -267,15 +314,29 @@ namespace Network
             OnPlayersChanged?.Invoke(_currentSession.Players);
         }
 
+        private void SubscribeToSession()
+        {
+            _currentSession.PlayerJoined += OnPlayerJoined;
+            _currentSession.PlayerLeaving += OnPlayerLeft;
+            _currentSession.PlayerPropertiesChanged += OnPlayerPropertiesChanged;
+            _currentSession.Deleted += OnSessionDeleted;
+            _currentSession.RemovedFromSession += OnRemovedFromSession;
+        }
+
+        private void UnsubscribeFromSession()
+        {
+            if (_currentSession == null) return;
+
+            _currentSession.PlayerJoined -= OnPlayerJoined;
+            _currentSession.PlayerLeaving -= OnPlayerLeft;
+            _currentSession.PlayerPropertiesChanged -= OnPlayerPropertiesChanged;
+            _currentSession.Deleted -= OnSessionDeleted;
+            _currentSession.RemovedFromSession -= OnRemovedFromSession;
+        }
 
         private void OnDestroy()
         {
-            if (_currentSession != null)
-            {
-                _currentSession.PlayerJoined -= OnPlayerJoined;
-                _currentSession.PlayerLeaving -= OnPlayerLeft;
-                _currentSession.PlayerPropertiesChanged -= OnPlayerPropertiesChanged;
-            }
+            UnsubscribeFromSession();
 
             if (Instance == this)
             {
