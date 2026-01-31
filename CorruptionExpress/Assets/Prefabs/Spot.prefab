@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 2519739670804748231}
   - component: {fileID: 3889427971869311996}
   - component: {fileID: 4582516713369820784}
+  - component: {fileID: 1824129596080564896}
   m_Layer: 0
   m_Name: Spot
   m_TagString: Spot
@@ -220,3 +221,16 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.49999997
+--- !u!114 &1824129596080564896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129234508064342834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cefc12eea1b374c9f05c30ef1d6f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Spot
+  approachNode: {fileID: 0}

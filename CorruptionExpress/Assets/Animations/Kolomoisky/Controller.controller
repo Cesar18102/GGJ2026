@@ -1,6 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-7083267940360006037
+--- !u!1107 &-3556034247201251833
+AnimatorStateMachine:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Base Layer
+  m_ChildStates:
+  - serializedVersion: 1
+    m_State: {fileID: 328722953621632443}
+    m_Position: {x: 550, y: 170, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4994939639227103014}
+    m_Position: {x: 300, y: 110, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3952961988646340736}
+    m_Position: {x: 300, y: 380, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2978529112237089116}
+    m_Position: {x: 210, y: 260, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3189379633188683318}
+    m_Position: {x: 300, y: 210, z: 0}
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: 4994939639227103014}
+--- !u!1102 &-3189379633188683318
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Walk
+  m_Speed: 2
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 5d5501d34a634b845a2c050e0b49ec06, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-2978529112237089116
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -26,40 +86,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1107 &-3556034247201251833
-AnimatorStateMachine:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Base Layer
-  m_ChildStates:
-  - serializedVersion: 1
-    m_State: {fileID: 1346041048490417892}
-    m_Position: {x: 300, y: 120, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 6696909773091478964}
-    m_Position: {x: 320, y: 190, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 478575116125829195}
-    m_Position: {x: 370, y: 250, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1067089221045390488}
-    m_Position: {x: 405, y: 315, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7083267940360006037}
-    m_Position: {x: 440, y: 380, z: 0}
-  m_ChildStateMachines: []
-  m_AnyStateTransitions: []
-  m_EntryTransitions: []
-  m_StateMachineTransitions: {}
-  m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
-  m_ExitPosition: {x: 800, y: 120, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1346041048490417892}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -82,14 +108,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &478575116125829195
+--- !u!1102 &328722953621632443
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Examine Animation
+  m_Name: Examine Spot
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -108,7 +134,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1067089221045390488
+--- !u!1102 &3952961988646340736
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -134,14 +160,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1346041048490417892
+--- !u!1102 &4994939639227103014
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Kolomoisky Walk Animation
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -155,32 +181,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 3fc0796e84b82af488095d9e749f9705, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &6696909773091478964
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Kolomoisky Walk Animation 0
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5d5501d34a634b845a2c050e0b49ec06, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

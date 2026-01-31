@@ -25,5 +25,10 @@ public class SceneInputController : MonoBehaviour
 
         Vector2 worldPos = _camera.ScreenToWorldPoint(_lastPointerPos);
         Collider2D collider = Physics2D.OverlapPoint(worldPos);
+
+        if (_currentGameActionHandler != null)
+        {
+            _currentGameActionHandler.OnSceneObjectClicked(collider.gameObject);
+        }
     }
 }
