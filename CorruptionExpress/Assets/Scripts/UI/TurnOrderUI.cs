@@ -1,4 +1,4 @@
-using GameState;
+﻿using GameState;
 using System.Collections.Generic;
 using System.Linq;
 using Teams;
@@ -13,6 +13,7 @@ public class TurnOrderUI : MonoBehaviour
     [SerializeField] private Sprite _nabuSprite;
     [SerializeField] private Sprite _corruptSprite;
 
+    private readonly Dictionary<ulong, PlayerTeamController> _byId = new();
     private readonly List<TurnIndicator> _icons = new();
 
     private void Start()
@@ -20,10 +21,20 @@ public class TurnOrderUI : MonoBehaviour
         var gsm = GameStateManager.Instance;
         if (gsm == null) return;
 
+        CachePlayers();
         Rebuild();
 
         gsm.TurnOrder.OnListChanged += _ => Rebuild();
         gsm.CurrentTurnClientId.OnValueChanged += (_, __) => RefreshHighlights();
+        gsm.LastActionByClientId.OnValueChanged += (_, __) => RefreshHighlights();
+        gsm.LastPlannedAction.OnValueChanged += (_, __) => RefreshHighlights();
+    }
+
+    private void CachePlayers()
+    {
+        _byId.Clear();
+        foreach (var p in PlayerTeamController.Select(player => player))
+            _byId[p.OwnerClientId] = p.GetComponent<PlayerTeamController>();
     }
 
     private void Rebuild()
@@ -43,27 +54,36 @@ public class TurnOrderUI : MonoBehaviour
 
             var sprite = ResolveSprite(clientId);
             bool isCurrent = clientId == gsm.CurrentTurnClientId.Value;
+            ActionType action = gsm.LastPlannedAction.Value;
 
-            icon.Set(sprite, isCurrent);
+            icon.Set(sprite, isCurrent, string.Empty);
         }
     }
 
     private void RefreshHighlights()
     {
         var gsm = GameStateManager.Instance;
-        if (gsm == null) return;
+        if (gsm == null) {
+            return;
+        }
+
+        ulong current = gsm.CurrentTurnClientId.Value;
+        ulong prev = gsm.LastActionByClientId.Value;
 
         for (int i = 0; i < gsm.TurnOrder.Count && i < _icons.Count; i++)
         {
             ulong id = gsm.TurnOrder[i];
             var sprite = ResolveSprite(id);
-            _icons[i].Set(sprite, id == gsm.CurrentTurnClientId.Value);
+
+            _icons[i].Set(sprite, id == current, id == prev ? $"Last Action: " + gsm.LastPlannedAction.Value.ToString() : string.Empty);
         }
     }
 
     private Sprite ResolveSprite(ulong clientId)
     {
-        var playerById = PlayerTeamController.Select(player => player).ToDictionary(player => player.OwnerClientId);
-        return playerById[clientId].GetComponent<PlayerTeamController>().AssignedTeam.Value == Team.Nabu ? _nabuSprite : _corruptSprite;
+        if (_byId.TryGetValue(clientId, out var ptc))
+            return ptc.AssignedTeam.Value == Team.Nabu ? _nabuSprite : _corruptSprite;
+
+        return _corruptSprite; // fallback чтоб не падало
     }
 }

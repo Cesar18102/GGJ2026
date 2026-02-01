@@ -67,9 +67,14 @@ namespace GameState
             NetworkVariableWritePermission.Server
         );
 
+        public NetworkVariable<int> ExecutionRound = new(
+            0,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
         public NetworkList<ulong> TurnOrder { get; } = new NetworkList<ulong>();
 
-        private readonly List<ulong> _turnOrder = new();
         private readonly Queue<(ulong clientId, ActionType action)> _actionsQueue = new();
 
         private int _turnIndex;
@@ -100,7 +105,6 @@ namespace GameState
             }
 
             Instance = this;
-            _uiController.OnAction += _uiController_OnAction;
         }
 
         public override void OnNetworkSpawn()
@@ -109,6 +113,7 @@ namespace GameState
 
             CurrentPhase.OnValueChanged += HandlePhaseChanged;
             RemainingEvidences.OnValueChanged += HandleRemainingNumberOfItemsChanged;
+            _uiController.OnAction += _uiController_OnAction;
 
             if (IsServer)
             {
@@ -124,6 +129,7 @@ namespace GameState
 
             CurrentPhase.OnValueChanged -= HandlePhaseChanged;
             RemainingEvidences.OnValueChanged -= HandleRemainingNumberOfItemsChanged;
+            _uiController.OnAction -= _uiController_OnAction;
 
             TurnOrder.Dispose();
 
@@ -165,6 +171,8 @@ namespace GameState
                 yield break;
             }
 
+            PlayerTeamController.ForEachPlayer(player => player.transform.SetPositionAndRotation(Vector3.up * 100, Quaternion.identity));
+
             yield return new WaitForSeconds(0.5f);
             SetPhase(GamePhase.Setup);
 
@@ -194,13 +202,22 @@ namespace GameState
                 PlanningRound.Value = 0;
                 _turnIndex = 0;
 
-                CurrentTurnClientId.Value = _turnOrder[_turnIndex];
+                CurrentTurnClientId.Value = TurnOrder[_turnIndex];
                 LastPlannedAction.Value = ActionType.None;
                 LastActionByClientId.Value = 0;
 
                 SetPhase(GamePhase.Planning);
 
                 yield return new WaitUntil(() => PlanningRound.Value >= _planningCycles);
+
+                //ExecutionRound.Value = 0;
+                //_turnIndex = 0;
+                //CurrentTurnClientId.Value = TurnOrder[_turnIndex];
+
+                //SetPhase(GamePhase.Execution);
+                //ExecutionLoop();
+
+                //yield return new WaitUntil(() => ExecutionRound.Value >= _planningCycles);
             }
         }
 
@@ -213,6 +230,11 @@ namespace GameState
 
             Debug.Log($"[GameStateManager] Setting phase to {newPhase}");
             CurrentPhase.Value = newPhase;
+        }
+
+        private void ExecutionLoop()
+        {
+
         }
 
         public void ForcePhase(GamePhase phase)
@@ -303,23 +325,31 @@ namespace GameState
 
         private void DefineOrder()
         {
-            _turnOrder.Clear();
-            foreach (var c in NetworkManager.Singleton.ConnectedClientsList)
-                _turnOrder.Add(c.ClientId);
-            _turnOrder.Shuffle();
+            var clients = PlayerTeamController.Select(player => player.OwnerClientId).ToArray();
+            clients.Shuffle();
 
             TurnOrder.Clear();
-            foreach (var id in _turnOrder)
+            foreach (var id in clients)
+            {
                 TurnOrder.Add(id);
+            }
 
             Debug.Log($"Turn Order: {string.Join(",", TurnOrder)}");
         }
 
-        private void _uiController_OnAction(object sender, ActionType e) => TryAddPlannedActionServerRpc(e);
-
-        [ServerRpc(RequireOwnership = false)]
-        public void TryAddPlannedActionServerRpc(ActionType action, ServerRpcParams rpcParams = default)
+        private void _uiController_OnAction(object sender, ActionType e)
         {
+            Debug.Log($"[UI_SEND] local={NetworkManager.Singleton.LocalClientId} current(localView)={CurrentTurnClientId.Value} phase={CurrentPhase.Value}");
+
+            TryAddPlannedActionServerRpc(e);
+        }
+
+        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+        public void TryAddPlannedActionServerRpc(ActionType action, RpcParams rpcParams = default)
+        {
+            Debug.Log($"RPC action {action} sender={rpcParams.Receive.SenderClientId} current={CurrentTurnClientId.Value}; local={NetworkManager.Singleton.LocalClientId}");
+
+
             Debug.Log($"Trying to push {action}");
             if (CurrentPhase.Value != GamePhase.Planning)
             {
@@ -344,11 +374,14 @@ namespace GameState
 
         private void AdvanceTurn()
         {
+            Debug.Log($"[TURN] next={CurrentTurnClientId.Value} idx={_turnIndex} round={PlanningRound.Value}");
+
+
             Debug.Log($"Current turn: {_turnIndex}");
             _turnIndex++;
             Debug.Log($"New turn: {_turnIndex}");
 
-            if (_turnIndex >= _turnOrder.Count)
+            if (_turnIndex >= TurnOrder.Count)
             {
                 Debug.Log($"Planning round: {PlanningRound.Value} completed.");
 
@@ -362,7 +395,7 @@ namespace GameState
                 }
             }
 
-            CurrentTurnClientId.Value = _turnOrder[_turnIndex];
+            CurrentTurnClientId.Value = TurnOrder[_turnIndex];
         }
 
         #endregion Gameplay

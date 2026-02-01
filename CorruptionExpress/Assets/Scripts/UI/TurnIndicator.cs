@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,7 @@ public class TurnIndicator : MonoBehaviour
     [SerializeField]
     private Image _icon;
 
-    [SerializeField] 
+    [SerializeField]
     private Image _highlight;
 
     [SerializeField]
@@ -15,9 +16,18 @@ public class TurnIndicator : MonoBehaviour
     [SerializeField]
     private Color _noHighlightColor;
 
-    public void Set(Sprite sprite, bool highlight)
+    [SerializeField]
+    private TMP_Text _prevActionText;
+
+    public void Set(Sprite sprite, bool highlight, string prevActionText)
     {
         _icon.sprite = sprite;
+        _icon.color = highlight ? _highlightColor : _noHighlightColor;
+
+        if (_prevActionText != null)
+        {
+            _prevActionText.text = prevActionText;
+        }
 
         if (_highlight != null)
         {

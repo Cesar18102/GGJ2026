@@ -7677,6 +7677,7 @@ GameObject:
   - component: {fileID: 1498684575}
   - component: {fileID: 1498684574}
   - component: {fileID: 1498684578}
+  - component: {fileID: 1498684579}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -7795,6 +7796,22 @@ MonoBehaviour:
   _nabuPanel: {fileID: 794129004}
   _nabuWaitText: {fileID: 1012522774}
   _corruptionPanel: {fileID: 1694303991}
+--- !u!114 &1498684579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498684573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6add38a5713aa564fa8d84dd98553e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnOrderUI
+  _container: {fileID: 1553889128}
+  _iconPrefab: {fileID: 5262304975227039802, guid: 316ad7596760fe34f87a60bf0b0b8bee, type: 3}
+  _nabuSprite: {fileID: 4917291182231800338, guid: ed4ddb4e1529adb4e8e67f8fbf50ca8d, type: 3}
+  _corruptSprite: {fileID: -8009217075737733720, guid: 369b1d1ee68a64a9eafd296183e6a334, type: 3}
 --- !u!1 &1514295814
 GameObject:
   m_ObjectHideFlags: 0
@@ -8042,7 +8059,6 @@ GameObject:
   - component: {fileID: 1553889131}
   - component: {fileID: 1553889130}
   - component: {fileID: 1553889129}
-  - component: {fileID: 1553889132}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -8133,22 +8149,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553889127}
   m_CullTransparentMesh: 1
---- !u!114 &1553889132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553889127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6add38a5713aa564fa8d84dd98553e07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurnOrderUI
-  _container: {fileID: 1553889128}
-  _iconPrefab: {fileID: 1262238008193823759, guid: 316ad7596760fe34f87a60bf0b0b8bee, type: 3}
-  _nabuSprite: {fileID: -8009217075737733720, guid: 369b1d1ee68a64a9eafd296183e6a334, type: 3}
-  _corruptSprite: {fileID: 4917291182231800338, guid: ed4ddb4e1529adb4e8e67f8fbf50ca8d, type: 3}
 --- !u!1 &1557038554
 GameObject:
   m_ObjectHideFlags: 0
