@@ -1,5 +1,7 @@
+using Assets.Scripts.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -62,7 +64,7 @@ namespace Teams
 
             Debug.Log($"[TeamManager] Assigning teams: {playerCount} players, {nabuCount} Nabu, {playerCount - nabuCount} Corrupt Officials");
 
-            ShuffleList(clientIds);
+            clientIds.Shuffle();
 
             _clientTeamAssignments.Clear();
 
@@ -108,7 +110,12 @@ namespace Teams
 
         public static int CalculateNabuCount(int playerCount)
         {
-            return Mathf.Max(1, Mathf.FloorToInt(playerCount * 0.4f));
+            return Mathf.Max(1, Mathf.FloorToInt(playerCount * 0.68f));
+        }
+
+        public int GetCountCorruption()
+        {
+            return _clientTeamAssignments.Where(item => item.Value == Team.CorruptOfficials).Count();
         }
 
         private List<ulong> GetConnectedClientIds()
@@ -126,15 +133,6 @@ namespace Teams
             }
 
             return clientIds;
-        }
-
-        private static void ShuffleList<T>(List<T> list)
-        {
-            for (var i = list.Count - 1; i > 0; i--)
-            {
-                var randomIndex = Random.Range(0, i + 1);
-                (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
-            }
         }
     }
 }

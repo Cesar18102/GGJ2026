@@ -5,11 +5,6 @@ public class GoToSpotActionHandler : GameActionHandler
     [SerializeField]
     private CharacterNavigationController _characterNav;
 
-    public GoToSpotActionHandler() : base()
-    {
-
-    }
-
     public override void OnSceneObjectClicked(GameObject sceneObject)
     {
         if (sceneObject.tag == "Spot")

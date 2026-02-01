@@ -1,6 +1,8 @@
 using System;
-using GameState;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Teams
@@ -14,35 +16,6 @@ namespace Teams
         );
 
         public event Action<Team> OnTeamAssigned;
-
-        public bool CanPerformActions
-        {
-            get
-            {
-                if (GameStateManager.Instance == null)
-                {
-                    return false;
-                }
-
-                var phase = GameStateManager.Instance.CurrentPhase.Value;
-
-                switch (phase)
-                {
-                    case GamePhase.WaitingForAssignment:
-                    case GamePhase.TeamReveal:
-                        return false;
-
-                    case GamePhase.NabuWaiting:
-                        return AssignedTeam.Value == Team.CorruptOfficials;
-
-                    case GamePhase.MainGameplay:
-                        return true;
-
-                    default:
-                        return false;
-                }
-            }
-        }
 
         public override void OnNetworkSpawn()
         {
@@ -85,6 +58,55 @@ namespace Teams
             }
 
             return null;
+        }
+
+        public static void ForEachPlayer(Action<NetworkObject> action) => 
+            ForEachPlayer(player => true, (player, i) => action(player));
+        public static void ForEachPlayer(Action<NetworkObject, int> action) =>
+            ForEachPlayer(player => true, action);
+
+        public static void ForEachPlayer(Team team, Action<NetworkObject> action) => 
+            ForEachPlayer(team, (player, i) => action(player));
+        public static void ForEachPlayer(Team team, Action<NetworkObject, int> action) =>
+            ForEachPlayer(player => player.GetComponent<PlayerTeamController>()?.AssignedTeam.Value == team, action);
+
+        public static void ForEachPlayer(Predicate<NetworkObject> playerPredicate, Action<NetworkObject> action) => 
+            ForEachPlayer(playerPredicate, (player, i) => action(player));
+        public static void ForEachPlayer(Predicate<NetworkObject> playerPredicate, Action<NetworkObject, int> action)
+        {
+            var clients = NetworkManager.Singleton.ConnectedClientsList;
+
+            for (int i = 0; i < clients.Count; ++i)
+            {
+                var client = clients[i];
+                var playerObj = client.PlayerObject;
+                if (playerObj == null || !playerPredicate(playerObj))
+                {
+                    continue;
+                }
+
+                action(playerObj, i);
+            }
+        }
+
+        public static IEnumerable<T> Select<T>(Func<NetworkObject, T> selector) => 
+            Select(player => true, selector);
+
+        public static IEnumerable<T> Select<T>(Team team, Func<NetworkObject, T> selector) =>
+            Select(player => player.GetComponent<PlayerTeamController>()?.AssignedTeam.Value == team, selector);
+
+        public static IEnumerable<T> Select<T>(Predicate<NetworkObject> playerPredicate, Func<NetworkObject, T> selector)
+        {
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                var playerObj = client.PlayerObject;
+                if (playerObj == null || !playerPredicate(playerObj))
+                {
+                    continue;
+                }
+
+                yield return selector(playerObj);
+            }
         }
     }
 }

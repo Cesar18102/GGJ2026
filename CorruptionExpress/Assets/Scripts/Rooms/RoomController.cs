@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Teams;
 using UnityEngine;
 
 namespace Rooms
@@ -50,7 +49,7 @@ namespace Rooms
 
         public void NavigateLeft()
         {
-            if (!CanNavigate() || _currentIndex <= 0)
+            if (!_navigationEnabled || _currentIndex <= 0)
             {
                 return;
             }
@@ -61,29 +60,13 @@ namespace Rooms
 
         public void NavigateRight()
         {
-            if (!CanNavigate() || _currentIndex >= rooms.Count - 1)
+            if (!_navigationEnabled || _currentIndex >= rooms.Count - 1)
             {
                 return;
             }
 
             _currentIndex++;
             UpdateView();
-        }
-
-        private bool CanNavigate()
-        {
-            if (!_navigationEnabled)
-            {
-                return false;
-            }
-
-            var localPlayer = PlayerTeamController.GetLocalPlayer();
-            if (localPlayer != null && !localPlayer.CanPerformActions)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public void NavigateToRoom(int index)

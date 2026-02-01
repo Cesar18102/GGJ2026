@@ -10,8 +10,8 @@ namespace Teams
     public enum GamePhase
     {
         WaitingForAssignment,
-        TeamReveal,
-        NabuWaiting,
-        MainGameplay
+        Setup,
+        Planning,
+        Execution
     }
 }
