@@ -1,8 +1,5 @@
 ﻿using Assets.Scripts.Input;
 using GameState;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Teams;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,7 +10,6 @@ public class SceneInputController : MonoBehaviour
     private Camera _camera;
 
     private Vector2 _lastPointerPos;
-    private GameObject _lastSelectedGameObject;
 
     public void OnPoint(InputAction.CallbackContext ctx)
     {
@@ -32,8 +28,6 @@ public class SceneInputController : MonoBehaviour
         
         if (collider?.gameObject != null)
         {
-            _lastSelectedGameObject = collider.gameObject;
-
             InputData input = GetInputData(collider.gameObject);
             GameStateManager.Instance.HandleInputServerRpc(input);
         }
@@ -64,16 +58,5 @@ public class SceneInputController : MonoBehaviour
             RoomId = spot.GetComponentInParent<Room>().transform.GetSiblingIndex(),
             SpotId = spot.transform.GetSiblingIndex()
         };
-    }
-
-    public GameObject GetInput()
-    {
-        return _lastSelectedGameObject;
-    }
-
-    public IEnumerator WaitForInput(Predicate<GameObject> predicate)
-    {
-        _lastSelectedGameObject = null;
-        yield return new WaitUntil(() => _lastSelectedGameObject != null && predicate(_lastSelectedGameObject));
     }
 }

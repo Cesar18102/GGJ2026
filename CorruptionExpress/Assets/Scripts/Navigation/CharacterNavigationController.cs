@@ -19,7 +19,6 @@ public class CharacterNavigationController : MonoBehaviour
 
     public bool IsMoving { get; private set; }
 
-    private Coroutine _co;
     private Animator _animator;
     private Vector3? _originalScale;
 
@@ -77,7 +76,6 @@ public class CharacterNavigationController : MonoBehaviour
         _animator.Play("Idle");
 
         IsMoving = false;
-        _co = null;
     }
 
     private void UpdateFaceDirection(FaceDirection desiredFaceDirection)

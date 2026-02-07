@@ -27,6 +27,12 @@ public class PlayerNetState : NetworkBehaviour
         NetworkVariableWritePermission.Server
     );
 
+    public NetworkVariable<bool> IsExecuting = new(
+        false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+
     public void AddEvidence(int amount)
     {
         Debug.Log($"Providing {amount} items.");
@@ -43,6 +49,12 @@ public class PlayerNetState : NetworkBehaviour
         }
 
         EvidenceCount.Value -= amount;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetIsExecutingServerRpc(bool isExecuting)
+    {
+        IsExecuting.Value = isExecuting;
     }
 
     [Header("What to hide/disable")]

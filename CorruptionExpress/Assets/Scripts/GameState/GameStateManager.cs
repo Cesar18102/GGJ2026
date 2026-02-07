@@ -36,9 +36,6 @@ namespace GameState
         [SerializeField]
         private GameObject _roomsContainer;
 
-        [SerializeField]
-        private InstantPutEvidenceActionHandler _putEvidenceActionHandler;
-
         private Dictionary<ulong, InputData> _inputs = new Dictionary<ulong, InputData>();
 
         public static GameStateManager Instance { get; private set; }
@@ -349,11 +346,6 @@ namespace GameState
         private IEnumerator PlanningPhase()
         {
             PlannedActions.Clear();
-            //_turnIndex = 0;
-
-            //CurrentTurnClientId.Value = TurnOrder[_turnIndex];
-            //LastPlannedAction.Value = ActionType.None;
-            //LastActionByClientId.Value = 0;
 
             SetPhase(GamePhase.Planning);
 
@@ -381,7 +373,6 @@ namespace GameState
                 }
             }
 
-            //yield return new WaitUntil(() => PlanningRound.Value >= _planningCycles);
             Debug.Log("[Planning] Done. Queue size=" + PlannedActions.Count);
         }
 
@@ -401,20 +392,40 @@ namespace GameState
                 CurrentExecutedByClientId.Value = step.ClientId;
 
                 PlayerTeamController player = PlayerTeamController.GetPlayer(step.ClientId);
+                PlayerNetState state = player.NetworkObject.GetComponent<PlayerNetState>();
+
+                state.IsExecuting.Value = true;
 
                 if (step.Action == ActionType.Move)
                 {
                     yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
-                    Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
-
-                    CharacterNavigationController navController = player.GetComponentInChildren<CharacterNavigationController>();
-                    yield return navController.GoTo(spot);
+                    NavigateClientRpc(step.ClientId, _inputs[step.ClientId].SpotInput);
                 }
+
+                yield return new WaitUntil(() => !state.IsExecuting.Value);
             }
 
             ExecIndex.Value = -1;
             PlannedActions.Clear();
         }
+
+        [Rpc(SendTo.Everyone)]
+        private void NavigateClientRpc(ulong clientId, SpotInput spotInfo)
+        {
+            StartCoroutine(NavigateClientCo(clientId, spotInfo));
+        }
+
+        private IEnumerator NavigateClientCo(ulong clientId, SpotInput spotInfo)
+        {
+            PlayerTeamController player = PlayerTeamController.GetPlayer(clientId);
+            Spot spot = GetSpot(spotInfo);
+
+            CharacterNavigationController navController = player.GetComponentInChildren<CharacterNavigationController>();
+            yield return navController.GoTo(spot);
+
+            player.NetworkObject.GetComponent<PlayerNetState>().SetIsExecutingServerRpc(false);
+        }
+
         #endregion Execution Phase
 
         #endregion Gameplay
