@@ -1,16 +1,26 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Input;
+using System.Collections;
+using UnityEngine;
 
 public class GoToSpotActionHandler : GameActionHandler
 {
-    [SerializeField]
-    private CharacterNavigationController _characterNav;
-
-    public override void OnSceneObjectClicked(GameObject sceneObject)
+    public override bool CanExecute(InputData input)
     {
-        if (sceneObject.tag == "Spot")
-        {
-            Spot spot = sceneObject.GetComponent<Spot>();
-            _characterNav.GoTo(spot);
-        }
+        throw new System.NotImplementedException();
+    }
+
+    public override void Execute(InputData input)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override IEnumerator WaitForEnd()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override IEnumerator WaitForStart()
+    {
+        throw new System.NotImplementedException();
     }
 }

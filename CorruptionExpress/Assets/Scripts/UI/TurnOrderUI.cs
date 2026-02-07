@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Teams;
+using TMPro;
 using UnityEngine;
 
 public class TurnOrderUI : MonoBehaviour
 {
     [SerializeField] private Transform _container;
     [SerializeField] private TurnIndicator _iconPrefab;
+    [SerializeField] private TMP_Text _phaseNameText;
 
     [Header("Fallback sprites")]
     [SerializeField] private Sprite _nabuSprite;
@@ -24,10 +26,18 @@ public class TurnOrderUI : MonoBehaviour
         CachePlayers();
         Rebuild();
 
+        gsm.OnPhaseChanged += Gsm_OnPhaseChanged;
         gsm.TurnOrder.OnListChanged += _ => Rebuild();
         gsm.CurrentTurnClientId.OnValueChanged += (_, __) => RefreshHighlights();
         gsm.LastActionByClientId.OnValueChanged += (_, __) => RefreshHighlights();
         gsm.LastPlannedAction.OnValueChanged += (_, __) => RefreshHighlights();
+        gsm.PlannedActions.OnListChanged += _ => RefreshHighlights();
+        gsm.ExecIndex.OnValueChanged += (_, __) => RefreshHighlights();
+    }
+
+    private void Gsm_OnPhaseChanged(GamePhase obj)
+    {
+        _phaseNameText.text = $"{obj} Phase";
     }
 
     private void CachePlayers()
@@ -67,23 +77,36 @@ public class TurnOrderUI : MonoBehaviour
             return;
         }
 
-        ulong current = gsm.CurrentTurnClientId.Value;
-        ulong prev = gsm.LastActionByClientId.Value;
+        ulong current = gsm.CurrentPhase.Value == GamePhase.Planning ?
+            gsm.CurrentTurnClientId.Value : gsm.CurrentExecutedByClientId.Value;
 
         for (int i = 0; i < gsm.TurnOrder.Count && i < _icons.Count; i++)
         {
             ulong id = gsm.TurnOrder[i];
             var sprite = ResolveSprite(id);
 
-            _icons[i].Set(sprite, id == current, id == prev ? $"Last Action: " + gsm.LastPlannedAction.Value.ToString() : string.Empty);
+            string text = string.Empty;
+            
+            if (id == gsm.CurrentExecutedByClientId.Value && gsm.CurrentPhase.Value == GamePhase.Execution)
+            {
+                text = $"Current Action: {gsm.PlannedActions[gsm.ExecIndex.Value].Action.ToString()}";
+            }
+            else if (id == gsm.LastActionByClientId.Value && gsm.CurrentPhase.Value == GamePhase.Planning)
+            {
+                text = $"Last Action: {gsm.CurrentExecutedAction.Value.ToString()}";
+            }
+
+            _icons[i].Set(sprite, id == current, text);
         }
     }
 
     private Sprite ResolveSprite(ulong clientId)
     {
         if (_byId.TryGetValue(clientId, out var ptc))
+        {
             return ptc.AssignedTeam.Value == Team.Nabu ? _nabuSprite : _corruptSprite;
+        }
 
-        return _corruptSprite; // fallback чтоб не падало
+        return _corruptSprite;
     }
 }

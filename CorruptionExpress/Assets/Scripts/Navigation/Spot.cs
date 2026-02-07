@@ -1,5 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
+[RequireComponent(typeof(SpotNetState))]
 public class Spot : MonoBehaviour
 {
     [SerializeField]
@@ -11,16 +13,16 @@ public class Spot : MonoBehaviour
     public NavNode2D GetApproachNode() => _approachNode;
     public FaceDirection GetFaceDirection() => _faceDirection;
 
-    private bool _hasItem;
-
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void PutItem()
     {
-        _hasItem = true;
+        GetComponent<SpotNetState>().HasItem.Value = true;
     }
 
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void TakeItem()
     {
-        _hasItem = false;
+        GetComponent<SpotNetState>().HasItem.Value = false;
     }
 
     private void OnDrawGizmos()
@@ -31,7 +33,7 @@ public class Spot : MonoBehaviour
             Gizmos.DrawLine(transform.position, _approachNode.transform.position);
         }
 
-        if (_hasItem)
+        if (GetComponent<SpotNetState>().HasItem.Value)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(transform.position, 0.5f);

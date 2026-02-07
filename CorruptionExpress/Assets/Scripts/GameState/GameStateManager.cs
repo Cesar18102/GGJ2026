@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Helpers;
+using Assets.Scripts.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace GameState
         private UIController _uiController;
 
         [SerializeField] 
-        private Transform[] spawnPoints;
+        private Transform[] _spawnPoints;
 
         [SerializeField]
         private int _planningCycles = 3;
@@ -33,10 +34,12 @@ namespace GameState
         private SceneInputController _sceneInputController;
 
         [SerializeField]
-        private GoToSpotActionHandler _goToSpotActionHandler;
+        private GameObject _roomsContainer;
 
         [SerializeField]
-        private PutEvidenceActionHandler _putEvidenceActionHandler;
+        private InstantPutEvidenceActionHandler _putEvidenceActionHandler;
+
+        private Dictionary<ulong, InputData> _inputs = new Dictionary<ulong, InputData>();
 
         public static GameStateManager Instance { get; private set; }
 
@@ -74,11 +77,25 @@ namespace GameState
         );
 
         public NetworkList<ulong> TurnOrder { get; } = new NetworkList<ulong>();
+        public NetworkList<PlannedAction> PlannedActions { get; } = new NetworkList<PlannedAction>();
 
-        private readonly Queue<(ulong clientId, ActionType action)> _actionsQueue = new();
+        public NetworkVariable<int> ExecIndex = new(
+            -1,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
-        private int _turnIndex;
-        
+        public NetworkVariable<ActionType> CurrentExecutedAction = new(
+            ActionType.None,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
+        public NetworkVariable<ulong> CurrentExecutedByClientId = new(
+            0,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
         public NetworkVariable<GamePhase> CurrentPhase { get; } = new(
             GamePhase.WaitingForAssignment,
@@ -88,13 +105,10 @@ namespace GameState
         public event Action<GamePhase> OnPhaseChanged;
 
         public NetworkVariable<int> RemainingEvidences { get; } = new NetworkVariable<int>(
-            -1, 
+            0, 
             NetworkVariableReadPermission.Everyone, 
             NetworkVariableWritePermission.Server
         );
-
-
-        private Coroutine _phaseTimerCoroutine;
 
         private void Awake()
         {
@@ -111,13 +125,13 @@ namespace GameState
         {
             base.OnNetworkSpawn();
 
-            CurrentPhase.OnValueChanged += HandlePhaseChanged;
             RemainingEvidences.OnValueChanged += HandleRemainingNumberOfItemsChanged;
-            _uiController.OnAction += _uiController_OnAction;
+            CurrentPhase.OnValueChanged += HandlePhaseChanged;
+            _uiController.OnInput += OnUiInput;
 
             if (IsServer)
             {
-                StartGameFlow();
+                StartCoroutine(GameFlowCoroutine());
             }
 
             Debug.Log($"[GameStateManager] Network spawned. Current phase: {CurrentPhase.Value}");
@@ -127,16 +141,11 @@ namespace GameState
         {
             Debug.Log($"[GameStateManager] Network despawned.");
 
-            CurrentPhase.OnValueChanged -= HandlePhaseChanged;
             RemainingEvidences.OnValueChanged -= HandleRemainingNumberOfItemsChanged;
-            _uiController.OnAction -= _uiController_OnAction;
+            CurrentPhase.OnValueChanged -= HandlePhaseChanged;
+            _uiController.OnInput -= OnUiInput;
 
             TurnOrder.Dispose();
-
-            if (_phaseTimerCoroutine != null)
-            {
-                StopCoroutine(_phaseTimerCoroutine);
-            }
 
             if (Instance == this)
             {
@@ -146,16 +155,6 @@ namespace GameState
             base.OnNetworkDespawn();
         }
 
-        private void StartGameFlow()
-        {
-            if (!IsServer)
-            {
-                return;
-            }
-
-            StartCoroutine(GameFlowCoroutine());
-        }
-
         private IEnumerator GameFlowCoroutine()
         {
             yield return new WaitForSeconds(0.5f);
@@ -163,7 +162,7 @@ namespace GameState
             if (TeamManager.Instance != null)
             {
                 TeamManager.Instance.AssignTeams();
-                RemainingEvidences.Value = _numberOfEvidences * TeamManager.Instance.GetCountCorruption();
+                //RemainingEvidences.Value = _numberOfEvidences * TeamManager.Instance.GetCountCorruption();
             }
             else
             {
@@ -174,50 +173,14 @@ namespace GameState
             PlayerTeamController.ForEachPlayer(player => player.transform.SetPositionAndRotation(Vector3.up * 100, Quaternion.identity));
 
             yield return new WaitForSeconds(0.5f);
-            SetPhase(GamePhase.Setup);
-
-            //setup phase
-            SetTeamActive(Team.CorruptOfficials, true);
-            SetTeamActive(Team.Nabu, false);
-
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
-            Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayerTeamController.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
-
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged += PlayerItemsCountChanged);
-
-            yield return new WaitUntil(() => PlayerTeamController.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value == 0).All(value => value));
-
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
-
-            SetTeamActive(Team.Nabu, true);
-            SpawnPlayersRandom();
-
-            DefineOrder();
+            yield return SetupPhase();
 
             for (int i = 0; i < _totalGameRounds; ++i)
             {
                 Debug.Log($"Game Round: {i + 1}");
 
-                _actionsQueue.Clear();
-                PlanningRound.Value = 0;
-                _turnIndex = 0;
-
-                CurrentTurnClientId.Value = TurnOrder[_turnIndex];
-                LastPlannedAction.Value = ActionType.None;
-                LastActionByClientId.Value = 0;
-
-                SetPhase(GamePhase.Planning);
-
-                yield return new WaitUntil(() => PlanningRound.Value >= _planningCycles);
-
-                //ExecutionRound.Value = 0;
-                //_turnIndex = 0;
-                //CurrentTurnClientId.Value = TurnOrder[_turnIndex];
-
-                //SetPhase(GamePhase.Execution);
-                //ExecutionLoop();
-
-                //yield return new WaitUntil(() => ExecutionRound.Value >= _planningCycles);
+                yield return PlanningPhase();
+                yield return ExecutionPhase();
             }
         }
 
@@ -232,53 +195,58 @@ namespace GameState
             CurrentPhase.Value = newPhase;
         }
 
-        private void ExecutionLoop()
-        {
-
-        }
-
-        public void ForcePhase(GamePhase phase)
-        {
-            if (!IsServer)
-            {
-                Debug.LogWarning("[GameStateManager] Only server can force phase changes");
-                return;
-            }
-
-            if (_phaseTimerCoroutine != null)
-            {
-                StopCoroutine(_phaseTimerCoroutine);
-                _phaseTimerCoroutine = null;
-            }
-
-            SetPhase(phase);
-        }
-
-        #region Gameplay
-
-
         private void HandlePhaseChanged(GamePhase previousPhase, GamePhase newPhase)
         {
             Debug.Log($"[GameStateManager] Phase changed from {previousPhase} to {newPhase}");
             OnPhaseChanged?.Invoke(newPhase);
+        }
 
-            switch (newPhase)
+        [Rpc(SendTo.Server)]
+        public void HandleInputServerRpc(InputData input, RpcParams rpcParams = default)
+        {
+            if (IsServer)
             {
-                case GamePhase.Setup:
-                    HandleSetupPhase();
-                    break;
+                Debug.Log($"[GameStateManager] Server recieved input: " +
+                    $"Spot(R:{input.SpotInput.RoomId},S:{input.SpotInput.SpotId}); " +
+                    $"TargetPlayer({input.TargetClientId}); " +
+                    $"Action({input.ActionType}); " +
+                    $"Move({input.MoveDirection})"
+                );
+
+                _inputs[rpcParams.Receive.SenderClientId] = input;
             }
         }
 
-        private void HandleSetupPhase()
+        private void OnUiInput(object sender, InputData e)
         {
-            PlayerTeamController currentPlayer = PlayerTeamController.GetLocalPlayer();
-            _uiController.ShowPreparePanel(currentPlayer.AssignedTeam.Value);
+            Debug.Log($"[UI_SEND] local={NetworkManager.Singleton.LocalClientId} current(localView)={CurrentTurnClientId.Value} phase={CurrentPhase.Value}");
+            HandleInputServerRpc(e);
+        }
 
-            if (currentPlayer.AssignedTeam.Value == Team.CorruptOfficials)
-            {
-                _sceneInputController.SetCurrentGameActionHandler(_putEvidenceActionHandler);
-            }
+        #region Gameplay
+
+        #region Setup Phase
+
+        private IEnumerator SetupPhase()
+        {
+            SetPhase(GamePhase.Setup);
+            ShowPreparePanelClientRpc();
+            SetTeamActive(Team.CorruptOfficials, true);
+            SetTeamActive(Team.Nabu, false);
+
+            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged += PlayerItemsCountChanged);
+
+            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
+            Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayerTeamController.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
+
+            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => StartCoroutine(HideEvidenceCo(player.GetComponent<PlayerTeamController>())));
+            yield return new WaitUntil(() => PlayerTeamController.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value == 0).All(value => value));
+
+            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
+
+            SetTeamActive(Team.Nabu, true);
+            SpawnPlayersRandom();
+            DefineOrder();
         }
 
         private void PlayerItemsCountChanged(int oldItems, int newItems)
@@ -295,7 +263,6 @@ namespace GameState
         private void HandleRemainingNumberOfItemsChanged(int oldItems, int newItems)
         {
             Debug.Log($"Remaining Items Count Changed from {oldItems} to {newItems}");
-
             _uiController.SetRemainingItemsToWait(newItems);
         }
 
@@ -304,23 +271,61 @@ namespace GameState
             PlayerTeamController.ForEachPlayer(team, player => player.GetComponent<PlayerNetState>().IsActive.Value = active);
         }
 
+        [Rpc(SendTo.Everyone)]
+        private void ShowPreparePanelClientRpc()
+        {
+            PlayerTeamController currentPlayer = PlayerTeamController.GetLocalPlayer();
+            _uiController.ShowPreparePanel(currentPlayer.AssignedTeam.Value);
+        }
+
+        private IEnumerator HideEvidenceCo(PlayerTeamController player)
+        {
+            PlayerNetState state = player.GetComponent<PlayerNetState>();
+
+            while (state.EvidenceCount.Value > 0)
+            {
+                ulong clientId = player.OwnerClientId;
+
+                yield return WaitForInput(clientId, data => data.HasSpotInput());
+                Spot spot = GetSpot(_inputs[clientId].SpotInput);
+
+                state.EvidenceCount.Value--;
+                spot.GetComponent<SpotNetState>().HasItem.Value = true;
+            }
+        }
+
         private void SpawnPlayersRandom()
         {
-            Debug.Log($"Players are being spawed");
+            Debug.Log($"Players are being spawned");
 
-            // тасую точки
-            spawnPoints.Shuffle();
+            _spawnPoints.Shuffle();
 
             PlayerTeamController.ForEachPlayer((player, i) =>
             {
-                var p = spawnPoints[i % spawnPoints.Length];
+                Transform p = _spawnPoints[i % _spawnPoints.Length];
                 player.transform.SetPositionAndRotation(p.position, p.rotation);
 
                 // якщо треба для 2D: обнулити Z
                 var pos = player.transform.position;
                 pos.z = 0f;
                 player.transform.position = pos;
+
+                PlayerNetState state = player.GetComponent<PlayerNetState>();
+                state.CurrentPosition.Value = p.gameObject.transform.GetSiblingIndex();
+                state.CurrentRoom.Value = p.gameObject.GetComponentInParent<Room>().gameObject.transform.GetSiblingIndex();
             });
+
+            SpawnPlayersClientRpc();
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void SpawnPlayersClientRpc()
+        {
+            PlayerTeamController player = PlayerTeamController.GetLocalPlayer();
+            PlayerNetState state = player.NetworkObject.GetComponent<PlayerNetState>();
+            NavNode2D navNode = GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value);
+
+            player.gameObject.GetComponentInChildren<CharacterNavigationController>().SetCurrentNavNode(navNode);
         }
 
         private void DefineOrder()
@@ -337,67 +342,97 @@ namespace GameState
             Debug.Log($"Turn Order: {string.Join(",", TurnOrder)}");
         }
 
-        private void _uiController_OnAction(object sender, ActionType e)
+        #endregion Setup Phase
+
+        #region Planning Phase
+
+        private IEnumerator PlanningPhase()
         {
-            Debug.Log($"[UI_SEND] local={NetworkManager.Singleton.LocalClientId} current(localView)={CurrentTurnClientId.Value} phase={CurrentPhase.Value}");
+            PlannedActions.Clear();
+            //_turnIndex = 0;
 
-            TryAddPlannedActionServerRpc(e);
-        }
+            //CurrentTurnClientId.Value = TurnOrder[_turnIndex];
+            //LastPlannedAction.Value = ActionType.None;
+            //LastActionByClientId.Value = 0;
 
-        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-        public void TryAddPlannedActionServerRpc(ActionType action, RpcParams rpcParams = default)
-        {
-            Debug.Log($"RPC action {action} sender={rpcParams.Receive.SenderClientId} current={CurrentTurnClientId.Value}; local={NetworkManager.Singleton.LocalClientId}");
+            SetPhase(GamePhase.Planning);
 
+            PlayerTeamController[] players = TurnOrder.AsNativeArray().Select(id => PlayerTeamController.GetPlayer(id)).ToArray();
 
-            Debug.Log($"Trying to push {action}");
-            if (CurrentPhase.Value != GamePhase.Planning)
+            for (PlanningRound.Value = 0; PlanningRound.Value < _planningCycles; PlanningRound.Value++)
             {
-                return;
-            }
+                Debug.Log($"Planning round: {PlanningRound.Value} started.");
+                for(int turnIndex = 0; turnIndex < players.Length; turnIndex++) {
+                    Debug.Log($"Current turn: {turnIndex}");
 
-            ulong sender = rpcParams.Receive.SenderClientId;
+                    ulong playerId = players[turnIndex].OwnerClientId;
+                    CurrentTurnClientId.Value = playerId;
+                    
+                    yield return WaitForInput(playerId, input => input.HasActionTypeInput());
 
-            if (sender != CurrentTurnClientId.Value)
-            {
-                return;
-            }
+                    ActionType action = _inputs[playerId].ActionType;
+                    PlannedAction plannedAction = new PlannedAction(playerId, action);
+                    PlannedActions.Add(plannedAction);
 
-            Debug.Log($"Pushing {action}");
-            _actionsQueue.Enqueue((sender, action));
+                    Debug.Log($"{action} planned by {playerId}");
 
-            LastPlannedAction.Value = action;
-            LastActionByClientId.Value = sender;
-
-            AdvanceTurn();
-        }
-
-        private void AdvanceTurn()
-        {
-            Debug.Log($"[TURN] next={CurrentTurnClientId.Value} idx={_turnIndex} round={PlanningRound.Value}");
-
-
-            Debug.Log($"Current turn: {_turnIndex}");
-            _turnIndex++;
-            Debug.Log($"New turn: {_turnIndex}");
-
-            if (_turnIndex >= TurnOrder.Count)
-            {
-                Debug.Log($"Planning round: {PlanningRound.Value} completed.");
-
-                _turnIndex = 0;
-                PlanningRound.Value++;
-
-                if (PlanningRound.Value >= _planningCycles)
-                {
-                    Debug.Log("[Planning] Done. Queue size=" + _actionsQueue.Count);
-                    return;
+                    LastPlannedAction.Value = action;
+                    LastActionByClientId.Value = playerId;
                 }
             }
 
-            CurrentTurnClientId.Value = TurnOrder[_turnIndex];
+            //yield return new WaitUntil(() => PlanningRound.Value >= _planningCycles);
+            Debug.Log("[Planning] Done. Queue size=" + PlannedActions.Count);
         }
 
+        #endregion Planning Phase
+
+        #region Execution Phase
+
+        private IEnumerator ExecutionPhase()
+        {
+            SetPhase(GamePhase.Execution);
+
+            for (ExecIndex.Value = 0; ExecIndex.Value < PlannedActions.Count; ExecIndex.Value++)
+            {
+                var step = PlannedActions[ExecIndex.Value];
+
+                CurrentExecutedAction.Value = step.Action;
+                CurrentExecutedByClientId.Value = step.ClientId;
+
+                PlayerTeamController player = PlayerTeamController.GetPlayer(step.ClientId);
+
+                if (step.Action == ActionType.Move)
+                {
+                    yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
+                    Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
+
+                    CharacterNavigationController navController = player.GetComponentInChildren<CharacterNavigationController>();
+                    yield return navController.GoTo(spot);
+                }
+            }
+
+            ExecIndex.Value = -1;
+            PlannedActions.Clear();
+        }
+        #endregion Execution Phase
+
         #endregion Gameplay
+
+        private IEnumerator WaitForInput(ulong clientId, Func<InputData, bool> inputIndicator)
+        {
+            _inputs.Remove(clientId);
+            yield return new WaitUntil(() => _inputs.ContainsKey(clientId) && inputIndicator(_inputs[clientId]));
+        }
+
+        private Room GetRoom(int index)
+        {
+            return _roomsContainer.transform.GetChild(index).gameObject.GetComponent<Room>();
+        }
+
+        private Spot GetSpot(SpotInput spotInput)
+        {
+            return GetRoom(spotInput.RoomId).GetSpot(spotInput.SpotId);
+        }
     }
 }

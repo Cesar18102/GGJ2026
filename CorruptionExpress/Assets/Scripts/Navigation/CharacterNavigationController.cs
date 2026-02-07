@@ -28,11 +28,16 @@ public class CharacterNavigationController : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void GoTo(Spot spot)
+    public void SetCurrentNavNode(NavNode2D node)
+    {
+        _currentNavNode = node;
+    }
+
+    public IEnumerator GoTo(Spot spot)
     {
         if (IsMoving)
         {
-            return;
+            yield break;
         }
 
         NavNode2D targetNode = spot.GetApproachNode();
@@ -40,14 +45,10 @@ public class CharacterNavigationController : MonoBehaviour
 
         if (path == null || path.Count == 0)
         {
-            return;
+            yield break;
         }
-
-        if (_co != null)
-        {
-            StopCoroutine(_co);
-        }
-        _co = StartCoroutine(MoveCo(path, spot.GetFaceDirection()));
+        
+        yield return MoveCo(path, spot.GetFaceDirection());
     }
 
     private IEnumerator MoveCo(List<NavNode2D> nodes, FaceDirection targetFaceDirection)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Input;
+using System;
 using System.Collections.Generic;
 using Teams;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private GameObject _corruptionPanel;
 
-    public event EventHandler<ActionType> OnAction;
+    public event EventHandler<InputData> OnInput;
 
     public void UpdateItems(IEnumerable<ItemController> items)
     {
@@ -63,8 +64,19 @@ public class UIController : MonoBehaviour
         _corruptionPanel.SetActive(false);
     }
 
-    public void OnWear() => OnAction?.Invoke(this, ActionType.Wear);
-    public void OnMove() => OnAction?.Invoke(this, ActionType.Move);
-    public void OnSearch() => OnAction?.Invoke(this, ActionType.Search);
-    public void OnPut() => OnAction?.Invoke(this, ActionType.Put);
+    public void OnWear() => OnInput?.Invoke(this, GetInputData(ActionType.Wear));
+    public void OnMove() => OnInput?.Invoke(this, GetInputData(ActionType.Move));
+    public void OnSearch() => OnInput?.Invoke(this, GetInputData(ActionType.Search));
+    public void OnPut() => OnInput?.Invoke(this, GetInputData(ActionType.Put));
+
+    private InputData GetInputData(ActionType action)
+    {
+        return new InputData()
+        {
+            ActionType = action,
+            MoveDirection = RoomMoveDirection.None,
+            SpotInput = SpotInput.Empty,
+            TargetClientId = 0
+        };
+    }
 }

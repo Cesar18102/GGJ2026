@@ -47,11 +47,14 @@ namespace Teams
                 return null;
             }
 
-            var localClientId = NetworkManager.Singleton.LocalClientId;
+            return GetPlayer(NetworkManager.Singleton.LocalClientId);
+        }
 
+        public static PlayerTeamController GetPlayer(ulong clientId)
+        {
             foreach (var player in FindObjectsByType<PlayerTeamController>(FindObjectsSortMode.None))
             {
-                if (player.OwnerClientId == localClientId)
+                if (player.OwnerClientId == clientId)
                 {
                     return player;
                 }
@@ -59,6 +62,7 @@ namespace Teams
 
             return null;
         }
+           
 
         public static void ForEachPlayer(Action<NetworkObject> action) => 
             ForEachPlayer(player => true, (player, i) => action(player));

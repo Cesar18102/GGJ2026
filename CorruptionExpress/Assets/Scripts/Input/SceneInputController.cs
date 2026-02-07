@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Input;
+using GameState;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Teams;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SceneInputController : MonoBehaviour
@@ -6,15 +12,8 @@ public class SceneInputController : MonoBehaviour
     [SerializeField]
     private Camera _camera;
 
-    [SerializeField]
-    private GameActionHandler _currentGameActionHandler;
-
     private Vector2 _lastPointerPos;
-
-    public void SetCurrentGameActionHandler(GameActionHandler currentGameActionHandler)
-    {
-        _currentGameActionHandler = currentGameActionHandler;
-    }
+    private GameObject _lastSelectedGameObject;
 
     public void OnPoint(InputAction.CallbackContext ctx)
     {
@@ -30,10 +29,51 @@ public class SceneInputController : MonoBehaviour
 
         Vector2 worldPos = _camera.ScreenToWorldPoint(_lastPointerPos);
         Collider2D collider = Physics2D.OverlapPoint(worldPos);
-
-        if (_currentGameActionHandler != null && collider?.gameObject != null)
+        
+        if (collider?.gameObject != null)
         {
-            _currentGameActionHandler.OnSceneObjectClicked(collider.gameObject);
+            _lastSelectedGameObject = collider.gameObject;
+
+            InputData input = GetInputData(collider.gameObject);
+            GameStateManager.Instance.HandleInputServerRpc(input);
         }
+    }
+
+    private InputData GetInputData(GameObject obj)
+    {
+        return new InputData()
+        {
+            ActionType = ActionType.None,
+            MoveDirection = RoomMoveDirection.None,
+            SpotInput = GetSpotInput(obj),
+            TargetClientId = obj.GetComponent<PlayerTeamController>()?.NetworkObject.OwnerClientId ?? 0
+        };
+    }
+
+    private SpotInput GetSpotInput(GameObject obj)
+    {
+        Spot spot = obj.GetComponent<Spot>();
+
+        if (spot == null)
+        {
+            return SpotInput.Empty;
+        }
+
+        return new SpotInput()
+        {
+            RoomId = spot.GetComponentInParent<Room>().transform.GetSiblingIndex(),
+            SpotId = spot.transform.GetSiblingIndex()
+        };
+    }
+
+    public GameObject GetInput()
+    {
+        return _lastSelectedGameObject;
+    }
+
+    public IEnumerator WaitForInput(Predicate<GameObject> predicate)
+    {
+        _lastSelectedGameObject = null;
+        yield return new WaitUntil(() => _lastSelectedGameObject != null && predicate(_lastSelectedGameObject));
     }
 }

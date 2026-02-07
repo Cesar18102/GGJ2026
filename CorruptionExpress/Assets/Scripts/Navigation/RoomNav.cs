@@ -8,6 +8,22 @@ public class Room : MonoBehaviour
     [SerializeField]
     private NavNode2D _rightEntrance;
 
+    [SerializeField]
+    private GameObject _waypointsContainer;
+
+    [SerializeField]
+    private GameObject _spotsContainer;
+
+    public NavNode2D GetWaypoint(int index)
+    {
+        return _waypointsContainer.transform.GetChild(index).gameObject.GetComponent<NavNode2D>();
+    }
+
+    public Spot GetSpot(int index)
+    {
+        return _spotsContainer.transform.GetChild(index).gameObject.GetComponent<Spot>();
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
