@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Helpers;
 using GameState;
 using System.Collections.Generic;
-using System.Linq;
 using Teams;
 using TMPro;
 using UnityEngine;
@@ -16,7 +15,7 @@ public class TurnOrderUI : MonoBehaviour
     [SerializeField] private Sprite _nabuSprite;
     [SerializeField] private Sprite _corruptSprite;
 
-    private readonly Dictionary<ulong, PlayerTeamController> _byId = new();
+    private readonly Dictionary<ulong, PlayerNetState> _byId = new();
     private readonly List<TurnIndicator> _icons = new();
 
     private void Start()
@@ -45,7 +44,7 @@ public class TurnOrderUI : MonoBehaviour
     {
         _byId.Clear();
         foreach (var p in PlayersHelper.Select(player => player))
-            _byId[p.OwnerClientId] = p.GetComponent<PlayerTeamController>();
+            _byId[p.OwnerClientId] = p.GetComponent<PlayerNetState>();
     }
 
     private void Rebuild()

@@ -7,11 +7,11 @@ public class PlayerVisualSwitcher : NetworkBehaviour
     [SerializeField] private GameObject visualNabu;
     [SerializeField] private GameObject visualCorrupt;
 
-    private PlayerTeamController _team;
+    private PlayerNetState _team;
 
     private void Awake()
     {
-        _team = GetComponent<PlayerTeamController>();
+        _team = GetComponent<PlayerNetState>();
     }
 
     public override void OnNetworkSpawn()

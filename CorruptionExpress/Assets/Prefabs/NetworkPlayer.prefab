@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1000001}
   - component: {fileID: 1000002}
-  - component: {fileID: 3276947878215211750}
   - component: {fileID: 3003745432759134446}
   - component: {fileID: 6665443040221894586}
   - component: {fileID: 2793822763279625358}
@@ -62,19 +61,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &3276947878215211750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0bd43672b564fc2834cb374dab2108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teams.PlayerTeamController
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &3003745432759134446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,20 +74,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerNetState
   ShowTopMostFoldoutHeaderGroup: 1
-  IsActive:
-    m_InternalValue: 0
   EvidenceCount:
     m_InternalValue: 0
   CurrentPosition:
     m_InternalValue: -1
   CurrentRoom:
     m_InternalValue: -1
-  IsExecuting:
-    m_InternalValue: 0
   CurrentAnimationType:
     m_InternalValue: 0
-  visualsRoot: {fileID: 0}
-  collidersToDisable: []
 --- !u!114 &6665443040221894586
 MonoBehaviour:
   m_ObjectHideFlags: 0

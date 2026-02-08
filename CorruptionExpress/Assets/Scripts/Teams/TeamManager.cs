@@ -83,7 +83,7 @@ namespace Teams
 
         private void AssignTeamToPlayer(ulong clientId, Team team)
         {
-            foreach (var player in FindObjectsByType<PlayerTeamController>(FindObjectsSortMode.None))
+            foreach (var player in FindObjectsByType<PlayerNetState>(FindObjectsSortMode.None))
             {
                 if (player.OwnerClientId == clientId)
                 {

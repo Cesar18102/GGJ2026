@@ -1,9 +1,18 @@
 ﻿using Assets.Scripts.Actions;
+using System;
+using Teams;
 using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerNetState : NetworkBehaviour
 {
+    public NetworkVariable<Team> AssignedTeam { get; } = new(
+        Team.Unassigned,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+    public event Action<Team> OnTeamAssigned;
+
     public NetworkVariable<int> EvidenceCount = new(
         0,
         NetworkVariableReadPermission.Everyone,
@@ -49,11 +58,24 @@ public class PlayerNetState : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         CurrentAnimationType.OnValueChanged += OnAnimtionTypeUpdated;
+        AssignedTeam.OnValueChanged += HandleTeamChanged;
+
+        if (AssignedTeam.Value != Team.Unassigned)
+        {
+            OnTeamAssigned?.Invoke(AssignedTeam.Value);
+        }
     }
 
     public override void OnNetworkDespawn()
     {
         CurrentAnimationType.OnValueChanged -= OnAnimtionTypeUpdated;
+        AssignedTeam.OnValueChanged -= HandleTeamChanged;
+    }
+
+    private void HandleTeamChanged(Team previousValue, Team newValue)
+    {
+        Debug.Log($"[PlayerNetState] Team changed from {previousValue} to {newValue} for client {OwnerClientId}");
+        OnTeamAssigned?.Invoke(newValue);
     }
 
     private void OnAnimtionTypeUpdated(AnimationType oldState, AnimationType newState)

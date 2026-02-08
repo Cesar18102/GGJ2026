@@ -235,7 +235,7 @@ namespace GameState
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
             Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayersHelper.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
 
-            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => StartCoroutine(HideEvidenceCo(player.GetComponent<PlayerTeamController>())));
+            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => StartCoroutine(HideEvidenceCo(player.GetComponent<PlayerNetState>())));
             yield return new WaitUntil(() => PlayersHelper.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value == 0).All(value => value));
 
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
@@ -264,11 +264,11 @@ namespace GameState
         [Rpc(SendTo.Everyone)]
         private void ShowPreparePanelClientRpc()
         {
-            PlayerTeamController currentPlayer = PlayerTeamController.GetLocalPlayer();
+            PlayerNetState currentPlayer = PlayersHelper.GetLocalPlayer();
             _uiController.ShowPreparePanel(currentPlayer.AssignedTeam.Value);
         }
 
-        private IEnumerator HideEvidenceCo(PlayerTeamController player)
+        private IEnumerator HideEvidenceCo(PlayerNetState player)
         {
             PlayerNetState state = player.GetComponent<PlayerNetState>();
 
@@ -332,7 +332,7 @@ namespace GameState
 
             SetPhase(GamePhase.Planning);
 
-            PlayerTeamController[] players = TurnOrder.AsNativeArray().Select(id => PlayerTeamController.GetPlayer(id)).ToArray();
+            PlayerNetState[] players = TurnOrder.AsNativeArray().Select(id => PlayersHelper.GetPlayer(id)).ToArray();
 
             for (PlanningRound.Value = 0; PlanningRound.Value < _planningCycles; PlanningRound.Value++)
             {
@@ -374,7 +374,7 @@ namespace GameState
                 CurrentExecutedAction.Value = step.Action;
                 CurrentExecutedByClientId.Value = step.ClientId;
 
-                PlayerTeamController player = PlayerTeamController.GetPlayer(step.ClientId);
+                PlayerNetState player = PlayersHelper.GetPlayer(step.ClientId);
 
                 if (step.Action == ActionType.Move)
                 {
@@ -389,9 +389,8 @@ namespace GameState
             PlannedActions.Clear();
         }
 
-        private IEnumerator MoveCo(PlayerTeamController player, Spot spot)
+        private IEnumerator MoveCo(PlayerNetState state, Spot spot)
         {
-            PlayerNetState state = player.NetworkObject.GetComponent<PlayerNetState>();
             NavNode2D currentNode = GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value);
             NavNode2D targetNode = spot.GetApproachNode();
             List<NavNode2D> path = GraphPathfinder2D.FindPath(currentNode, targetNode);
@@ -408,7 +407,7 @@ namespace GameState
                 currentNode = node;
                 Vector3 desiredScale = Vector3.one * node.GetDesiredScale();
 
-                yield return MoveTo(player.NetworkObject, (Vector2)node.transform.position, desiredScale);
+                yield return MoveTo(state.NetworkObject, (Vector2)node.transform.position, desiredScale);
             }
 
             UpdateFaceDirection(state, spot.GetFaceDirection());
@@ -422,7 +421,7 @@ namespace GameState
             if (state.CurrentFaceDirection != desiredFaceDirection)
             {
                 state.CurrentFaceDirection = desiredFaceDirection;
-                state.GetComponent<NetworkObject>().transform.Rotate(0, 180, 0);
+                state.NetworkObject.transform.Rotate(0, 180, 0);
             }
         }
 
