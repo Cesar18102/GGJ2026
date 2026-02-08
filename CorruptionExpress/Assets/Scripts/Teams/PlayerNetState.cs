@@ -1,37 +1,32 @@
-﻿using Unity.Netcode;
+﻿using Assets.Scripts.Actions;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerNetState : NetworkBehaviour
 {
-    public NetworkVariable<bool> IsActive = new(
-        false,
-        NetworkVariableReadPermission.Everyone,
-        NetworkVariableWritePermission.Server
-    );
-
     public NetworkVariable<int> EvidenceCount = new(
         0,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
-
     public NetworkVariable<int> CurrentPosition = new(
         -1,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
-
     public NetworkVariable<int> CurrentRoom = new(
         -1,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
-
-    public NetworkVariable<bool> IsExecuting = new(
-        false,
+    public NetworkVariable<AnimationType> CurrentAnimationType = new(
+        AnimationType.None,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
+
+    public FaceDirection CurrentFaceDirection { get; set; }
+    public float Speed { get; set; }
 
     public void AddEvidence(int amount)
     {
@@ -51,36 +46,18 @@ public class PlayerNetState : NetworkBehaviour
         EvidenceCount.Value -= amount;
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void SetIsExecutingServerRpc(bool isExecuting)
-    {
-        IsExecuting.Value = isExecuting;
-    }
-
-    [Header("What to hide/disable")]
-    [SerializeField] private GameObject visualsRoot; // спрайти/скелет/рендер
-    [SerializeField] private Collider2D[] collidersToDisable;
-
     public override void OnNetworkSpawn()
     {
-        Apply(IsActive.Value);
-        IsActive.OnValueChanged += (_, v) => Apply(v);
+        CurrentAnimationType.OnValueChanged += OnAnimtionTypeUpdated;
     }
 
     public override void OnNetworkDespawn()
     {
-        IsActive.OnValueChanged -= (_, v) => Apply(v); // не критично для джему, але ок
+        CurrentAnimationType.OnValueChanged -= OnAnimtionTypeUpdated;
     }
 
-    private void Apply(bool active)
+    private void OnAnimtionTypeUpdated(AnimationType oldState, AnimationType newState)
     {
-        if (visualsRoot != null)
-            visualsRoot.SetActive(active);
-
-        if (collidersToDisable != null)
-        {
-            foreach (var c in collidersToDisable)
-                if (c != null) c.enabled = active;
-        }
+        GetComponentInChildren<Animator>().SetInteger("State", (int)newState);
     }
 }

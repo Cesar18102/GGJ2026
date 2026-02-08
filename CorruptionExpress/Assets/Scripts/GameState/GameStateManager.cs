@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.Helpers;
+﻿using Assets.Scripts.Actions;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.Input;
+using Assets.Scripts.Navigation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -159,7 +161,6 @@ namespace GameState
             if (TeamManager.Instance != null)
             {
                 TeamManager.Instance.AssignTeams();
-                //RemainingEvidences.Value = _numberOfEvidences * TeamManager.Instance.GetCountCorruption();
             }
             else
             {
@@ -167,7 +168,7 @@ namespace GameState
                 yield break;
             }
 
-            PlayerTeamController.ForEachPlayer(player => player.transform.SetPositionAndRotation(Vector3.up * 100, Quaternion.identity));
+            PlayersHelper.ForEachPlayer(player => player.transform.SetPositionAndRotation(Vector3.up * 100, Quaternion.identity));
 
             yield return new WaitForSeconds(0.5f);
             yield return SetupPhase();
@@ -228,20 +229,17 @@ namespace GameState
         {
             SetPhase(GamePhase.Setup);
             ShowPreparePanelClientRpc();
-            SetTeamActive(Team.CorruptOfficials, true);
-            SetTeamActive(Team.Nabu, false);
 
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged += PlayerItemsCountChanged);
+            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged += PlayerItemsCountChanged);
 
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
-            Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayerTeamController.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
+            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
+            Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayersHelper.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
 
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => StartCoroutine(HideEvidenceCo(player.GetComponent<PlayerTeamController>())));
-            yield return new WaitUntil(() => PlayerTeamController.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value == 0).All(value => value));
+            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => StartCoroutine(HideEvidenceCo(player.GetComponent<PlayerTeamController>())));
+            yield return new WaitUntil(() => PlayersHelper.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value == 0).All(value => value));
 
-            PlayerTeamController.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
+            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
 
-            SetTeamActive(Team.Nabu, true);
             SpawnPlayersRandom();
             DefineOrder();
         }
@@ -261,11 +259,6 @@ namespace GameState
         {
             Debug.Log($"Remaining Items Count Changed from {oldItems} to {newItems}");
             _uiController.SetRemainingItemsToWait(newItems);
-        }
-
-        private void SetTeamActive(Team team, bool active)
-        {
-            PlayerTeamController.ForEachPlayer(team, player => player.GetComponent<PlayerNetState>().IsActive.Value = active);
         }
 
         [Rpc(SendTo.Everyone)]
@@ -297,7 +290,7 @@ namespace GameState
 
             _spawnPoints.Shuffle();
 
-            PlayerTeamController.ForEachPlayer((player, i) =>
+            PlayersHelper.ForEachPlayer((player, i) =>
             {
                 Transform p = _spawnPoints[i % _spawnPoints.Length];
                 player.transform.SetPositionAndRotation(p.position, p.rotation);
@@ -310,24 +303,14 @@ namespace GameState
                 PlayerNetState state = player.GetComponent<PlayerNetState>();
                 state.CurrentPosition.Value = p.gameObject.transform.GetSiblingIndex();
                 state.CurrentRoom.Value = p.gameObject.GetComponentInParent<Room>().gameObject.transform.GetSiblingIndex();
+                state.CurrentFaceDirection = player.GetComponentInChildren<CharacterSettings>().GetStartingFaceDirection();
+                state.Speed = player.GetComponentInChildren<CharacterSettings>().GetSpeed();
             });
-
-            SpawnPlayersClientRpc();
-        }
-
-        [Rpc(SendTo.Everyone)]
-        private void SpawnPlayersClientRpc()
-        {
-            PlayerTeamController player = PlayerTeamController.GetLocalPlayer();
-            PlayerNetState state = player.NetworkObject.GetComponent<PlayerNetState>();
-            NavNode2D navNode = GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value);
-
-            player.gameObject.GetComponentInChildren<CharacterNavigationController>().SetCurrentNavNode(navNode);
         }
 
         private void DefineOrder()
         {
-            var clients = PlayerTeamController.Select(player => player.OwnerClientId).ToArray();
+            var clients = PlayersHelper.Select(player => player.OwnerClientId).ToArray();
             clients.Shuffle();
 
             TurnOrder.Clear();
@@ -392,38 +375,76 @@ namespace GameState
                 CurrentExecutedByClientId.Value = step.ClientId;
 
                 PlayerTeamController player = PlayerTeamController.GetPlayer(step.ClientId);
-                PlayerNetState state = player.NetworkObject.GetComponent<PlayerNetState>();
-
-                state.IsExecuting.Value = true;
 
                 if (step.Action == ActionType.Move)
                 {
                     yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
-                    NavigateClientRpc(step.ClientId, _inputs[step.ClientId].SpotInput);
-                }
 
-                yield return new WaitUntil(() => !state.IsExecuting.Value);
+                    Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
+                    yield return MoveCo(player, spot);
+                }
             }
 
             ExecIndex.Value = -1;
             PlannedActions.Clear();
         }
 
-        [Rpc(SendTo.Everyone)]
-        private void NavigateClientRpc(ulong clientId, SpotInput spotInfo)
+        private IEnumerator MoveCo(PlayerTeamController player, Spot spot)
         {
-            StartCoroutine(NavigateClientCo(clientId, spotInfo));
+            PlayerNetState state = player.NetworkObject.GetComponent<PlayerNetState>();
+            NavNode2D currentNode = GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value);
+            NavNode2D targetNode = spot.GetApproachNode();
+            List<NavNode2D> path = GraphPathfinder2D.FindPath(currentNode, targetNode);
+
+            state.CurrentAnimationType.Value = AnimationType.Move;
+
+            foreach (NavNode2D node in path)
+            {
+                FaceDirection desiredFaceDirection = node.transform.position.x > currentNode.transform.position.x ?
+                    FaceDirection.Right : FaceDirection.Left;
+
+                UpdateFaceDirection(state, desiredFaceDirection);
+
+                currentNode = node;
+                Vector3 desiredScale = Vector3.one * node.GetDesiredScale();
+
+                yield return MoveTo(player.NetworkObject, (Vector2)node.transform.position, desiredScale);
+            }
+
+            UpdateFaceDirection(state, spot.GetFaceDirection());
+            state.CurrentPosition.Value = targetNode.transform.GetSiblingIndex();
+
+            state.CurrentAnimationType.Value = AnimationType.None;
         }
 
-        private IEnumerator NavigateClientCo(ulong clientId, SpotInput spotInfo)
+        private void UpdateFaceDirection(PlayerNetState state, FaceDirection desiredFaceDirection)
         {
-            PlayerTeamController player = PlayerTeamController.GetPlayer(clientId);
-            Spot spot = GetSpot(spotInfo);
+            if (state.CurrentFaceDirection != desiredFaceDirection)
+            {
+                state.CurrentFaceDirection = desiredFaceDirection;
+                state.GetComponent<NetworkObject>().transform.Rotate(0, 180, 0);
+            }
+        }
 
-            CharacterNavigationController navController = player.GetComponentInChildren<CharacterNavigationController>();
-            yield return navController.GoTo(spot);
+        private IEnumerator MoveTo(NetworkObject player, Vector2 target, Vector3 targetScale)
+        {
+            float totalDist = ((Vector2)player.transform.position - target).magnitude;
+            float currentDist = totalDist;
 
-            player.NetworkObject.GetComponent<PlayerNetState>().SetIsExecutingServerRpc(false);
+            float speed = player.GetComponent<PlayerNetState>().Speed;
+
+            Vector3 startingScale = player.transform.localScale;
+            Vector3 dScale = targetScale - startingScale;
+
+            while (currentDist > 0.0025f)
+            {
+                player.transform.position = Vector2.MoveTowards(player.transform.position, target, speed * Time.deltaTime);
+                currentDist = ((Vector2)player.transform.position - target).magnitude;
+
+                player.transform.localScale = startingScale + dScale * (totalDist - currentDist) / totalDist;
+
+                yield return null;
+            }
         }
 
         #endregion Execution Phase

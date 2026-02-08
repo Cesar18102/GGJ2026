@@ -606,7 +606,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4818887766964248971}
   - component: {fileID: 9116547055448960974}
-  - component: {fileID: 1265461398298809516}
   m_Layer: 0
   m_Name: NABU 2
   m_TagString: Untagged
@@ -664,22 +663,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1265461398298809516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4505671987892619496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366353bd7260b784fb35fbf6fed31ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterNavigationController
-  _currentNavNode: {fileID: 0}
-  _currentFaceDirection: 0
-  _speed: 1.5
-  _walkStateName: Walk
 --- !u!1 &4544446809498391352
 GameObject:
   m_ObjectHideFlags: 0

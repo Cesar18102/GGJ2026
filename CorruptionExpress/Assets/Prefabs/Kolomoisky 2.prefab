@@ -806,7 +806,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3290904416627108896}
   - component: {fileID: 1947061245667716506}
-  - component: {fileID: 9155267090157804164}
   m_Layer: 0
   m_Name: Kolomoisky 2
   m_TagString: Untagged
@@ -864,22 +863,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9155267090157804164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2717675769281235595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366353bd7260b784fb35fbf6fed31ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterNav
-  _currentNavNode: {fileID: 0}
-  _currentFaceDirection: 0
-  _speed: 1
-  _walkStateName: Walk
 --- !u!1 &3200570079827516128
 GameObject:
   m_ObjectHideFlags: 0

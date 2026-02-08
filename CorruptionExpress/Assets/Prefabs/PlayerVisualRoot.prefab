@@ -305,7 +305,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6353570917595541192}
   - component: {fileID: 8509274056404418199}
-  - component: {fileID: 3432028614431233605}
   m_Layer: 0
   m_Name: NABU 2
   m_TagString: Untagged
@@ -322,7 +321,7 @@ Transform:
   m_GameObject: {fileID: 1367763392560732374}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5830536, y: -3.1378798, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -363,22 +362,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3432028614431233605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367763392560732374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366353bd7260b784fb35fbf6fed31ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterNavigationController
-  _currentNavNode: {fileID: 0}
-  _currentFaceDirection: 0
-  _speed: 1.5
-  _walkStateName: Walk
 --- !u!1 &1469301083877061070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,7 +1058,6 @@ GameObject:
   m_Component:
   - component: {fileID: 888230530251884212}
   - component: {fileID: 329411768414775327}
-  - component: {fileID: 69646223339077587}
   m_Layer: 0
   m_Name: Kolomoisky 2
   m_TagString: Untagged
@@ -1092,7 +1074,7 @@ Transform:
   m_GameObject: {fileID: 3042071736648282908}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5830536, y: -3.1378798, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1133,22 +1115,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &69646223339077587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3042071736648282908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366353bd7260b784fb35fbf6fed31ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterNav
-  _currentNavNode: {fileID: 0}
-  _currentFaceDirection: 0
-  _speed: 1
-  _walkStateName: Walk
 --- !u!1 &3138226976235516696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,7 +2460,7 @@ Transform:
   m_GameObject: {fileID: 5625969750614742540}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -181.41695, y: 7.13788, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

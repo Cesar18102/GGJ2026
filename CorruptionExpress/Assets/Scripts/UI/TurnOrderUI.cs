@@ -1,4 +1,5 @@
-﻿using GameState;
+﻿using Assets.Scripts.Helpers;
+using GameState;
 using System.Collections.Generic;
 using System.Linq;
 using Teams;
@@ -43,7 +44,7 @@ public class TurnOrderUI : MonoBehaviour
     private void CachePlayers()
     {
         _byId.Clear();
-        foreach (var p in PlayerTeamController.Select(player => player))
+        foreach (var p in PlayersHelper.Select(player => player))
             _byId[p.OwnerClientId] = p.GetComponent<PlayerTeamController>();
     }
 
@@ -93,7 +94,7 @@ public class TurnOrderUI : MonoBehaviour
             }
             else if (id == gsm.LastActionByClientId.Value && gsm.CurrentPhase.Value == GamePhase.Planning)
             {
-                text = $"Last Action: {gsm.CurrentExecutedAction.Value.ToString()}";
+                text = $"Last Action: {gsm.LastPlannedAction.Value.ToString()}";
             }
 
             _icons[i].Set(sprite, id == current, text);
