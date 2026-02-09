@@ -64,7 +64,6 @@ public class TurnOrderUI : MonoBehaviour
 
             Sprite sprite = ResolveSprite(clientId);
             bool isCurrent = (long)clientId == gsm.CurrentTurnClientId.Value;
-            ActionType action = gsm.LastPlannedAction.Value;
 
             icon.Set(sprite, isCurrent, string.Empty);
         }
