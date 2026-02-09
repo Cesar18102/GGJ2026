@@ -5214,9 +5214,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 693459534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 530}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 5, y: 465}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &886994943
@@ -8165,6 +8165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6add38a5713aa564fa8d84dd98553e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnOrderUI
+  _uiHolder: {fileID: 693459533}
   _container: {fileID: 1553889128}
   _iconPrefab: {fileID: 5262304975227039802, guid: 316ad7596760fe34f87a60bf0b0b8bee, type: 3}
   _phaseNameText: {fileID: 886994943}
@@ -9910,7 +9911,6 @@ MonoBehaviour:
   _totalGameRounds: 5
   _sceneInputController: {fileID: 1146530337}
   _roomsContainer: {fileID: 1808736669}
-  _putEvidenceActionHandler: {fileID: 1763478957}
   CurrentTurnClientId:
     m_InternalValue: 0
   PlanningRound:
@@ -9918,8 +9918,6 @@ MonoBehaviour:
   LastPlannedAction:
     m_InternalValue: 0
   LastActionByClientId:
-    m_InternalValue: 0
-  ExecutionRound:
     m_InternalValue: 0
   ExecIndex:
     m_InternalValue: -1

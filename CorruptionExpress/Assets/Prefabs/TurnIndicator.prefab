@@ -94,7 +94,7 @@ MonoBehaviour:
   _highlight: {fileID: 2303107333663387828}
   _highlightColor: {r: 1, g: 0.3647059, b: 0.3647059, a: 1}
   _noHighlightColor: {r: 1, g: 1, b: 1, a: 1}
-  _prevActionText: {fileID: 1750719357836776642}
+  _textHolder: {fileID: 1750719357836776642}
 --- !u!1 &5723137374877560112
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,34 +42,28 @@ namespace GameState
 
         public static GameStateManager Instance { get; private set; }
 
-        // чей сейчас ход (clientId)
-        public NetworkVariable<ulong> CurrentTurnClientId = new(
+        public NetworkVariable<GamePhase> CurrentPhase { get; } = new(
+           GamePhase.WaitingForAssignment,
+           NetworkVariableReadPermission.Everyone,
+           NetworkVariableWritePermission.Server
+        );
+        public event Action<GamePhase> OnPhaseChanged;
+
+        #region Setup variables
+        public NetworkVariable<int> RemainingEvidences { get; } = new NetworkVariable<int>(
             0,
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
         );
+        #endregion Setup variables
 
-        // какой круг планирования
+        #region Planning variables
+        public NetworkVariable<long> CurrentTurnClientId = new(
+            -1,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
         public NetworkVariable<int> PlanningRound = new(
-            0,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-
-        // последнее действие (для UI всем)
-        public NetworkVariable<ActionType> LastPlannedAction = new(
-            ActionType.None,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-
-        public NetworkVariable<ulong> LastActionByClientId = new(
-            0,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-
-        public NetworkVariable<int> ExecutionRound = new(
             0,
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
@@ -77,37 +71,15 @@ namespace GameState
 
         public NetworkList<ulong> TurnOrder { get; } = new NetworkList<ulong>();
         public NetworkList<PlannedAction> PlannedActions { get; } = new NetworkList<PlannedAction>();
+        #endregion Planning variables
 
+        #region Execution variables
         public NetworkVariable<int> ExecIndex = new(
             -1,
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
         );
-
-        public NetworkVariable<ActionType> CurrentExecutedAction = new(
-            ActionType.None,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-
-        public NetworkVariable<ulong> CurrentExecutedByClientId = new(
-            0,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-
-        public NetworkVariable<GamePhase> CurrentPhase { get; } = new(
-            GamePhase.WaitingForAssignment,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-        public event Action<GamePhase> OnPhaseChanged;
-
-        public NetworkVariable<int> RemainingEvidences { get; } = new NetworkVariable<int>(
-            0, 
-            NetworkVariableReadPermission.Everyone, 
-            NetworkVariableWritePermission.Server
-        );
+        #endregion Execution variables
 
         private void Awake()
         {
@@ -305,6 +277,8 @@ namespace GameState
                 state.CurrentRoom.Value = p.gameObject.GetComponentInParent<Room>().gameObject.transform.GetSiblingIndex();
                 state.CurrentFaceDirection = player.GetComponentInChildren<CharacterSettings>().GetStartingFaceDirection();
                 state.Speed = player.GetComponentInChildren<CharacterSettings>().GetSpeed();
+
+                //TODO: init scale
             });
         }
 
@@ -328,8 +302,6 @@ namespace GameState
 
         private IEnumerator PlanningPhase()
         {
-            PlannedActions.Clear();
-
             SetPhase(GamePhase.Planning);
 
             PlayerNetState[] players = TurnOrder.AsNativeArray().Select(id => PlayersHelper.GetPlayer(id)).ToArray();
@@ -338,10 +310,10 @@ namespace GameState
             {
                 Debug.Log($"Planning round: {PlanningRound.Value} started.");
                 for(int turnIndex = 0; turnIndex < players.Length; turnIndex++) {
-                    Debug.Log($"Current turn: {turnIndex}");
-
                     ulong playerId = players[turnIndex].OwnerClientId;
-                    CurrentTurnClientId.Value = playerId;
+                    Debug.Log($"Current turn: {turnIndex}; Planning by {playerId}");
+
+                    CurrentTurnClientId.Value = (long)playerId;
                     
                     yield return WaitForInput(playerId, input => input.HasActionTypeInput());
 
@@ -350,12 +322,10 @@ namespace GameState
                     PlannedActions.Add(plannedAction);
 
                     Debug.Log($"{action} planned by {playerId}");
-
-                    LastPlannedAction.Value = action;
-                    LastActionByClientId.Value = playerId;
                 }
             }
 
+            CurrentTurnClientId.Value = -1;
             Debug.Log("[Planning] Done. Queue size=" + PlannedActions.Count);
         }
 
@@ -369,19 +339,22 @@ namespace GameState
 
             for (ExecIndex.Value = 0; ExecIndex.Value < PlannedActions.Count; ExecIndex.Value++)
             {
-                var step = PlannedActions[ExecIndex.Value];
-
-                CurrentExecutedAction.Value = step.Action;
-                CurrentExecutedByClientId.Value = step.ClientId;
-
+                PlannedAction step = PlannedActions[ExecIndex.Value];
                 PlayerNetState player = PlayersHelper.GetPlayer(step.ClientId);
+
+                Debug.Log($"[Execution] turn {ExecIndex.Value}: {step.Action} by {step.ClientId}");
 
                 if (step.Action == ActionType.Move)
                 {
                     yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
 
                     Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
+
+                    Debug.Log($"[Execution] turn {ExecIndex.Value}: Move start");
+
                     yield return MoveCo(player, spot);
+
+                    Debug.Log($"[Execution] turn {ExecIndex.Value}: Move end");
                 }
             }
 

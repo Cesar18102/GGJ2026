@@ -17,16 +17,16 @@ public class TurnIndicator : MonoBehaviour
     private Color _noHighlightColor;
 
     [SerializeField]
-    private TMP_Text _prevActionText;
+    private TMP_Text _textHolder;
 
-    public void Set(Sprite sprite, bool highlight, string prevActionText)
+    public void Set(Sprite sprite, bool highlight, string text)
     {
         _icon.sprite = sprite;
         _icon.color = highlight ? _highlightColor : _noHighlightColor;
 
-        if (_prevActionText != null)
+        if (_textHolder != null)
         {
-            _prevActionText.text = prevActionText;
+            _textHolder.text = text;
         }
 
         if (_highlight != null)
