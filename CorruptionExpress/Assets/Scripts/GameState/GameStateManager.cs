@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.Actions;
+﻿using Assets.Scripts.ActionHandlers;
+using Assets.Scripts.Actions;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Input;
 using Assets.Scripts.Navigation;
+using Rooms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +39,9 @@ namespace GameState
 
         [SerializeField]
         private GameObject _roomsContainer;
+
+        [SerializeField]
+        private RoomController _roomController;
 
         private Dictionary<ulong, InputData> _inputs = new Dictionary<ulong, InputData>();
 
@@ -145,6 +150,8 @@ namespace GameState
             yield return new WaitForSeconds(0.5f);
             yield return SetupPhase();
 
+            SubscribeCurrentRoomChangedClientRpc();
+
             for (int i = 0; i < _totalGameRounds; ++i)
             {
                 Debug.Log($"Game Round: {i + 1}");
@@ -207,13 +214,23 @@ namespace GameState
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
             Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayersHelper.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
 
+            SetNavigationEnabledClientRpc(true);
+
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => StartCoroutine(HideEvidenceCo(player.GetComponent<PlayerNetState>())));
             yield return new WaitUntil(() => PlayersHelper.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value == 0).All(value => value));
+
+            SetNavigationEnabledClientRpc(false);
 
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
 
             SpawnPlayersRandom();
             DefineOrder();
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void SetNavigationEnabledClientRpc(bool isEnabled)
+        {
+            _roomController.SetNavigationEnabled(isEnabled);
         }
 
         private void PlayerItemsCountChanged(int oldItems, int newItems)
@@ -346,15 +363,44 @@ namespace GameState
 
                 if (step.Action == ActionType.Move)
                 {
+                    yield return WaitForInput(step.ClientId, input => input.HasMoveDirectionInput());
+
+                    RoomMoveDirection direction = _inputs[step.ClientId].MoveDirection;
+
+                    Room currentRoom = GetRoom(player.CurrentRoom.Value);
+                    NavNode2D currentNode = currentRoom.GetWaypoint(player.CurrentPosition.Value);
+                    NavNode2D exit = currentRoom.GetExit(direction);
+
+                    yield return MoveActionHandler.MoveCo(player, currentNode, exit);
+
+                    int newRoomIndex = player.CurrentRoom.Value + direction.ToRoomIndexDelta();
+                    Room newRoom = GetRoom(newRoomIndex);
+                    NavNode2D entrance = newRoom.GetEntrance(direction);
+
+                    yield return MoveActionHandler.MoveCo(player, exit, entrance);
+
+                    player.CurrentRoom.Value = newRoomIndex;
+                }
+
+                if (step.Action == ActionType.Search)
+                {
                     yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
 
+                    NavNode2D currentNode = GetRoom(player.CurrentRoom.Value).GetWaypoint(player.CurrentPosition.Value);
+
                     Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
+                    NavNode2D targetNode = spot.GetApproachNode();
 
-                    Debug.Log($"[Execution] turn {ExecIndex.Value}: Move start");
+                    yield return MoveActionHandler.MoveCo(player, currentNode, targetNode);
+                    MoveActionHandler.UpdateFaceDirection(player, spot.GetFaceDirection());
 
-                    yield return MoveCo(player, spot);
+                    player.CurrentAnimationType.Value = AnimationType.Search;
+                    yield return new WaitUntil(() => player.CurrentAnimationType.Value == AnimationType.None);
 
-                    Debug.Log($"[Execution] turn {ExecIndex.Value}: Move end");
+                    if (spot.TakeItem())
+                    {
+                        player.AddEvidence(1);
+                    }
                 }
             }
 
@@ -362,62 +408,7 @@ namespace GameState
             PlannedActions.Clear();
         }
 
-        private IEnumerator MoveCo(PlayerNetState state, Spot spot)
-        {
-            NavNode2D currentNode = GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value);
-            NavNode2D targetNode = spot.GetApproachNode();
-            List<NavNode2D> path = GraphPathfinder2D.FindPath(currentNode, targetNode);
-
-            state.CurrentAnimationType.Value = AnimationType.Move;
-
-            foreach (NavNode2D node in path)
-            {
-                FaceDirection desiredFaceDirection = node.transform.position.x > currentNode.transform.position.x ?
-                    FaceDirection.Right : FaceDirection.Left;
-
-                UpdateFaceDirection(state, desiredFaceDirection);
-
-                currentNode = node;
-                Vector3 desiredScale = Vector3.one * node.GetDesiredScale();
-
-                yield return MoveTo(state.NetworkObject, (Vector2)node.transform.position, desiredScale);
-            }
-
-            UpdateFaceDirection(state, spot.GetFaceDirection());
-            state.CurrentPosition.Value = targetNode.transform.GetSiblingIndex();
-
-            state.CurrentAnimationType.Value = AnimationType.None;
-        }
-
-        private void UpdateFaceDirection(PlayerNetState state, FaceDirection desiredFaceDirection)
-        {
-            if (state.CurrentFaceDirection != desiredFaceDirection)
-            {
-                state.CurrentFaceDirection = desiredFaceDirection;
-                state.NetworkObject.transform.Rotate(0, 180, 0);
-            }
-        }
-
-        private IEnumerator MoveTo(NetworkObject player, Vector2 target, Vector3 targetScale)
-        {
-            float totalDist = ((Vector2)player.transform.position - target).magnitude;
-            float currentDist = totalDist;
-
-            float speed = player.GetComponent<PlayerNetState>().Speed;
-
-            Vector3 startingScale = player.transform.localScale;
-            Vector3 dScale = targetScale - startingScale;
-
-            while (currentDist > 0.0025f)
-            {
-                player.transform.position = Vector2.MoveTowards(player.transform.position, target, speed * Time.deltaTime);
-                currentDist = ((Vector2)player.transform.position - target).magnitude;
-
-                player.transform.localScale = startingScale + dScale * (totalDist - currentDist) / totalDist;
-
-                yield return null;
-            }
-        }
+        
 
         #endregion Execution Phase
 
@@ -437,6 +428,20 @@ namespace GameState
         private Spot GetSpot(SpotInput spotInput)
         {
             return GetRoom(spotInput.RoomId).GetSpot(spotInput.SpotId);
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void SubscribeCurrentRoomChangedClientRpc()
+        {
+            PlayersHelper.GetLocalPlayer().CurrentRoom.OnValueChanged += OnPlayerRoomChanged;
+        }
+
+        private void OnPlayerRoomChanged(int oldRoom, int newRoom)
+        {
+            PlayerNetState player = PlayersHelper.GetLocalPlayer();
+            Debug.Log($"Player {player.OwnerClientId} changed room from {oldRoom} to {newRoom}");
+
+            _roomController.NavigateToRoom(newRoom);
         }
     }
 }

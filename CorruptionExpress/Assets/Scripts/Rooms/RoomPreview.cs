@@ -75,7 +75,7 @@ namespace Rooms
             }
 
             roomCamera.targetTexture = previewTexture;
-            roomCamera.Render();
+            roomCamera.gameObject.SetActive(true);
         }
 
         public void Hide()

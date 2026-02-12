@@ -1,3 +1,5 @@
+using Assets.Scripts.Input;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,12 +33,12 @@ namespace Rooms
         {
             if (leftPreview != null)
             {
-                leftPreview.OnNavigate += NavigateLeft;
+                leftPreview.OnNavigate += OnNavigateLeft;
             }
 
             if (rightPreview != null)
             {
-                rightPreview.OnNavigate += NavigateRight;
+                rightPreview.OnNavigate += OnNavigateRight;
             }
         }
 
@@ -47,32 +49,53 @@ namespace Rooms
 
         public bool IsNavigationEnabled => _navigationEnabled;
 
-        public void NavigateLeft()
+        private void OnNavigateLeft()
         {
-            if (!_navigationEnabled || _currentIndex <= 0)
+            if (_currentIndex <= 0)
             {
                 return;
             }
 
-            _currentIndex--;
-            UpdateView();
+            if (_navigationEnabled)
+            {
+                Navigate(RoomMoveDirection.Left);
+            }
         }
 
-        public void NavigateRight()
+        private void OnNavigateRight()
         {
-            if (!_navigationEnabled || _currentIndex >= rooms.Count - 1)
+            if (_currentIndex >= rooms.Count - 1)
             {
                 return;
             }
 
-            _currentIndex++;
+            if (_navigationEnabled)
+            {
+                Navigate(RoomMoveDirection.Right);
+            }
+        }
+
+        public void Navigate(RoomMoveDirection direction)
+        {
+            DeactivatePreviewCameras();
+            _currentIndex += direction.ToRoomIndexDelta();
             UpdateView();
         }
 
         public void NavigateToRoom(int index)
         {
+            DeactivatePreviewCameras();
             _currentIndex = Mathf.Clamp(index, 0, rooms.Count - 1);
             UpdateView();
+        }
+
+        private void DeactivatePreviewCameras()
+        {
+            var leftRoom = _currentIndex > 0 ? rooms[_currentIndex - 1] : null;
+            var rightRoom = _currentIndex < rooms.Count - 1 ? rooms[_currentIndex + 1] : null;
+
+            leftRoom?.roomCamera?.gameObject.SetActive(false);
+            rightRoom?.roomCamera?.gameObject.SetActive(false);
         }
 
         private void UpdateView()

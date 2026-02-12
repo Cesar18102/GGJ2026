@@ -20,9 +20,12 @@ public class Spot : MonoBehaviour
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void TakeItem()
+    public bool TakeItem()
     {
-        GetComponent<SpotNetState>().HasItem.Value = false;
+        SpotNetState state = GetComponent<SpotNetState>();
+        bool hadItem = state.HasItem.Value;
+        state.HasItem.Value = false;
+        return hadItem;
     }
 
     private void OnDrawGizmos()

@@ -10,8 +10,30 @@ namespace Assets.Scripts.Input
 
         //Execution input
         public SpotInput SpotInput; //For Search or Put
-        public ulong TargetClientId; //For Search or Give to Player
+        public long TargetClientId; //For Search or Give to Player
         public RoomMoveDirection MoveDirection; //For Move
+
+        public static InputData FromAction(ActionType action)
+        {
+            return new InputData()
+            {
+                ActionType = action,
+                MoveDirection = RoomMoveDirection.None,
+                SpotInput = SpotInput.Empty,
+                TargetClientId = 0
+            };
+        }
+
+        public static InputData FromMoveDirection(RoomMoveDirection direction)
+        {
+            return new InputData()
+            {
+                ActionType = ActionType.None,
+                MoveDirection = direction,
+                SpotInput = SpotInput.Empty,
+                TargetClientId = 0
+            };
+        }
 
         public bool Equals(InputData other)
         {
@@ -30,7 +52,7 @@ namespace Assets.Scripts.Input
         }
 
         public bool HasSpotInput() => !SpotInput.Equals(SpotInput.Empty);
-        public bool HasTargetPlayerInput() => TargetClientId != 0; //???
+        public bool HasTargetPlayerInput() => TargetClientId != -1;
         public bool HasMoveDirectionInput() => MoveDirection != RoomMoveDirection.None;
         public bool HasActionTypeInput() => ActionType != ActionType.None;
     }

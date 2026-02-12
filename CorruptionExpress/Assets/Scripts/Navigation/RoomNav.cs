@@ -1,4 +1,7 @@
+using Assets.Scripts.Input;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Room : MonoBehaviour
 {
@@ -13,6 +16,26 @@ public class Room : MonoBehaviour
 
     [SerializeField]
     private GameObject _spotsContainer;
+
+    public NavNode2D GetExit(RoomMoveDirection direction)
+    {
+        return direction switch
+        {
+            RoomMoveDirection.Left => _leftEntrance,
+            RoomMoveDirection.Right => _rightEntrance,
+            _ => throw new UnityException($"RoomMoveDirection {direction} is not supported by {nameof(GetExit)} method.")
+        };
+    }
+
+    public NavNode2D GetEntrance(RoomMoveDirection comeFromDirection)
+    {
+        return comeFromDirection switch
+        {
+            RoomMoveDirection.Left => _rightEntrance,
+            RoomMoveDirection.Right => _leftEntrance,
+            _ => throw new UnityException($"RoomMoveDirection {comeFromDirection} is not supported by {nameof(GetEntrance)} method.")
+        };
+    }
 
     public NavNode2D GetWaypoint(int index)
     {

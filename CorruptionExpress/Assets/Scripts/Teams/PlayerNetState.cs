@@ -55,6 +55,12 @@ public class PlayerNetState : NetworkBehaviour
         EvidenceCount.Value -= amount;
     }
 
+    [Rpc(SendTo.Server)]
+    public void SetIdleServerRpc()
+    {
+        CurrentAnimationType.Value = AnimationType.None;
+    }
+
     public override void OnNetworkSpawn()
     {
         CurrentAnimationType.OnValueChanged += OnAnimtionTypeUpdated;

@@ -210,9 +210,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3042071736648282908, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
       addedObject: {fileID: 272542114567837771}
+    - targetCorrespondingSourceObject: {fileID: 3042071736648282908, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3413525460385437058}
     - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6637430989751612145}
+    - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9097492424324247008}
   m_SourcePrefab: {fileID: 100100000, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
 --- !u!1 &5324637586492803371 stripped
 GameObject:
@@ -233,6 +239,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Navigation.CharacterSettings
   _staringFaceDirection: 0
   _speed: 1
+--- !u!114 &3413525460385437058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5324637586492803371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39982a6669d456144a892d5c8d798341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationController
 --- !u!4 &6343900007395607111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4312613349521897584, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
@@ -257,3 +275,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Navigation.CharacterSettings
   _staringFaceDirection: 0
   _speed: 1.5
+--- !u!114 &9097492424324247008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153819915047428833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39982a6669d456144a892d5c8d798341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationController

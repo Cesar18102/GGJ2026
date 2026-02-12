@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
     {
         int i = 0;
 
-        foreach(ItemController item in items)
+        foreach (ItemController item in items)
         {
             if (i >= _itemSlotControllers.Length)
             {
@@ -64,19 +64,10 @@ public class UIController : MonoBehaviour
         _corruptionPanel.SetActive(false);
     }
 
-    public void OnWear() => OnInput?.Invoke(this, GetInputData(ActionType.Wear));
-    public void OnMove() => OnInput?.Invoke(this, GetInputData(ActionType.Move));
-    public void OnSearch() => OnInput?.Invoke(this, GetInputData(ActionType.Search));
-    public void OnPut() => OnInput?.Invoke(this, GetInputData(ActionType.Put));
-
-    private InputData GetInputData(ActionType action)
-    {
-        return new InputData()
-        {
-            ActionType = action,
-            MoveDirection = RoomMoveDirection.None,
-            SpotInput = SpotInput.Empty,
-            TargetClientId = 0
-        };
-    }
+    public void OnWear() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Wear));
+    public void OnMove() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Move));
+    public void OnSearch() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Search));
+    public void OnPut() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Put));
+    public void OnMoveLeft() => OnInput?.Invoke(this, InputData.FromMoveDirection(RoomMoveDirection.Left));
+    public void OnMoveRight() => OnInput?.Invoke(this, InputData.FromMoveDirection(RoomMoveDirection.Right));
 }
