@@ -2,8 +2,8 @@ using Unity.Netcode;
 
 public class SpotNetState : NetworkBehaviour
 {
-    public NetworkVariable<bool> HasItem = new(
-        false,
+    public NetworkVariable<int> ItemsCount = new(
+        0,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );

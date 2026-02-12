@@ -16,16 +16,20 @@ public class Spot : MonoBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void PutItem()
     {
-        GetComponent<SpotNetState>().HasItem.Value = true;
+        GetComponent<SpotNetState>().ItemsCount.Value++;
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public bool TakeItem()
     {
         SpotNetState state = GetComponent<SpotNetState>();
-        bool hadItem = state.HasItem.Value;
-        state.HasItem.Value = false;
-        return hadItem;
+        if (state.ItemsCount.Value > 0)
+        {
+            state.ItemsCount.Value--;
+            return true;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmos()
@@ -36,7 +40,7 @@ public class Spot : MonoBehaviour
             Gizmos.DrawLine(transform.position, _approachNode.transform.position);
         }
 
-        if (GetComponent<SpotNetState>().HasItem.Value)
+        if (GetComponent<SpotNetState>().ItemsCount.Value > 0)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(transform.position, 0.5f);

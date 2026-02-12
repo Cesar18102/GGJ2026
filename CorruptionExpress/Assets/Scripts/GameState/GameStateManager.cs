@@ -146,6 +146,7 @@ namespace GameState
             }
 
             PlayersHelper.ForEachPlayer(player => player.transform.SetPositionAndRotation(Vector3.up * 100, Quaternion.identity));
+            SubscribePlayerInventoryChangedClientRpc();
 
             yield return new WaitForSeconds(0.5f);
             yield return SetupPhase();
@@ -269,7 +270,7 @@ namespace GameState
                 Spot spot = GetSpot(_inputs[clientId].SpotInput);
 
                 state.EvidenceCount.Value--;
-                spot.GetComponent<SpotNetState>().HasItem.Value = true;
+                spot.GetComponent<SpotNetState>().ItemsCount.Value++;
             }
         }
 
@@ -397,9 +398,31 @@ namespace GameState
                     player.CurrentAnimationType.Value = AnimationType.Search;
                     yield return new WaitUntil(() => player.CurrentAnimationType.Value == AnimationType.None);
 
-                    if (spot.TakeItem())
+                    if (player.CanTakeItem && spot.TakeItem())
                     {
                         player.AddEvidence(1);
+                    }
+                }
+
+                if (step.Action == ActionType.Put)
+                {
+                    yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
+
+                    NavNode2D currentNode = GetRoom(player.CurrentRoom.Value).GetWaypoint(player.CurrentPosition.Value);
+
+                    Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
+                    NavNode2D targetNode = spot.GetApproachNode();
+
+                    yield return MoveActionHandler.MoveCo(player, currentNode, targetNode);
+                    MoveActionHandler.UpdateFaceDirection(player, spot.GetFaceDirection());
+
+                    player.CurrentAnimationType.Value = AnimationType.Put;
+                    yield return new WaitUntil(() => player.CurrentAnimationType.Value == AnimationType.None);
+
+                    if (player.CanPutItem)
+                    {
+                        spot.PutItem();
+                        player.EvidenceCount.Value--;
                     }
                 }
             }
@@ -429,6 +452,18 @@ namespace GameState
         {
             return GetRoom(spotInput.RoomId).GetSpot(spotInput.SpotId);
         }
+
+        [Rpc(SendTo.Everyone)]
+        private void SubscribePlayerInventoryChangedClientRpc()
+        {
+            PlayersHelper.GetLocalPlayer().EvidenceCount.OnValueChanged += OnInventoryChanged;
+        }
+
+        private void OnInventoryChanged(int oldCount, int newCount)
+        {
+            _uiController.UpdateItems(newCount);
+        }
+
 
         [Rpc(SendTo.Everyone)]
         private void SubscribeCurrentRoomChangedClientRpc()

@@ -18,6 +18,9 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private GameObject _corruptionPanel;
 
+    [SerializeField]
+    private GameObject[] _moneyIndicators;
+
     public event EventHandler<InputData> OnInput;
 
     public void UpdateItems(IEnumerable<ItemController> items)
@@ -38,6 +41,20 @@ public class UIController : MonoBehaviour
         for (; i < _itemSlotControllers.Length; ++i)
         {
             _itemSlotControllers[i].UnsetItem();
+        }
+    }
+
+    public void UpdateItems(int count)
+    {
+        int i = 0;
+        for (; i < count; ++i)
+        {
+            _moneyIndicators[i].SetActive(true);
+        }
+
+        for (; i < _moneyIndicators.Length; ++i)
+        {
+            _moneyIndicators[i].SetActive(false);
         }
     }
 

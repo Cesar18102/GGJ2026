@@ -37,6 +37,9 @@ public class PlayerNetState : NetworkBehaviour
     public FaceDirection CurrentFaceDirection { get; set; }
     public float Speed { get; set; }
 
+    public bool CanTakeItem => EvidenceCount.Value < 4;
+    public bool CanPutItem => EvidenceCount.Value > 0;
+
     public void AddEvidence(int amount)
     {
         Debug.Log($"Providing {amount} items.");
