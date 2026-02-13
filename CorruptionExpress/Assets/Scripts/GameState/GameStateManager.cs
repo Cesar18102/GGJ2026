@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ActionHandlers;
 using Assets.Scripts.Actions;
+using Assets.Scripts.GameState;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Input;
 using Assets.Scripts.Navigation;
@@ -36,6 +37,12 @@ namespace GameState
         private int _totalGameRounds = 5;
 
         [SerializeField]
+        private float _evidenceRatioFoundForNabuWin = 0.7f;
+
+        [SerializeField]
+        private float _deanonRatioForNabuLose = 1.0f;
+
+        [SerializeField]
         private SceneInputController _sceneInputController;
 
         [SerializeField]
@@ -43,6 +50,8 @@ namespace GameState
 
         [SerializeField]
         private RoomController _roomController;
+
+        private int _totalEvidences = 0;
 
         private Dictionary<ulong, InputData> _inputs = new Dictionary<ulong, InputData>();
 
@@ -85,6 +94,17 @@ namespace GameState
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
         );
+        public NetworkVariable<Team> WinTeam = new(
+            Team.Unassigned,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+        public NetworkVariable<WinReason> Reason = new(
+            WinReason.None,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
         #endregion Execution variables
 
         private void Awake()
@@ -160,6 +180,17 @@ namespace GameState
 
                 yield return PlanningPhase();
                 yield return ExecutionPhase();
+
+                if (WinTeam.Value != Team.Unassigned)
+                {
+                    break;
+                }
+            }
+
+            if (WinTeam.Value == Team.Unassigned)
+            {
+                WinTeam.Value = Team.CorruptOfficials;
+                Reason.Value = WinReason.RoundsPassed;
             }
         }
 
@@ -218,6 +249,8 @@ namespace GameState
 
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().AddEvidence(_numberOfEvidences));
             Debug.Log("[SETUP] Corrupt evidence counts: " + string.Join(", ", PlayersHelper.Select(Team.CorruptOfficials, p => p.GetComponent<PlayerNetState>().EvidenceCount.Value)));
+
+            _totalEvidences = PlayersHelper.Select(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value).Sum();
 
             SetNavigationEnabledClientRpc(true);
 
@@ -443,6 +476,14 @@ namespace GameState
                 }
 
                 DeanonimizationCheck(player.CurrentRoom.Value);
+
+                WinTeam.Value = WinCheck(out WinReason reason);
+                Reason.Value = reason;
+
+                if (WinTeam.Value != Team.Unassigned)
+                {
+                    break;
+                }
             }
 
             ExecIndex.Value = -1;
@@ -469,6 +510,31 @@ namespace GameState
                     nabuAgent.IsDeanonimized.Value = true;
                 }
             }
+        }
+
+        private Team WinCheck(out WinReason reason)
+        {
+            int foundEvidences = PlayersHelper.Select(Team.Nabu, player => player.GetComponent<PlayerNetState>().EvidenceCount.Value).Sum();
+            int neededEvidences = (int)Math.Round(_totalEvidences * _evidenceRatioFoundForNabuWin);
+
+            int deanonCount = PlayersHelper.Select(Team.Nabu, player => player.GetComponent<PlayerNetState>().IsDeanonimized.Value).Count(value => value);
+            int totalNabu = PlayersHelper.Select(Team.Nabu, player => player).Count();
+            int neededDeanonToLose = (int)Math.Round(totalNabu * _deanonRatioForNabuLose);
+
+            if (deanonCount >= neededDeanonToLose)
+            {
+                reason = WinReason.Deanon;
+                return Team.CorruptOfficials;
+            }
+
+            if (foundEvidences >= neededEvidences)
+            {
+                reason = WinReason.EvidencesFound;
+                return Team.Nabu;
+            }
+
+            reason = WinReason.None;
+            return Team.Unassigned;
         }
 
         #endregion Checks
@@ -547,7 +613,9 @@ namespace GameState
                 NavigationVisible = isHidingItems || isExecutingMove,
                 PreviewsVisible = !player.WearsMask.Value,
                 WearActionText = player.WearsMask.Value ? "Unwear" : "Wear",
-                WearActionVisible = player.AssignedTeam.Value == Team.Nabu && !player.IsDeanonimized.Value
+                WearActionVisible = player.AssignedTeam.Value == Team.Nabu && !player.IsDeanonimized.Value,
+                WinTeam = WinTeam.Value,
+                Reason = Reason.Value
             };
 
             _uiController.UpdateState(state);

@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.Input;
+﻿using Assets.Scripts.GameState;
+using Assets.Scripts.Input;
 using Assets.Scripts.UI;
+using GameState;
 using System;
 using System.Collections.Generic;
 using Teams;
@@ -40,6 +42,12 @@ public class UIController : MonoBehaviour
 
     [SerializeField]
     private GameObject _navigateRight;
+
+    [SerializeField]
+    private GameObject _winIndicator;
+
+    [SerializeField]
+    private TMP_Text _winText;
 
     public event EventHandler<InputData> OnInput;
 
@@ -110,6 +118,15 @@ public class UIController : MonoBehaviour
         _rightPreview.SetActive(state.PreviewsVisible);
         _navigateLeft.SetActive(state.NavigationVisible);
         _navigateRight.SetActive(state.NavigationVisible);
+
+        _winIndicator.SetActive(state.WinTeam != Team.Unassigned);
+        _winText.text = state.Reason switch
+        {
+            WinReason.None => string.Empty,
+            WinReason.EvidencesFound => "Агенти НАБУ знайшли достатню кількість доказів. Честь маю!",
+            WinReason.Deanon => "Значну кількість агентів було деанонімізовано!",
+            WinReason.RoundsPassed => "Обшук пройшов невдало!"
+        };
     }
 
     public void OnWear() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Wear));
