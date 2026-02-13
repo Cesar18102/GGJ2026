@@ -102,12 +102,13 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!28 &-6606663651059718966
 Texture2D:
   m_ObjectHideFlags: 0
@@ -118,10 +119,8 @@ Texture2D:
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
   m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
+  serializedVersion: 4
   m_Width: 2048
   m_Height: 2048
   m_CompleteImageSize: 4194304
@@ -168,14 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: BubbleTitleTMP
   m_EditorClassIdentifier: 
-  hashCode: -1752114249
-  material: {fileID: -6753723746149418804}
-  materialHashCode: 1449402935
   m_Version: 1.1.0
-  m_SourceFontFileGUID: 58b647c5b2ec4184e9a07a561cdf0644
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 58b647c5b2ec4184e9a07a561cdf0644, type: 3}
-  m_SourceFontFile: {fileID: 12800000, guid: 58b647c5b2ec4184e9a07a561cdf0644, type: 3}
-  m_AtlasPopulationMode: 1
   m_FaceInfo:
     m_FaceIndex: 0
     m_FamilyName: JazzCreateBubble
@@ -198,6 +190,32 @@ MonoBehaviour:
     m_StrikethroughOffset: 51.2
     m_StrikethroughThickness: 16.15
     m_TabWidth: 92
+  m_Material: {fileID: -6753723746149418804}
+  m_SourceFontFileGUID: 58b647c5b2ec4184e9a07a561cdf0644
+  m_CreationSettings:
+    sourceFontFileName: 
+    sourceFontFileGUID: 58b647c5b2ec4184e9a07a561cdf0644
+    faceIndex: 0
+    pointSizeSamplingMode: 0
+    pointSize: 323
+    padding: 9
+    paddingMode: 0
+    packingMode: 4
+    atlasWidth: 2048
+    atlasHeight: 2048
+    characterSetSelectionMode: 7
+    characterSequence: "\u263A\u263B\u2665\u2666\u2663\u2660\u2022\u25D8\u25CB\u25D9\u2642\u2640\u266A\u266B\u263C\u25BA\u25C4\u2195\u203C\u25AC\u21A8\u2191\u2193\u2192\u2190\r\n\u221F\u2194\u25B2\u25BC!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n`abcdefghijklmnopqrstuvwxyz\xEE\xEC\xC4\xC5\xC9\xE6\xC6\xF4\xF6\xF2\xFB\xF9\xFF\xD6\xDC\xA2\xA3\xA5\u0192\xE1\xED\xF3\xFA\xF1\xD1\xAA\xBA\xBF\xAC\xBD\xBC\xA1\xAB\r\n\xBB\u2591\u2592\u2593\u2502\u2524\u2563
+      \u2551\u2557\u2510\u2514\u2534\u252C\u251C\u2500\u253C\u255A\u2554\u2569\u2566\u2563\u2551\u2557\u2022\xA7\xA9\xAE\xB6_\r"
+    referencedFontAssetGUID: b5eb0cc2289fab14284326eeb574c079
+    referencedTextAssetGUID: 
+    fontStyle: 0
+    fontStyleModifier: 0
+    renderMode: 4165
+    includeFontFeatures: 0
+  m_SourceFontFile: {fileID: 12800000, guid: 58b647c5b2ec4184e9a07a561cdf0644, type: 3}
+  m_SourceFontFilePath: 
+  m_AtlasPopulationMode: 1
+  InternalDynamicOS: 0
   m_GlyphTable:
   - m_Index: 3
     m_Metrics:
@@ -3491,7 +3509,12 @@ MonoBehaviour:
   - {fileID: -6606663651059718966}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
+  m_GetFontFeatures: 1
   m_ClearDynamicDataOnBuild: 0
+  m_AtlasWidth: 2048
+  m_AtlasHeight: 2048
+  m_AtlasPadding: 9
+  m_AtlasRenderMode: 4165
   m_UsedGlyphRects:
   - m_X: 0
     m_Y: 0
@@ -4774,58 +4797,14 @@ MonoBehaviour:
     m_Y: 1986
     m_Width: 269
     m_Height: 61
-  m_fontInfo:
-    Name: 
-    PointSize: 0
-    Scale: 0
-    CharacterCount: 0
-    LineHeight: 0
-    Baseline: 0
-    Ascender: 0
-    CapHeight: 0
-    Descender: 0
-    CenterLine: 0
-    SuperscriptOffset: 0
-    SubscriptOffset: 0
-    SubSize: 0
-    Underline: 0
-    UnderlineThickness: 0
-    strikethrough: 0
-    strikethroughThickness: 0
-    TabWidth: 0
-    Padding: 0
-    AtlasWidth: 0
-    AtlasHeight: 0
-  atlas: {fileID: 0}
-  m_AtlasWidth: 2048
-  m_AtlasHeight: 2048
-  m_AtlasPadding: 9
-  m_AtlasRenderMode: 4165
-  m_glyphInfoList: []
-  m_KerningTable:
-    kerningPairs: []
   m_FontFeatureTable:
+    m_MultipleSubstitutionRecords: []
+    m_LigatureSubstitutionRecords: []
     m_GlyphPairAdjustmentRecords: []
-  fallbackFontAssets: []
+    m_MarkToBaseAdjustmentRecords: []
+    m_MarkToMarkAdjustmentRecords: []
+  m_ShouldReimportFontFeatures: 0
   m_FallbackFontAssetTable: []
-  m_CreationSettings:
-    sourceFontFileName: 
-    sourceFontFileGUID: 58b647c5b2ec4184e9a07a561cdf0644
-    pointSizeSamplingMode: 0
-    pointSize: 323
-    padding: 9
-    packingMode: 4
-    atlasWidth: 2048
-    atlasHeight: 2048
-    characterSetSelectionMode: 7
-    characterSequence: "\u263A\u263B\u2665\u2666\u2663\u2660\u2022\u25D8\u25CB\u25D9\u2642\u2640\u266A\u266B\u263C\u25BA\u25C4\u2195\u203C\u25AC\u21A8\u2191\u2193\u2192\u2190\r\n\u221F\u2194\u25B2\u25BC!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n`abcdefghijklmnopqrstuvwxyz\xEE\xEC\xC4\xC5\xC9\xE6\xC6\xF4\xF6\xF2\xFB\xF9\xFF\xD6\xDC\xA2\xA3\xA5\u0192\xE1\xED\xF3\xFA\xF1\xD1\xAA\xBA\xBF\xAC\xBD\xBC\xA1\xAB\r\n\xBB\u2591\u2592\u2593\u2502\u2524\u2563
-      \u2551\u2557\u2510\u2514\u2534\u252C\u251C\u2500\u253C\u255A\u2554\u2569\u2566\u2563\u2551\u2557\u2022\xA7\xA9\xAE\xB6_\r"
-    referencedFontAssetGUID: b5eb0cc2289fab14284326eeb574c079
-    referencedTextAssetGUID: 
-    fontStyle: 0
-    fontStyleModifier: 0
-    renderMode: 4165
-    includeFontFeatures: 0
   m_FontWeightTable:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
@@ -4854,3 +4833,30 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
+  m_fontInfo:
+    Name: 
+    PointSize: 0
+    Scale: 0
+    CharacterCount: 0
+    LineHeight: 0
+    Baseline: 0
+    Ascender: 0
+    CapHeight: 0
+    Descender: 0
+    CenterLine: 0
+    SuperscriptOffset: 0
+    SubscriptOffset: 0
+    SubSize: 0
+    Underline: 0
+    UnderlineThickness: 0
+    strikethrough: 0
+    strikethroughThickness: 0
+    TabWidth: 0
+    Padding: 0
+    AtlasWidth: 0
+    AtlasHeight: 0
+  m_glyphInfoList: []
+  m_KerningTable:
+    kerningPairs: []
+  fallbackFontAssets: []
+  atlas: {fileID: 0}
