@@ -113,7 +113,13 @@ public class UIController : MonoBehaviour
     {
         _actionsContainer.SetActive(state.ActionsVisible);
         _wearAction.SetActive(state.WearActionVisible);
-        _wearAction.GetComponentInChildren<TMP_Text>().text = state.WearActionText;
+
+        TMP_Text wearActionTextHolder = _wearAction.GetComponentInChildren<TMP_Text>();
+        if (wearActionTextHolder is not null)
+        {
+            wearActionTextHolder.text = state.WearActionText;
+        }
+
         _leftPreview.SetActive(state.PreviewsVisible);
         _rightPreview.SetActive(state.PreviewsVisible);
         _navigateLeft.SetActive(state.NavigationVisible);

@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using SessionPlayer = Unity.Services.Multiplayer.IReadOnlyPlayer;
 
@@ -29,6 +30,7 @@ namespace Network
         [SerializeField] private Button startGameButton;
         [SerializeField] private Transform playerListContainer;
         [SerializeField] private GameObject playerListItemPrefab;
+        [SerializeField] private TMP_FontAsset _playerListFontAsset;
 
         [Header("Status")] [SerializeField] private TextMeshProUGUI statusText;
 
@@ -275,6 +277,7 @@ namespace Network
                 if (nameText == null)
                 {
                     nameText = item.AddComponent<TextMeshProUGUI>();
+                    nameText.font = _playerListFontAsset;
                 }
                 
                 Debug.Log($"[LobbyUI] Player: {player.Id}. Properties: {string.Join(" | ", player.Properties.Keys.ToList())}");

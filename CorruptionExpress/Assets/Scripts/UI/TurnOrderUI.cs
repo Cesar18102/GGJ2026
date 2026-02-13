@@ -40,7 +40,7 @@ public class TurnOrderUI : MonoBehaviour
     private void OnPhaseChanged(GamePhase obj)
     {
         _uiHolder.SetActive(obj == GamePhase.Planning || obj == GamePhase.Execution);
-        _phaseNameText.text = $"{obj} Phase";
+        _phaseNameText.text = obj.ToString();
     }
 
     private void Rebuild()
@@ -66,7 +66,7 @@ public class TurnOrderUI : MonoBehaviour
             Sprite sprite = ResolveSprite(clientId);
             bool isCurrent = (long)clientId == gsm.CurrentTurnClientId.Value;
 
-            icon.Set(sprite, isCurrent, string.Empty);
+            icon.Set(sprite, isCurrent, string.Empty, null);
         }
     }
 
@@ -87,6 +87,7 @@ public class TurnOrderUI : MonoBehaviour
 
             bool highlight = false;
             string text = string.Empty;
+            ActionType? displayedAction = null;
 
             if (currentPhase == GamePhase.Planning)
             {
@@ -95,7 +96,11 @@ public class TurnOrderUI : MonoBehaviour
                 if (gsm.PlannedActions.Count > 0)
                 {
                     PlannedAction lastPlannedAction = gsm.PlannedActions[gsm.PlannedActions.Count - 1];
-                    text = lid == (long)lastPlannedAction.ClientId ? $"Last: {lastPlannedAction.Action.ToString()}" : string.Empty;
+                    if (lid == (long)lastPlannedAction.ClientId)
+                    {
+                        text = $"Last: {lastPlannedAction.Action.ToString()}";
+                        displayedAction = lastPlannedAction.Action;
+                    }
                 }
             }
             else if (currentPhase == GamePhase.Execution && gsm.ExecIndex.Value >= 0 && gsm.ExecIndex.Value < gsm.PlannedActions.Count)
@@ -103,10 +108,14 @@ public class TurnOrderUI : MonoBehaviour
                 PlannedAction action = gsm.PlannedActions[gsm.ExecIndex.Value];
 
                 highlight = lid == (long)action.ClientId;
-                text = highlight ? $"Current: {action.Action.ToString()}" : string.Empty;
+                if (highlight)
+                {
+                    text = $"Current: {action.Action.ToString()}";
+                    displayedAction = action.Action;
+                }
             }
 
-            _icons[i].Set(sprite, highlight, text);
+            _icons[i].Set(sprite, highlight, text, displayedAction);
         }
     }
 
