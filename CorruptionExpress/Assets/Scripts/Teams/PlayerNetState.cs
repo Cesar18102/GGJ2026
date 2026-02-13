@@ -33,6 +33,16 @@ public class PlayerNetState : NetworkBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
+    public NetworkVariable<bool> WearsMask = new(
+        true,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+    public NetworkVariable<bool> IsDeanonimized = new(
+        false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
 
     public FaceDirection CurrentFaceDirection { get; set; }
     public float Speed { get; set; }
@@ -68,6 +78,8 @@ public class PlayerNetState : NetworkBehaviour
     {
         CurrentAnimationType.OnValueChanged += OnAnimtionTypeUpdated;
         AssignedTeam.OnValueChanged += HandleTeamChanged;
+        WearsMask.OnValueChanged += OnWearsMaskChanged;
+        IsDeanonimized.OnValueChanged += OnIsDeanonimizedChanged;
 
         if (AssignedTeam.Value != Team.Unassigned)
         {
@@ -79,12 +91,46 @@ public class PlayerNetState : NetworkBehaviour
     {
         CurrentAnimationType.OnValueChanged -= OnAnimtionTypeUpdated;
         AssignedTeam.OnValueChanged -= HandleTeamChanged;
+        WearsMask.OnValueChanged -= OnWearsMaskChanged;
+        IsDeanonimized.OnValueChanged -= OnIsDeanonimizedChanged;
     }
 
     private void HandleTeamChanged(Team previousValue, Team newValue)
     {
         Debug.Log($"[PlayerNetState] Team changed from {previousValue} to {newValue} for client {OwnerClientId}");
         OnTeamAssigned?.Invoke(newValue);
+    }
+
+    private void OnWearsMaskChanged(bool oldState, bool newState)
+    {
+        if (AssignedTeam.Value != Team.Nabu)
+        {
+            return;
+        }
+
+        NabuAppearanceController nabuAppearanceController = GetComponentInChildren<NabuAppearanceController>();
+
+        if (newState)
+        {
+            nabuAppearanceController.WearMask();
+        }
+        else
+        {
+            nabuAppearanceController.TakeMaskOff();
+        }
+    }
+
+    private void OnIsDeanonimizedChanged(bool oldState, bool newState)
+    {
+        if (AssignedTeam.Value != Team.Nabu)
+        {
+            return;
+        }
+
+        if (newState)
+        {
+            GetComponentInChildren<NabuAppearanceController>().Deanonimize();
+        }
     }
 
     private void OnAnimtionTypeUpdated(AnimationType oldState, AnimationType newState)

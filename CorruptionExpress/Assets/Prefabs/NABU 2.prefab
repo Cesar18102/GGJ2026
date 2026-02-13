@@ -606,6 +606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4818887766964248971}
   - component: {fileID: 9116547055448960974}
+  - component: {fileID: 5683518031555147858}
   m_Layer: 0
   m_Name: NABU 2
   m_TagString: Untagged
@@ -663,6 +664,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5683518031555147858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505671987892619496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d7c5a944c72a949aa8578bbed89072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NabuAppearanceController
+  _maskSprite: {fileID: 2887530986383976318, guid: 3089a5c7a654d554bb761b140caee445, type: 3}
+  _noMaskSprite: {fileID: 3298258970293872105, guid: 6dc8f32ad357c9c42b1ae8b85286303c, type: 3}
+  _headRenderer: {fileID: 13682298212453911}
 --- !u!1 &4544446809498391352
 GameObject:
   m_ObjectHideFlags: 0

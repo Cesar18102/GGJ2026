@@ -3,6 +3,7 @@ using Assets.Scripts.Actions;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Input;
 using Assets.Scripts.Navigation;
+using Assets.Scripts.UI;
 using Rooms;
 using System;
 using System.Collections;
@@ -209,6 +210,9 @@ namespace GameState
         {
             SetPhase(GamePhase.Setup);
             ShowPreparePanelClientRpc();
+
+            PlayersHelper.ForEachPlayer(Team.Nabu, player => player.GetComponent<PlayerNetState>().WearsMask.Value = true);
+            PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().WearsMask.Value = false);
 
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged += PlayerItemsCountChanged);
 
@@ -425,15 +429,49 @@ namespace GameState
                         player.EvidenceCount.Value--;
                     }
                 }
+
+                if (step.Action == ActionType.Wear)
+                {
+                    yield return new WaitForSeconds(0.5f);
+
+                    if (!player.IsDeanonimized.Value)
+                    {
+                        player.WearsMask.Value = !player.WearsMask.Value;
+                    }
+
+                    yield return new WaitForSeconds(0.5f);
+                }
+
+                DeanonimizationCheck(player.CurrentRoom.Value);
             }
 
             ExecIndex.Value = -1;
             PlannedActions.Clear();
         }
 
-        
-
         #endregion Execution Phase
+
+        #region Checks
+
+        private void DeanonimizationCheck(int room)
+        {
+            PlayerNetState[] playersInSameRoom = PlayersHelper.Select(
+                player => player.GetComponent<PlayerNetState>().CurrentRoom.Value == room, 
+                player => player.GetComponent<PlayerNetState>()
+            ).ToArray();
+
+            bool anyCorruptionersHere = playersInSameRoom.Any(player => player.AssignedTeam.Value == Team.CorruptOfficials);
+            if (anyCorruptionersHere)
+            {
+                IEnumerable<PlayerNetState> nabuAgentsToDeanonimize = playersInSameRoom.Where(player => player.AssignedTeam.Value == Team.Nabu && !player.WearsMask.Value);
+                foreach (PlayerNetState nabuAgent in nabuAgentsToDeanonimize)
+                {
+                    nabuAgent.IsDeanonimized.Value = true;
+                }
+            }
+        }
+
+        #endregion Checks
 
         #endregion Gameplay
 
@@ -477,6 +515,42 @@ namespace GameState
             Debug.Log($"Player {player.OwnerClientId} changed room from {oldRoom} to {newRoom}");
 
             _roomController.NavigateToRoom(newRoom);
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            PlayerNetState player = PlayersHelper.GetLocalPlayer();
+
+            if (player == null)
+            {
+                return;
+            }
+
+            bool isHidingItems = 
+                CurrentPhase.Value == GamePhase.Setup && 
+                player.AssignedTeam.Value == Team.CorruptOfficials;
+
+            bool isExecutingMove = 
+                CurrentPhase.Value == GamePhase.Execution &&
+                ExecIndex.Value >= 0 &&
+                PlannedActions[ExecIndex.Value].ClientId == player.OwnerClientId &&
+                PlannedActions[ExecIndex.Value].Action == ActionType.Move;
+
+            UIState state = new UIState()
+            {
+                ActionsVisible = CurrentPhase.Value == GamePhase.Planning && CurrentTurnClientId.Value == (long)player.OwnerClientId,
+                NavigationVisible = isHidingItems || isExecutingMove,
+                PreviewsVisible = !player.WearsMask.Value,
+                WearActionText = player.WearsMask.Value ? "Unwear" : "Wear",
+                WearActionVisible = player.AssignedTeam.Value == Team.Nabu && !player.IsDeanonimized.Value
+            };
+
+            _uiController.UpdateState(state);
         }
     }
 }

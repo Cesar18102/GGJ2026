@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Input;
+using Assets.Scripts.UI;
 using System;
 using System.Collections.Generic;
 using Teams;
+using TMPro;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -20,6 +22,24 @@ public class UIController : MonoBehaviour
 
     [SerializeField]
     private GameObject[] _moneyIndicators;
+
+    [SerializeField]
+    private GameObject _actionsContainer;
+
+    [SerializeField]
+    private GameObject _wearAction;
+
+    [SerializeField]
+    private GameObject _leftPreview;
+
+    [SerializeField]
+    private GameObject _rightPreview;
+
+    [SerializeField]
+    private GameObject _navigateLeft;
+
+    [SerializeField]
+    private GameObject _navigateRight;
 
     public event EventHandler<InputData> OnInput;
 
@@ -79,6 +99,17 @@ public class UIController : MonoBehaviour
     public void CorruptionReady()
     {
         _corruptionPanel.SetActive(false);
+    }
+
+    public void UpdateState(UIState state)
+    {
+        _actionsContainer.SetActive(state.ActionsVisible);
+        _wearAction.SetActive(state.WearActionVisible);
+        _wearAction.GetComponentInChildren<TMP_Text>().text = state.WearActionText;
+        _leftPreview.SetActive(state.PreviewsVisible);
+        _rightPreview.SetActive(state.PreviewsVisible);
+        _navigateLeft.SetActive(state.NavigationVisible);
+        _navigateRight.SetActive(state.NavigationVisible);
     }
 
     public void OnWear() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Wear));

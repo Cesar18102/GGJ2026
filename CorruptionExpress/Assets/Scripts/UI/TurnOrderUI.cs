@@ -14,6 +14,7 @@ public class TurnOrderUI : MonoBehaviour
 
     [Header("Fallback sprites")]
     [SerializeField] private Sprite _nabuSprite;
+    [SerializeField] private Sprite _deanonimizedNabuSprite;
     [SerializeField] private Sprite _corruptSprite;
 
     private readonly List<TurnIndicator> _icons = new();
@@ -111,6 +112,13 @@ public class TurnOrderUI : MonoBehaviour
 
     private Sprite ResolveSprite(ulong clientId)
     {
-        return PlayersHelper.GetPlayer(clientId).AssignedTeam.Value == Team.Nabu ? _nabuSprite : _corruptSprite;
+        PlayerNetState player = PlayersHelper.GetPlayer(clientId);
+
+        if (player.AssignedTeam.Value == Team.Nabu)
+        {
+            return player.IsDeanonimized.Value ? _deanonimizedNabuSprite : _nabuSprite;
+        }
+
+        return _corruptSprite;
     }
 }

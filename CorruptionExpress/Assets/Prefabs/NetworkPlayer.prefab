@@ -82,6 +82,10 @@ MonoBehaviour:
     m_InternalValue: -1
   CurrentAnimationType:
     m_InternalValue: 0
+  WearsMask:
+    m_InternalValue: 0
+  IsDeanonimized:
+    m_InternalValue: 0
 --- !u!114 &6665443040221894586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +223,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9097492424324247008}
+    - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7807295077335926713}
   m_SourcePrefab: {fileID: 100100000, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
 --- !u!1 &5324637586492803371 stripped
 GameObject:
@@ -251,6 +258,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39982a6669d456144a892d5c8d798341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationController
+--- !u!212 &5846541471804449541 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3670543587470973234, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+  m_PrefabInstance: {fileID: 7193222274008611383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6343900007395607111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4312613349521897584, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
@@ -287,3 +299,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39982a6669d456144a892d5c8d798341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationController
+--- !u!114 &7807295077335926713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153819915047428833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d7c5a944c72a949aa8578bbed89072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NabuAppearanceController
+  _maskSprite: {fileID: 2887530986383976318, guid: 3089a5c7a654d554bb761b140caee445, type: 3}
+  _noMaskSprite: {fileID: 3298258970293872105, guid: 6dc8f32ad357c9c42b1ae8b85286303c, type: 3}
+  _headRenderer: {fileID: 5846541471804449541}
+  _head: {fileID: 8877009370578974923}
+--- !u!1 &8877009370578974923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1793010382669447932, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+  m_PrefabInstance: {fileID: 7193222274008611383}
+  m_PrefabAsset: {fileID: 0}

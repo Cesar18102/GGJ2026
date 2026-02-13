@@ -901,7 +901,6 @@ GameObject:
   m_Component:
   - component: {fileID: 153237210}
   - component: {fileID: 153237207}
-  - component: {fileID: 153237209}
   - component: {fileID: 153237208}
   m_Layer: 0
   m_Name: Living Room Camera
@@ -1005,14 +1004,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &153237209
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153237206}
-  m_Enabled: 1
 --- !u!4 &153237210
 Transform:
   m_ObjectHideFlags: 0
@@ -1880,7 +1871,6 @@ GameObject:
   m_Component:
   - component: {fileID: 385044909}
   - component: {fileID: 385044912}
-  - component: {fileID: 385044911}
   - component: {fileID: 385044910}
   m_Layer: 0
   m_Name: Collection Room Camera
@@ -1948,14 +1938,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &385044911
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385044908}
-  m_Enabled: 1
 --- !u!20 &385044912
 Camera:
   m_ObjectHideFlags: 0
@@ -2480,7 +2462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 484259085}
   - component: {fileID: 484259082}
-  - component: {fileID: 484259084}
   - component: {fileID: 484259083}
   m_Layer: 0
   m_Name: Kitchen Camera
@@ -2584,14 +2565,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &484259084
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484259081}
-  m_Enabled: 1
 --- !u!4 &484259085
 Transform:
   m_ObjectHideFlags: 0
@@ -2967,7 +2940,6 @@ GameObject:
   m_Component:
   - component: {fileID: 537205532}
   - component: {fileID: 537205535}
-  - component: {fileID: 537205534}
   - component: {fileID: 537205533}
   m_Layer: 0
   m_Name: Bedroom Camera
@@ -3035,14 +3007,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &537205534
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537205531}
-  m_Enabled: 1
 --- !u!20 &537205535
 Camera:
   m_ObjectHideFlags: 0
@@ -3653,7 +3617,6 @@ GameObject:
   m_Component:
   - component: {fileID: 671791286}
   - component: {fileID: 671791289}
-  - component: {fileID: 671791288}
   - component: {fileID: 671791287}
   m_Layer: 0
   m_Name: Loggia Camera
@@ -3721,14 +3684,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &671791288
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 671791285}
-  m_Enabled: 1
 --- !u!20 &671791289
 Camera:
   m_ObjectHideFlags: 0
@@ -5697,7 +5652,6 @@ GameObject:
   m_Component:
   - component: {fileID: 985710444}
   - component: {fileID: 985710441}
-  - component: {fileID: 985710443}
   - component: {fileID: 985710442}
   m_Layer: 0
   m_Name: Hall Camera
@@ -5801,14 +5755,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &985710443
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985710440}
-  m_Enabled: 1
 --- !u!4 &985710444
 Transform:
   m_ObjectHideFlags: 0
@@ -8485,6 +8431,12 @@ MonoBehaviour:
   - {fileID: 51867223}
   - {fileID: 1369117926}
   - {fileID: 720077671}
+  _actionsContainer: {fileID: 1664233883}
+  _wearAction: {fileID: 499638618}
+  _leftPreview: {fileID: 647757444}
+  _rightPreview: {fileID: 271924536}
+  _navigateLeft: {fileID: 290333655}
+  _navigateRight: {fileID: 736239}
 --- !u!114 &1498684579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8502,6 +8454,7 @@ MonoBehaviour:
   _iconPrefab: {fileID: 5262304975227039802, guid: 316ad7596760fe34f87a60bf0b0b8bee, type: 3}
   _phaseNameText: {fileID: 886994943}
   _nabuSprite: {fileID: 4917291182231800338, guid: ed4ddb4e1529adb4e8e67f8fbf50ca8d, type: 3}
+  _deanonimizedNabuSprite: {fileID: -7445992684448478012, guid: 8a50812f736aee445adc4db9fd69b757, type: 3}
   _corruptSprite: {fileID: -8009217075737733720, guid: 369b1d1ee68a64a9eafd296183e6a334, type: 3}
 --- !u!1 &1514295814
 GameObject:
@@ -8562,7 +8515,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1520145249}
   - component: {fileID: 1520145252}
-  - component: {fileID: 1520145251}
   - component: {fileID: 1520145250}
   m_Layer: 0
   m_Name: Cabinet Camera
@@ -8630,14 +8582,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1520145251
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520145248}
-  m_Enabled: 1
 --- !u!20 &1520145252
 Camera:
   m_ObjectHideFlags: 0
