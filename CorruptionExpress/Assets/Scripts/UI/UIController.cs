@@ -49,6 +49,12 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private TMP_Text _winText;
 
+    [SerializeField]
+    private AudioSource _nabuMusic;
+
+    [SerializeField]
+    private AudioSource _corruptionMusic;
+
     public event EventHandler<InputData> OnInput;
 
     public void UpdateItems(IEnumerable<ItemController> items)
@@ -84,6 +90,12 @@ public class UIController : MonoBehaviour
         {
             _moneyIndicators[i].SetActive(false);
         }
+    }
+
+    public void StartMusic(Team team)
+    {
+        _nabuMusic.gameObject.SetActive(team == Team.Nabu);
+        _corruptionMusic.gameObject.SetActive(team == Team.CorruptOfficials);
     }
 
     public void ShowPreparePanel(Team team)

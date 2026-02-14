@@ -293,6 +293,7 @@ namespace GameState
         {
             PlayerNetState currentPlayer = PlayersHelper.GetLocalPlayer();
             _uiController.ShowPreparePanel(currentPlayer.AssignedTeam.Value);
+            _uiController.StartMusic(currentPlayer.AssignedTeam.Value);
         }
 
         private IEnumerator HideEvidenceCo(PlayerNetState player)
