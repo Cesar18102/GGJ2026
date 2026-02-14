@@ -333,7 +333,7 @@ namespace GameState
                 state.CurrentFaceDirection = player.GetComponentInChildren<CharacterSettings>().GetStartingFaceDirection();
                 state.Speed = player.GetComponentInChildren<CharacterSettings>().GetSpeed();
 
-                //TODO: init scale
+                player.transform.localScale = Vector3.one * GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value).GetDesiredScale();
             });
         }
 
