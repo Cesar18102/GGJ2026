@@ -367,10 +367,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 482227255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15.718}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -27.5, y: 261.9}
-  m_SizeDelta: {x: 150, y: 60}
+  m_AnchorMin: {x: 0.47582918, y: 0.89446676}
+  m_AnchorMax: {x: 0.47582918, y: 0.89446676}
+  m_AnchoredPosition: {x: 1.5, y: 5.399994}
+  m_SizeDelta: {x: 150, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &75268347
 MonoBehaviour:
@@ -2292,7 +2292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -105, y: -14}
+  m_AnchoredPosition: {x: -105, y: 15}
   m_SizeDelta: {x: 120, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1079608367
@@ -2402,8 +2402,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YuliaInfoController
   _head: {fileID: 1079608366}
-  _hiddenPosition: {x: -105, y: -14}
-  _shownPosition: {x: -105, y: 46}
+  _hiddenPosition: {x: -105, y: 15}
+  _shownPosition: {x: -105, y: 45}
   _headShowDuration: 1
   _infoHolder: {fileID: 1808725217}
   _infoText: {fileID: 1578885007}
