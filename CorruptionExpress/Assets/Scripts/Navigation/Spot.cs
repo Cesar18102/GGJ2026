@@ -1,8 +1,9 @@
+using Assets.Scripts.Interface;
 using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(SpotNetState))]
-public class Spot : MonoBehaviour
+public class Spot : MonoBehaviour, ISearchable
 {
     [SerializeField]
     private NavNode2D _approachNode;

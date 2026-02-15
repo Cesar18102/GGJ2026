@@ -40,7 +40,7 @@ public class SceneInputController : MonoBehaviour
             ActionType = ActionType.None,
             MoveDirection = RoomMoveDirection.None,
             SpotInput = GetSpotInput(obj),
-            TargetClientId = (long?)(obj.GetComponent<PlayerNetState>()?.NetworkObject.OwnerClientId) ?? -1
+            TargetClientId = (long?)(obj.GetComponentInParent<PlayerNetState>()?.NetworkObject.OwnerClientId) ?? -1
         };
     }
 

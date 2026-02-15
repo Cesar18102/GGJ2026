@@ -7,6 +7,7 @@
         Search = 2,
         SearchPlayer = 3,
         Put = 4,
-        Give = 5
+        Give = 5,
+        BeingSearched = 6
     }
 }

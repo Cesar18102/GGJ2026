@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts.Actions;
+using Assets.Scripts.Interface;
 using System;
 using Teams;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerNetState : NetworkBehaviour
+public class PlayerNetState : NetworkBehaviour, ISearchable
 {
     public NetworkVariable<Team> AssignedTeam { get; } = new(
         Team.Unassigned,
@@ -136,5 +137,16 @@ public class PlayerNetState : NetworkBehaviour
     private void OnAnimtionTypeUpdated(AnimationType oldState, AnimationType newState)
     {
         GetComponentInChildren<Animator>().SetInteger("State", (int)newState);
+    }
+
+    public bool TakeItem()
+    {
+        if (EvidenceCount.Value > 0)
+        {
+            EvidenceCount.Value--;
+            return true;
+        }
+
+        return false;
     }
 }

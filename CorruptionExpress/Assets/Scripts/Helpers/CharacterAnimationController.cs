@@ -11,4 +11,9 @@ public class CharacterAnimationController : MonoBehaviour
     {
         GetComponentInParent<PlayerNetState>().SetIdleServerRpc();
     }
+
+    public void OnBeingExaminedCompleted()
+    {
+        GetComponentInParent<PlayerNetState>().SetIdleServerRpc();
+    }
 }

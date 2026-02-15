@@ -22,4 +22,13 @@ public static class EnumExtensions
             _ => throw new UnityException($"RoomMoveDirection {direction} is not supported")
         };
     }
+
+    public static FaceDirection Invert(this FaceDirection direction)
+    {
+        return direction switch
+        {
+            FaceDirection.Left => FaceDirection.Right,
+            FaceDirection.Right => FaceDirection.Left,
+        };
+    }
 }

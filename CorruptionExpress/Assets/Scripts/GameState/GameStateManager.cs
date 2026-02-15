@@ -3,6 +3,7 @@ using Assets.Scripts.Actions;
 using Assets.Scripts.GameState;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Input;
+using Assets.Scripts.Interface;
 using Assets.Scripts.Navigation;
 using Assets.Scripts.UI;
 using Rooms;
@@ -339,7 +340,7 @@ namespace GameState
                 state.CurrentFaceDirection = player.GetComponentInChildren<CharacterSettings>().GetStartingFaceDirection();
                 state.Speed = player.GetComponentInChildren<CharacterSettings>().GetSpeed();
 
-                player.transform.localScale = Vector3.one * GetRoom(state.CurrentRoom.Value).GetWaypoint(state.CurrentPosition.Value).GetDesiredScale();
+                player.transform.localScale = Vector3.one * GetCurrentWaypoint(state).GetDesiredScale();
             });
         }
 
@@ -428,22 +429,43 @@ namespace GameState
 
                 if (step.Action == ActionType.Search)
                 {
-                    yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
+                    yield return WaitForInput(step.ClientId, input => input.HasSpotInput() || (player.AssignedTeam.Value == Team.Nabu && input.HasTargetPlayerInput()));
 
-                    NavNode2D currentNode = GetRoom(player.CurrentRoom.Value).GetWaypoint(player.CurrentPosition.Value);
+                    InputData input = _inputs[step.ClientId];
+                    NavNode2D currentNode = GetCurrentWaypoint(player);
 
-                    Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
-                    NavNode2D targetNode = spot.GetApproachNode();
-
-                    yield return MoveActionHandler.MoveCo(player, currentNode, targetNode);
-                    MoveActionHandler.UpdateFaceDirection(player, spot.GetFaceDirection());
-
-                    player.CurrentAnimationType.Value = AnimationType.Search;
-                    yield return new WaitUntil(() => player.CurrentAnimationType.Value == AnimationType.None);
-
-                    if (player.CanTakeItem && spot.TakeItem())
+                    if (input.HasSpotInput())
                     {
-                        player.AddEvidence(1);
+                        Spot spot = GetSpot(input.SpotInput);
+
+                        yield return MoveActionHandler.MoveCo(player, currentNode, spot.GetApproachNode());
+                        MoveActionHandler.UpdateFaceDirection(player, spot.GetFaceDirection());
+
+                        player.CurrentAnimationType.Value = AnimationType.Search;
+                        yield return new WaitUntil(() => player.CurrentAnimationType.Value == AnimationType.None);
+
+                        if (player.CanTakeItem && spot.TakeItem())
+                        {
+                            player.AddEvidence(1);
+                        }
+                    }
+                    else if (input.HasTargetPlayerInput())
+                    {
+                        PlayerNetState targetPlayer = PlayersHelper.GetPlayer((ulong)input.TargetClientId);
+                        NavNode2D targetNode = GetCurrentWaypoint(player);
+
+                        yield return MoveActionHandler.MoveCo(player, currentNode, GetCurrentWaypoint(targetPlayer));
+                        MoveActionHandler.UpdateFaceDirection(player, targetPlayer.CurrentFaceDirection.Invert());
+
+                        player.CurrentAnimationType.Value = AnimationType.SearchPlayer;
+                        targetPlayer.CurrentAnimationType.Value = AnimationType.BeingSearched;
+                        yield return new WaitUntil(() => player.CurrentAnimationType.Value == AnimationType.None);
+                        targetPlayer.CurrentAnimationType.Value = AnimationType.None;
+
+                        if (player.CanTakeItem && targetPlayer.TakeItem())
+                        {
+                            player.AddEvidence(1);
+                        }
                     }
                 }
 
@@ -451,7 +473,7 @@ namespace GameState
                 {
                     yield return WaitForInput(step.ClientId, input => input.HasSpotInput());
 
-                    NavNode2D currentNode = GetRoom(player.CurrentRoom.Value).GetWaypoint(player.CurrentPosition.Value);
+                    NavNode2D currentNode = GetCurrentWaypoint(player);
 
                     Spot spot = GetSpot(_inputs[step.ClientId].SpotInput);
                     NavNode2D targetNode = spot.GetApproachNode();
@@ -561,6 +583,11 @@ namespace GameState
         private Spot GetSpot(SpotInput spotInput)
         {
             return GetRoom(spotInput.RoomId).GetSpot(spotInput.SpotId);
+        }
+
+        private NavNode2D GetCurrentWaypoint(PlayerNetState player)
+        {
+            return GetRoom(player.CurrentRoom.Value).GetWaypoint(player.CurrentPosition.Value);
         }
 
         [Rpc(SendTo.Everyone)]
