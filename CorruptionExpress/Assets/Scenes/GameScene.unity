@@ -5496,8 +5496,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 9, y: 437.8}
-  m_SizeDelta: {x: 200, y: 35}
+  m_AnchoredPosition: {x: -17.6555, y: 437.8}
+  m_SizeDelta: {x: 385.4851, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &886994943
 MonoBehaviour:
@@ -5585,7 +5585,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -81.28487, y: 0, z: -43.675507, w: 0}
+  m_margin: {x: -14.503708, y: 0, z: -0.67958045, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8793,6 +8793,8 @@ MonoBehaviour:
   _winText: {fileID: 1993139832}
   _nabuMusic: {fileID: 1774940278}
   _corruptionMusic: {fileID: 2118284720}
+  _uiHolder: {fileID: 693459533}
+  _phaseNameText: {fileID: 886994943}
 --- !u!114 &1498684579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8805,10 +8807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6add38a5713aa564fa8d84dd98553e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnOrderUI
-  _uiHolder: {fileID: 693459533}
   _container: {fileID: 1553889128}
   _iconPrefab: {fileID: 5262304975227039802, guid: 316ad7596760fe34f87a60bf0b0b8bee, type: 3}
-  _phaseNameText: {fileID: 886994943}
   _nabuSprite: {fileID: 4917291182231800338, guid: ed4ddb4e1529adb4e8e67f8fbf50ca8d, type: 3}
   _deanonimizedNabuSprite: {fileID: -7445992684448478012, guid: 8a50812f736aee445adc4db9fd69b757, type: 3}
   _corruptSprite: {fileID: -8009217075737733720, guid: 369b1d1ee68a64a9eafd296183e6a334, type: 3}

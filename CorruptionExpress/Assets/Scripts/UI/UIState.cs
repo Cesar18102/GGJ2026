@@ -13,5 +13,7 @@ namespace Assets.Scripts.UI
         public string WearActionText { get; set; }
         public Team WinTeam { get; set; }
         public WinReason Reason { get; set; }
+        public bool TurnOrderUIShown { get; set; }
+        public string RoundPhaseTurnInfo { get; set; }
     }
 }

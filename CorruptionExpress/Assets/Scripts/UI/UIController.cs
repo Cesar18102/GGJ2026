@@ -55,6 +55,12 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private AudioSource _corruptionMusic;
 
+    [SerializeField] 
+    private GameObject _uiHolder;
+
+    [SerializeField] 
+    private TMP_Text _phaseNameText;
+
     public event EventHandler<InputData> OnInput;
 
     public void UpdateItems(IEnumerable<ItemController> items)
@@ -145,6 +151,9 @@ public class UIController : MonoBehaviour
             WinReason.Deanon => "Значну кількість агентів було деанонімізовано!",
             WinReason.RoundsPassed => "Обшук пройшов невдало!"
         };
+
+        _uiHolder.SetActive(state.TurnOrderUIShown);
+        _phaseNameText.text = state.RoundPhaseTurnInfo;
     }
 
     public void OnWear() => OnInput?.Invoke(this, InputData.FromAction(ActionType.Wear));

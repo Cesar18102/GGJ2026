@@ -57,6 +57,11 @@ namespace GameState
 
         public static GameStateManager Instance { get; private set; }
 
+        public NetworkVariable<int> GameRound { get; } = new(
+            0,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
         public NetworkVariable<GamePhase> CurrentPhase { get; } = new(
            GamePhase.WaitingForAssignment,
            NetworkVariableReadPermission.Everyone,
@@ -174,9 +179,9 @@ namespace GameState
 
             SubscribeCurrentRoomChangedClientRpc();
 
-            for (int i = 0; i < _totalGameRounds; ++i)
+            for (GameRound.Value = 0; GameRound.Value < _totalGameRounds; ++GameRound.Value)
             {
-                Debug.Log($"Game Round: {i + 1}");
+                Debug.Log($"Game Round: {GameRound.Value + 1}");
 
                 yield return PlanningPhase();
                 yield return ExecutionPhase();
@@ -608,6 +613,16 @@ namespace GameState
                 PlannedActions[ExecIndex.Value].ClientId == player.OwnerClientId &&
                 PlannedActions[ExecIndex.Value].Action == ActionType.Move;
 
+            string roundString = CurrentPhase.Value == GamePhase.Setup ? string.Empty : $"R: {GameRound.Value + 1}/{_totalGameRounds}";
+            string phaseString = $"P: {CurrentPhase.Value}";
+            string turnString = CurrentPhase.Value switch
+            {
+                GamePhase.Setup => string.Empty,
+                GamePhase.Planning => $"T: {PlanningRound.Value + 1}/{_planningCycles}",
+                GamePhase.Execution => $"T: {ExecIndex.Value / TurnOrder.Count + 1}/{_planningCycles}",
+                _ => string.Empty
+            };
+
             UIState state = new UIState()
             {
                 ActionsVisible = CurrentPhase.Value == GamePhase.Planning && CurrentTurnClientId.Value == (long)player.OwnerClientId,
@@ -616,8 +631,10 @@ namespace GameState
                 WearActionText = player.WearsMask.Value ? "Unwear" : "Wear",
                 WearActionVisible = player.AssignedTeam.Value == Team.Nabu && !player.IsDeanonimized.Value,
                 WinTeam = WinTeam.Value,
-                Reason = Reason.Value
-            };
+                Reason = Reason.Value,
+                TurnOrderUIShown = CurrentPhase.Value == GamePhase.Planning || CurrentPhase.Value == GamePhase.Execution,
+                RoundPhaseTurnInfo = string.Join("; ", new string[] { roundString, phaseString, turnString })
+            }; 
 
             _uiController.UpdateState(state);
         }

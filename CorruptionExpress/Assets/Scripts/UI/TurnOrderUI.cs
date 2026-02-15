@@ -2,15 +2,12 @@
 using GameState;
 using System.Collections.Generic;
 using Teams;
-using TMPro;
 using UnityEngine;
 
 public class TurnOrderUI : MonoBehaviour
 {
-    [SerializeField] private GameObject _uiHolder;
     [SerializeField] private Transform _container;
     [SerializeField] private TurnIndicator _iconPrefab;
-    [SerializeField] private TMP_Text _phaseNameText;
 
     [Header("Fallback sprites")]
     [SerializeField] private Sprite _nabuSprite;
@@ -29,18 +26,10 @@ public class TurnOrderUI : MonoBehaviour
 
         Rebuild();
 
-        gsm.OnPhaseChanged += OnPhaseChanged;
         gsm.TurnOrder.OnListChanged += _ => Rebuild();
-
         gsm.CurrentTurnClientId.OnValueChanged += (_, __) => RefreshHighlights();
         gsm.PlannedActions.OnListChanged += _ => RefreshHighlights();
         gsm.ExecIndex.OnValueChanged += (_, __) => RefreshHighlights();
-    }
-
-    private void OnPhaseChanged(GamePhase obj)
-    {
-        _uiHolder.SetActive(obj == GamePhase.Planning || obj == GamePhase.Execution);
-        _phaseNameText.text = obj.ToString();
     }
 
     private void Rebuild()
