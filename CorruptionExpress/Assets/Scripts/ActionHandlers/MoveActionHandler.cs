@@ -8,7 +8,7 @@ namespace Assets.Scripts.ActionHandlers
 {
     public static class MoveActionHandler
     {
-        public static IEnumerator MoveCo(PlayerNetState state, NavNode2D currentNode, NavNode2D targetNode)
+        public static IEnumerator MoveCo(PlayerNetState state, NavNode2D currentNode, NavNode2D targetNode, Vector3? desiredPosition = null)
         {
             Debug.Log($"Player {state.OwnerClientId}: Move start");
 
@@ -21,9 +21,12 @@ namespace Assets.Scripts.ActionHandlers
 
             state.CurrentAnimationType.Value = AnimationType.Move;
 
-            foreach (NavNode2D node in path)
+            for (int i = 0; i < path.Count; i++) 
             {
-                FaceDirection desiredFaceDirection = node.transform.position.x > currentNode.transform.position.x ?
+                NavNode2D node = path[i];
+                Vector3 position = i == path.Count - 1 ? (desiredPosition ?? node.transform.position) : node.transform.position;
+
+                FaceDirection desiredFaceDirection = position.x > state.NetworkObject.transform.position.x ?
                     FaceDirection.Right : FaceDirection.Left;
 
                 UpdateFaceDirection(state, desiredFaceDirection);
@@ -31,7 +34,7 @@ namespace Assets.Scripts.ActionHandlers
                 currentNode = node;
                 Vector3 desiredScale = Vector3.one * node.GetDesiredScale();
 
-                yield return MoveTo(state.NetworkObject, (Vector2)node.transform.position, desiredScale);
+                yield return MoveTo(state.NetworkObject, (Vector2)position, desiredScale);
             }
 
             state.CurrentPosition.Value = targetNode.transform.GetSiblingIndex();
@@ -49,7 +52,7 @@ namespace Assets.Scripts.ActionHandlers
             }
         }
 
-        private static IEnumerator MoveTo(NetworkObject player, Vector2 target, Vector3 targetScale)
+        public static IEnumerator MoveTo(NetworkObject player, Vector2 target, Vector3 targetScale)
         {
             float totalDist = ((Vector2)player.transform.position - target).magnitude;
             float currentDist = totalDist;

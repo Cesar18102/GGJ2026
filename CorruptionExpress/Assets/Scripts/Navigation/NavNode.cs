@@ -10,6 +10,12 @@ public class NavNode2D : MonoBehaviour
     [SerializeField]
     private float _desiredScale = 1.0f;
 
+    public NavNode2D() { }
+    public NavNode2D(float desiredScale)
+    {
+        _desiredScale = desiredScale;
+    }
+
     public List<NavNode2D> GetNeigbours() => _neighbors;
     public float GetDesiredScale() => _desiredScale;
 

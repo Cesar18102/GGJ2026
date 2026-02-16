@@ -86,6 +86,8 @@ MonoBehaviour:
     m_InternalValue: 0
   IsDeanonimized:
     m_InternalValue: 0
+  _orderOffset: 0
+  _scale: 100
 --- !u!114 &6665443040221894586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +149,37 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!1 &8670599040713206279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5739138146667496479}
+  m_Layer: 0
+  m_Name: ApproachPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5739138146667496479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670599040713206279}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.5, y: 0.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8034656455508884611}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7193222274008611383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,7 +242,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 888230530251884212, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5739138146667496479}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3042071736648282908, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
@@ -220,6 +256,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3042071736648282908, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3811760945871128413}
+    - targetCorrespondingSourceObject: {fileID: 3042071736648282908, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 423379721765839936}
     - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6637430989751612145}
@@ -232,6 +271,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6890463634696342072}
+    - targetCorrespondingSourceObject: {fileID: 1367763392560732374, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9074033773956877065}
   m_SourcePrefab: {fileID: 100100000, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
 --- !u!1 &5324637586492803371 stripped
 GameObject:
@@ -252,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Navigation.CharacterSettings
   _staringFaceDirection: 0
   _speed: 1
+  _approachPosition: {fileID: 5739138146667496479}
 --- !u!114 &3413525460385437058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +359,19 @@ PolygonCollider2D:
       - {x: 1.4934042, y: 3.9303894}
       - {x: 1.3283968, y: 9.395392}
   m_UseDelaunayMesh: 1
+--- !u!210 &423379721765839936
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5324637586492803371}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!212 &5846541471804449541 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3670543587470973234, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
@@ -324,6 +380,11 @@ SpriteRenderer:
 --- !u!4 &6343900007395607111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4312613349521897584, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
+  m_PrefabInstance: {fileID: 7193222274008611383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8034656455508884611 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 888230530251884212, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}
   m_PrefabInstance: {fileID: 7193222274008611383}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8153819915047428833 stripped
@@ -345,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Navigation.CharacterSettings
   _staringFaceDirection: 0
   _speed: 1.5
+  _approachPosition: {fileID: 0}
 --- !u!114 &9097492424324247008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +487,19 @@ PolygonCollider2D:
       - {x: 1.1462493, y: 3.6285145}
       - {x: 1.2982093, y: 8.54962}
   m_UseDelaunayMesh: 1
+--- !u!210 &9074033773956877065
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153819915047428833}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &8877009370578974923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1793010382669447932, guid: 0dcedd8ec9f298f4f91ab93569fc3401, type: 3}

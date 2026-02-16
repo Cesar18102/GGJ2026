@@ -1,9 +1,11 @@
 ﻿using Assets.Scripts.Actions;
 using Assets.Scripts.Interface;
+using Assets.Scripts.Navigation;
 using System;
 using Teams;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerNetState : NetworkBehaviour, ISearchable
 {
@@ -45,11 +47,25 @@ public class PlayerNetState : NetworkBehaviour, ISearchable
         NetworkVariableWritePermission.Server
     );
 
+    [SerializeField] int _orderOffset = 0;
+    [SerializeField] float _scale = 100f;
+
     public FaceDirection CurrentFaceDirection { get; set; }
     public float Speed { get; set; }
 
     public bool CanTakeItem => EvidenceCount.Value < 4;
     public bool CanPutItem => EvidenceCount.Value > 0;
+
+    void LateUpdate()
+    {
+        SortingGroup group = GetComponentInChildren<SortingGroup>();
+        if (group != null)
+        {
+            group.sortingOrder = _orderOffset + Mathf.RoundToInt(-NetworkObject.transform.position.y * _scale);
+        }
+    }
+
+    public Vector3 GetApproachPosition() => GetComponentInChildren<CharacterSettings>().GetApproachPosition().position;
 
     public void AddEvidence(int amount)
     {

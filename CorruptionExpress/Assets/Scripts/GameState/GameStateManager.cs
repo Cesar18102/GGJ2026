@@ -452,9 +452,10 @@ namespace GameState
                     else if (input.HasTargetPlayerInput())
                     {
                         PlayerNetState targetPlayer = PlayersHelper.GetPlayer((ulong)input.TargetClientId);
-                        NavNode2D targetNode = GetCurrentWaypoint(player);
+                        NavNode2D targetNode = GetCurrentWaypoint(targetPlayer);
+                        Vector3 stepAsidePosition = targetPlayer.GetApproachPosition();
 
-                        yield return MoveActionHandler.MoveCo(player, currentNode, GetCurrentWaypoint(targetPlayer));
+                        yield return MoveActionHandler.MoveCo(player, currentNode, targetNode, stepAsidePosition);
                         MoveActionHandler.UpdateFaceDirection(player, targetPlayer.CurrentFaceDirection.Invert());
 
                         player.CurrentAnimationType.Value = AnimationType.SearchPlayer;

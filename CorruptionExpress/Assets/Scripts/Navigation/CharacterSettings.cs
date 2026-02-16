@@ -12,5 +12,10 @@ namespace Assets.Scripts.Navigation
 
         public FaceDirection GetStartingFaceDirection() => _staringFaceDirection;
         public float GetSpeed() => _speed;
+
+        [SerializeField] 
+        private Transform _approachPosition;
+
+        public Transform GetApproachPosition() => _approachPosition;
     }
 }
