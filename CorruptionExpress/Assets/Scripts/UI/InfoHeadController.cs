@@ -15,17 +15,24 @@ public class InfoHeadController : MonoBehaviour
     [SerializeField]
     private string[] _infos;
 
+    [SerializeField]
+    private UISoundsController _soundsController;
+
     private bool _isShown = false;
     private int _infoIndex = 0;
 
     public void OnHeadClick()
     {
+        _soundsController.ClickSound();
+
         _isShown = !_isShown;
         StartCoroutine(Animate(_isShown));
     }
 
     public void OnNextInfo()
     {
+        _soundsController.ClickSound();
+
         if (_infoIndex < _infos.Length - 1)
         {
             _infoIndex++;
@@ -36,6 +43,8 @@ public class InfoHeadController : MonoBehaviour
 
     public void OnPrevInfo()
     {
+        _soundsController.ClickSound();
+
         if (_infoIndex > 0)
         {
             _infoIndex--;

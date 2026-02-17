@@ -1122,6 +1122,7 @@ GameObject:
   - component: {fileID: 482227254}
   - component: {fileID: 482227253}
   - component: {fileID: 482227252}
+  - component: {fileID: 482227256}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -1221,6 +1222,103 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!82 &482227256
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482227251}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 53ce90aeaa44e0748b5d4ee469929209, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &582647200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,6 +1450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 660817055}
   - component: {fileID: 660817056}
+  - component: {fileID: 660817057}
   m_Layer: 0
   m_Name: LobbyUIManager
   m_TagString: Untagged
@@ -1402,6 +1501,20 @@ MonoBehaviour:
   playerListItemPrefab: {fileID: 1000000, guid: 08a4778be03d340df8f1f227f453f67f, type: 3}
   _playerListFontAsset: {fileID: 11400000, guid: b12d46a2a00736e4599ff73e30fd7602, type: 2}
   statusText: {fileID: 1308756208}
+  _soundsController: {fileID: 660817057}
+--- !u!114 &660817057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660817054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80f5e3bb1dd3d94d832951e5fec1488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISoundsController
+  _uiAudio: {fileID: 482227256}
 --- !u!1 &688508011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,6 +2552,7 @@ MonoBehaviour:
     \u0457\u043C \u0437\u043D\u0430\u0439\u0442\u0438 \u0431\u0430\u0433\u0430\u0442\u043E
     \u0434\u043E\u043A\u0430\u0437\u0456\u0432. \u041D\u0435 \u0445\u043E\u0447\u0443
     \u0437\u043D\u043E\u0432\u0443 \u0432 \u0442\u044E\u0440\u043C\u0443..."
+  _soundsController: {fileID: 660817057}
 --- !u!1 &1104917683
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,6 +3601,7 @@ MonoBehaviour:
     \u0442\u043E\u043C\u0443 \u043F\u043E\u043A\u0432\u0430\u043F\u0442\u0435\u0441\u044C!
     \u0417\u043D\u0430\u0439\u0434\u0456\u0442\u044C \u0434\u043E\u043A\u0430\u0437\u0438
     \u0439 \u043D\u0435 \u0434\u0430\u0439\u0442\u0435 \u0441\u0435\u0431\u0435 \u0440\u043E\u0437\u043A\u0440\u0438\u0442\u0438."
+  _soundsController: {fileID: 660817057}
 --- !u!114 &1406047968
 MonoBehaviour:
   m_ObjectHideFlags: 0

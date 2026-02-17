@@ -35,6 +35,8 @@ namespace Network
 
         [Header("Status")] [SerializeField] private TextMeshProUGUI statusText;
 
+        [SerializeField] private UISoundsController _soundsController;
+
         private GameNetworkManager _networkManager;
         private bool _isReady;
         private readonly List<GameObject> _playerListItems = new();
@@ -152,6 +154,8 @@ namespace Network
 
         private async void OnCreateLobbyClicked()
         {
+            _soundsController.ClickSound();
+
             var lobbyName = string.IsNullOrEmpty(lobbyNameInput?.text) ? "My Lobby" : lobbyNameInput.text;
 
             SetLoading(true);
@@ -170,6 +174,8 @@ namespace Network
 
         private async void OnJoinLobbyClicked()
         {
+            _soundsController.ClickSound();
+
             var joinCode = joinCodeInput?.text?.Trim().ToUpper();
 
             if (string.IsNullOrEmpty(joinCode))
@@ -193,6 +199,8 @@ namespace Network
 
         private void OnCopyCodeClicked()
         {
+            _soundsController.ClickSound();
+
             var code = _networkManager.CurrentSessionCode;
             if (string.IsNullOrEmpty(code))
             {
@@ -205,6 +213,8 @@ namespace Network
 
         private async void OnReadyClicked()
         {
+            _soundsController.ClickSound();
+
             _isReady = !_isReady;
             UpdateReadyButton();
 
@@ -213,6 +223,8 @@ namespace Network
 
         private async void OnLeaveClicked()
         {
+            _soundsController.ClickSound();
+
             await _networkManager.LeaveSession();
             _isReady = false;
             UpdateReadyButton();
@@ -220,6 +232,8 @@ namespace Network
 
         private void OnStartGameClicked()
         {
+            _soundsController.ClickSound();
+
             if (_networkManager.IsHost && _networkManager.AreAllPlayersReady())
             {
                 _networkManager.StartGame();

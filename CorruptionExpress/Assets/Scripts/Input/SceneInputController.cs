@@ -9,6 +9,9 @@ public class SceneInputController : MonoBehaviour
     [SerializeField]
     private Camera _camera;
 
+    [SerializeField]
+    private UISoundsController _soundsController;
+
     private Vector2 _lastPointerPos;
 
     public void OnPoint(InputAction.CallbackContext ctx)
@@ -29,6 +32,12 @@ public class SceneInputController : MonoBehaviour
         if (collider?.gameObject != null)
         {
             InputData input = GetInputData(collider.gameObject);
+            
+            if (!input.Equals(default))
+            {
+                _soundsController.ClickSound();
+            }
+
             GameStateManager.Instance.HandleInputServerRpc(input);
         }
     }
