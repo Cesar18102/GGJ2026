@@ -89,6 +89,13 @@ namespace Rooms
             UpdateView();
         }
 
+        public void SetDefaultRoom()
+        {
+            DeactivatePreviewCameras();
+            _currentIndex = startingRoomIndex;
+            UpdateView();
+        }
+
         private void DeactivatePreviewCameras()
         {
             var leftRoom = _currentIndex > 0 ? rooms[_currentIndex - 1] : null;

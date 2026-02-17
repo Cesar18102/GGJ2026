@@ -148,6 +148,8 @@ public class PlayerNetState : NetworkBehaviour, ISearchable
         {
             GetComponentInChildren<NabuAppearanceController>().Deanonimize();
         }
+
+        GetComponentInChildren<Animator>().SetBool("IsDeanonimized", newState);
     }
 
     private void OnAnimtionTypeUpdated(AnimationType oldState, AnimationType newState)

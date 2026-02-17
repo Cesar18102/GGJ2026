@@ -268,6 +268,7 @@ namespace GameState
             PlayersHelper.ForEachPlayer(Team.CorruptOfficials, player => player.GetComponent<PlayerNetState>().EvidenceCount.OnValueChanged -= PlayerItemsCountChanged);
 
             SpawnPlayersRandom();
+            SetCameraToStartingRoomClientRpc();
             DefineOrder();
         }
 
@@ -342,6 +343,12 @@ namespace GameState
 
                 player.transform.localScale = Vector3.one * GetCurrentWaypoint(state).GetDesiredScale();
             });
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void SetCameraToStartingRoomClientRpc()
+        {
+            _roomController.SetDefaultRoom();
         }
 
         private void DefineOrder()
@@ -501,7 +508,7 @@ namespace GameState
                         player.WearsMask.Value = !player.WearsMask.Value;
                     }
 
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(5.0f);
                 }
 
                 DeanonimizationCheck(player.CurrentRoom.Value);
