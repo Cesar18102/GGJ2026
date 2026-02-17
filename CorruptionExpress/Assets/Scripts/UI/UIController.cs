@@ -138,10 +138,10 @@ public class UIController : MonoBehaviour
             wearActionTextHolder.text = state.WearActionText;
         }
 
-        _leftPreview.SetActive(state.PreviewsVisible);
-        _rightPreview.SetActive(state.PreviewsVisible);
-        _navigateLeft.SetActive(state.NavigationVisible);
-        _navigateRight.SetActive(state.NavigationVisible);
+        _leftPreview.SetActive(state.PreviewLeftVisible);
+        _rightPreview.SetActive(state.PreviewRightVisible);
+        _navigateLeft.SetActive(state.NavigateLeftVisible);
+        _navigateRight.SetActive(state.NavigateRightVisible);
 
         _winIndicator.SetActive(state.WinTeam != Team.Unassigned);
         _winText.text = state.Reason switch
@@ -151,7 +151,7 @@ public class UIController : MonoBehaviour
             WinReason.Deanon => "Значну кількість агентів було деанонімізовано!",
             WinReason.RoundsPassed => "Обшук пройшов невдало!"
         };
-
+        
         _uiHolder.SetActive(state.TurnOrderUIShown);
         _phaseNameText.text = state.RoundPhaseTurnInfo;
     }

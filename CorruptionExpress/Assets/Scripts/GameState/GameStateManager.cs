@@ -638,19 +638,24 @@ namespace GameState
                 return;
             }
 
+            GamePhase phase = CurrentPhase.Value;
+
             bool isHidingItems = 
-                CurrentPhase.Value == GamePhase.Setup && 
+                phase == GamePhase.Setup && 
                 player.AssignedTeam.Value == Team.CorruptOfficials;
 
-            bool isExecutingMove = 
-                CurrentPhase.Value == GamePhase.Execution &&
+            bool isExecutingMove =
+                phase == GamePhase.Execution &&
                 ExecIndex.Value >= 0 &&
                 PlannedActions[ExecIndex.Value].ClientId == player.OwnerClientId &&
                 PlannedActions[ExecIndex.Value].Action == ActionType.Move;
 
-            string roundString = CurrentPhase.Value == GamePhase.Setup ? string.Empty : $"R: {GameRound.Value + 1}/{_totalGameRounds}";
-            string phaseString = $"P: {CurrentPhase.Value}";
-            string turnString = CurrentPhase.Value switch
+            bool navigateVisible = isHidingItems || isExecutingMove;
+            bool previewVisible = !player.WearsMask.Value && phase != GamePhase.Setup;
+
+            string roundString = phase == GamePhase.Setup ? string.Empty : $"R: {GameRound.Value + 1}/{_totalGameRounds}";
+            string phaseString = $"P: {phase}";
+            string turnString = phase switch
             {
                 GamePhase.Setup => string.Empty,
                 GamePhase.Planning => $"T: {PlanningRound.Value + 1}/{_planningCycles}",
@@ -660,9 +665,11 @@ namespace GameState
 
             UIState state = new UIState()
             {
-                ActionsVisible = CurrentPhase.Value == GamePhase.Planning && CurrentTurnClientId.Value == (long)player.OwnerClientId,
-                NavigationVisible = isHidingItems || isExecutingMove,
-                PreviewsVisible = !player.WearsMask.Value,
+                ActionsVisible = phase == GamePhase.Planning && CurrentTurnClientId.Value == (long)player.OwnerClientId,
+                NavigateLeftVisible = navigateVisible && _roomController.CurrentRoomIndex > 0,
+                NavigateRightVisible = navigateVisible && _roomController.CurrentRoomIndex < _roomController.RoomCount - 1,
+                PreviewLeftVisible = previewVisible && _roomController.CurrentRoomIndex > 0,
+                PreviewRightVisible = previewVisible && _roomController.CurrentRoomIndex < _roomController.RoomCount - 1,
                 WearActionText = player.WearsMask.Value ? "Unwear" : "Wear",
                 WearActionVisible = player.AssignedTeam.Value == Team.Nabu && !player.IsDeanonimized.Value,
                 WinTeam = WinTeam.Value,
