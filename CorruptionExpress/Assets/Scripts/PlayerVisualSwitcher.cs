@@ -1,3 +1,4 @@
+using Assets.Scripts.Helpers;
 using Teams;
 using Unity.Netcode;
 using UnityEngine;
@@ -6,6 +7,9 @@ public class PlayerVisualSwitcher : NetworkBehaviour
 {
     [SerializeField] private GameObject visualNabu;
     [SerializeField] private GameObject visualCorrupt;
+
+    [SerializeField] private Texture2D _cursorNabu;
+    [SerializeField] private Texture2D _cursorCorrupt;
 
     private PlayerNetState _team;
 
@@ -22,14 +26,22 @@ public class PlayerVisualSwitcher : NetworkBehaviour
 
     private void Apply(Team t)
     {
-        if (visualNabu != null)
-        {
-            visualNabu.SetActive(t == Team.Nabu);
-        }
+        visualNabu.SetActive(t == Team.Nabu);
+        visualCorrupt.SetActive(t == Team.CorruptOfficials);
 
-        if (visualCorrupt != null)
+        if (PlayersHelper.GetLocalPlayer().OwnerClientId == OwnerClientId)
         {
-            visualCorrupt.SetActive(t == Team.CorruptOfficials);
+            Texture2D cursor = t switch
+            {
+                Team.Nabu => _cursorNabu,
+                Team.CorruptOfficials => _cursorCorrupt,
+                _ => null
+            };
+
+            if (cursor != null)
+            {
+                Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+            }
         }
     }
 }

@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualSwitcher
   ShowTopMostFoldoutHeaderGroup: 1
   visualNabu: {fileID: 8153819915047428833}
-  _cursorNabu: {fileID: 2800000, guid: 7b84956a089e0dd4381b847f8cb952d4, type: 3}
   visualCorrupt: {fileID: 5324637586492803371}
+  _cursorNabu: {fileID: 2800000, guid: 7b84956a089e0dd4381b847f8cb952d4, type: 3}
   _cursorCorrupt: {fileID: 2800000, guid: 8730c135bb6095647b4bee51abade074, type: 3}
 --- !u!114 &2793822763279625358
 MonoBehaviour:
