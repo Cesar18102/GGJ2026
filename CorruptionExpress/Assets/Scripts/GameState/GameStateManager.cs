@@ -299,8 +299,11 @@ namespace GameState
         private void ShowPreparePanelClientRpc()
         {
             PlayerNetState currentPlayer = PlayersHelper.GetLocalPlayer();
-            _uiController.ShowPreparePanel(currentPlayer.AssignedTeam.Value);
-            _uiController.StartMusic(currentPlayer.AssignedTeam.Value);
+            Team team = currentPlayer.AssignedTeam.Value;
+
+            _uiController.ShowPreparePanel(team);
+            _uiController.StartMusic(team);
+            _uiController.UpdateUI(team);
         }
 
         private IEnumerator HideEvidenceCo(PlayerNetState player)

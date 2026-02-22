@@ -61,6 +61,9 @@ public class UIController : MonoBehaviour
     [SerializeField] 
     private TMP_Text _phaseNameText;
 
+    [SerializeField]
+    private UIAppearanceController _uiAppearanceController;
+
     public event EventHandler<InputData> OnInput;
 
     public void UpdateItems(IEnumerable<ItemController> items)
@@ -108,6 +111,11 @@ public class UIController : MonoBehaviour
     {
         _nabuPanel.SetActive(team == Team.Nabu);
         _corruptionPanel.SetActive(team == Team.CorruptOfficials);
+    }
+
+    public void UpdateUI(Team team)
+    {
+        _uiAppearanceController.UpdateUI(team);
     }
 
     public void SetRemainingItemsToWait(int remainingItems)
